@@ -1,0 +1,59 @@
+# Node modules & dependencies
+node_modules
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+pnpm-debug.log
+apps/**/node_modules
+packages/**/node_modules
+
+# Build artifacts
+dist
+build
+.next
+out
+coverage
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+*.log.*
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# OS / Editor junk
+.DS_Store
+Thumbs.db
+.idea
+.vscode
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Docker itself
+Dockerfile
+.dockerignore
+
+# Tests / configs not needed in container
+__tests__
+jest.config.*
+*.spec.*
+*.test.*
+
+# Misc
+.cache
+.eslintcache
+.npm
+.nvm
+.git
+.gitignore
+.gitlab-ci.yml
+.github
