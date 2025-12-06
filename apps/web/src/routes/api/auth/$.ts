@@ -1,5 +1,5 @@
-import { auth } from "@trektoiec/auth";
 import { createFileRoute } from "@tanstack/react-router";
+import { auth } from "@trektoiec/auth";
 
 export const Route = createFileRoute("/api/auth/$")({
 	server: {
