@@ -17,7 +17,7 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"dotenv": "catalog:",
+		"@t3-oss/env-core": "^0.13.8",
 		"zod": "^4.1.11"
 	}
 }

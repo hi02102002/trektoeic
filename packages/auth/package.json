@@ -18,8 +18,8 @@
 	},
 	"dependencies": {
 		"better-auth": "catalog:",
-		"dotenv": "catalog:",
 		"zod": "^4.1.11",
-		"@trektoiec/db": "workspace:*"
+		"@trektoiec/db": "workspace:*",
+		"@trektoiec/env": "workspace:*"
 	}
 }

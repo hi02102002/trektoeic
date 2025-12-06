@@ -21,9 +21,6 @@ catalogs:
     better-auth:
       specifier: ^1.4.5
       version: 1.4.5
-    dotenv:
-      specifier: ^17.2.2
-      version: 17.2.3
 
 importers:
 
@@ -256,9 +253,6 @@ importers:
       '@trektoiec/db':
         specifier: workspace:*
         version: link:../db
-      dotenv:
-        specifier: 'catalog:'
-        version: 17.2.3
       typescript:
         specifier: ^5
         version: 5.9.3
@@ -275,12 +269,12 @@ importers:
       '@trektoiec/db':
         specifier: workspace:*
         version: link:../db
+      '@trektoiec/env':
+        specifier: workspace:*
+        version: link:../env
       better-auth:
         specifier: 'catalog:'
         version: 1.4.5(@tanstack/react-start@1.139.14(crossws@0.4.1(srvx@0.9.7))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(vite@7.2.6(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2)))(react-dom@19.1.2(react@19.1.2))(react@19.1.2)(solid-js@1.9.10)
-      dotenv:
-        specifier: 'catalog:'
-        version: 17.2.3
       typescript:
         specifier: ^5
         version: 5.9.3
@@ -296,9 +290,9 @@ importers:
 
   packages/db:
     dependencies:
-      dotenv:
-        specifier: 'catalog:'
-        version: 17.2.3
+      '@trektoiec/env':
+        specifier: workspace:*
+        version: link:../env
       drizzle-orm:
         specifier: ^0.44.2
         version: 0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3)
@@ -324,9 +318,9 @@ importers:
 
   packages/env:
     dependencies:
-      dotenv:
-        specifier: 'catalog:'
-        version: 17.2.3
+      '@t3-oss/env-core':
+        specifier: ^0.13.8
+        version: 0.13.8(typescript@5.9.3)(zod@4.1.13)
       typescript:
         specifier: ^5
         version: 5.9.3
@@ -2305,6 +2299,23 @@ packages:
 
   '@standard-schema/spec@1.0.0':
     resolution: {integrity: sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA==}
+
+  '@t3-oss/env-core@0.13.8':
+    resolution: {integrity: sha512-L1inmpzLQyYu4+Q1DyrXsGJYCXbtXjC4cICw1uAKv0ppYPQv656lhZPU91Qd1VS6SO/bou1/q5ufVzBGbNsUpw==}
+    peerDependencies:
+      arktype: ^2.1.0
+      typescript: '>=5.0.0'
+      valibot: ^1.0.0-beta.7 || ^1.0.0
+      zod: ^3.24.0 || ^4.0.0-beta.0
+    peerDependenciesMeta:
+      arktype:
+        optional: true
+      typescript:
+        optional: true
+      valibot:
+        optional: true
+      zod:
+        optional: true
 
   '@tailwindcss/node@4.1.17':
     resolution: {integrity: sha512-csIkHIgLb3JisEFQ0vxr2Y57GUNYh447C8xzwj89U/8fdW8LhProdxvnVH6U8M2Y73QKiTIH+LWbK3V2BBZsAg==}
@@ -5880,6 +5891,11 @@ snapshots:
     optional: true
 
   '@standard-schema/spec@1.0.0': {}
+
+  '@t3-oss/env-core@0.13.8(typescript@5.9.3)(zod@4.1.13)':
+    optionalDependencies:
+      typescript: 5.9.3
+      zod: 4.1.13
 
   '@tailwindcss/node@4.1.17':
     dependencies:
