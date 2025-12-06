@@ -14,6 +14,8 @@ import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as AppIndexRouteImport } from './routes/app/index'
 import { Route as marketingIndexRouteImport } from './routes/(marketing)/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
+import { Route as ApiUploadCloudflareRouteImport } from './routes/api/upload/cloudflare'
+import { Route as ApiUploadBackblazeRouteImport } from './routes/api/upload/backblaze'
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc/$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -40,6 +42,16 @@ const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => AuthRoute,
 } as any)
+const ApiUploadCloudflareRoute = ApiUploadCloudflareRouteImport.update({
+  id: '/api/upload/cloudflare',
+  path: '/api/upload/cloudflare',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiUploadBackblazeRoute = ApiUploadBackblazeRouteImport.update({
+  id: '/api/upload/backblaze',
+  path: '/api/upload/backblaze',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiRpcSplatRoute = ApiRpcSplatRouteImport.update({
   id: '/api/rpc/$',
   path: '/api/rpc/$',
@@ -56,6 +68,8 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
+  '/api/upload/backblaze': typeof ApiUploadBackblazeRoute
+  '/api/upload/cloudflare': typeof ApiUploadCloudflareRoute
   '/login': typeof AuthLoginIndexRoute
 }
 export interface FileRoutesByTo {
@@ -63,6 +77,8 @@ export interface FileRoutesByTo {
   '/app': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
+  '/api/upload/backblaze': typeof ApiUploadBackblazeRoute
+  '/api/upload/cloudflare': typeof ApiUploadCloudflareRoute
   '/login': typeof AuthLoginIndexRoute
 }
 export interface FileRoutesById {
@@ -73,13 +89,29 @@ export interface FileRoutesById {
   '/app/': typeof AppIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
+  '/api/upload/backblaze': typeof ApiUploadBackblazeRoute
+  '/api/upload/cloudflare': typeof ApiUploadCloudflareRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/api/auth/$' | '/api/rpc/$' | '/login'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/api/auth/$'
+    | '/api/rpc/$'
+    | '/api/upload/backblaze'
+    | '/api/upload/cloudflare'
+    | '/login'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app' | '/api/auth/$' | '/api/rpc/$' | '/login'
+  to:
+    | '/'
+    | '/app'
+    | '/api/auth/$'
+    | '/api/rpc/$'
+    | '/api/upload/backblaze'
+    | '/api/upload/cloudflare'
+    | '/login'
   id:
     | '__root__'
     | '/_auth'
@@ -88,6 +120,8 @@ export interface FileRouteTypes {
     | '/app/'
     | '/api/auth/$'
     | '/api/rpc/$'
+    | '/api/upload/backblaze'
+    | '/api/upload/cloudflare'
     | '/_auth/login/'
   fileRoutesById: FileRoutesById
 }
@@ -98,6 +132,8 @@ export interface RootRouteChildren {
   AppIndexRoute: typeof AppIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
+  ApiUploadBackblazeRoute: typeof ApiUploadBackblazeRoute
+  ApiUploadCloudflareRoute: typeof ApiUploadCloudflareRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -137,6 +173,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginIndexRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/api/upload/cloudflare': {
+      id: '/api/upload/cloudflare'
+      path: '/api/upload/cloudflare'
+      fullPath: '/api/upload/cloudflare'
+      preLoaderRoute: typeof ApiUploadCloudflareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/upload/backblaze': {
+      id: '/api/upload/backblaze'
+      path: '/api/upload/backblaze'
+      fullPath: '/api/upload/backblaze'
+      preLoaderRoute: typeof ApiUploadBackblazeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/rpc/$': {
       id: '/api/rpc/$'
       path: '/api/rpc/$'
@@ -171,6 +221,8 @@ const rootRouteChildren: RootRouteChildren = {
   AppIndexRoute: AppIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
+  ApiUploadBackblazeRoute: ApiUploadBackblazeRoute,
+  ApiUploadCloudflareRoute: ApiUploadCloudflareRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

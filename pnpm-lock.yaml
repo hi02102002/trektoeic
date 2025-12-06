@@ -141,6 +141,9 @@ importers:
       '@trektoiec/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@trektoiec/uploads':
+        specifier: workspace:*
+        version: link:../../packages/uploads
       ahooks:
         specifier: ^3.9.6
         version: 3.9.6(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
@@ -161,7 +164,7 @@ importers:
         version: 0.4.6(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
       nitro:
         specifier: ^3.0.1-alpha.1
-        version: 3.0.1-alpha.1(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3))(rollup@4.53.3)(vite@7.2.6(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
+        version: 3.0.1-alpha.1(aws4fetch@1.0.20)(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3))(rollup@4.53.3)(vite@7.2.6(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
       radix-ui:
         specifier: ^1.4.2
         version: 1.4.3(@types/react-dom@19.2.3(@types/react@19.1.17))(@types/react@19.1.17)(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
@@ -318,6 +321,22 @@ importers:
       drizzle-kit:
         specifier: ^0.31.2
         version: 0.31.8
+
+  packages/uploads:
+    dependencies:
+      '@better-upload/client':
+        specifier: ^3.0.5
+        version: 3.0.5(react@19.1.2)
+      '@better-upload/server':
+        specifier: ^3.0.5
+        version: 3.0.5
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+    devDependencies:
+      '@trektoiec/config':
+        specifier: workspace:*
+        version: link:../config
 
 packages:
 
@@ -493,6 +512,14 @@ packages:
 
   '@better-fetch/fetch@1.1.18':
     resolution: {integrity: sha512-rEFOE1MYIsBmoMJtQbl32PGHHXuG2hDxvEd7rUHE0vCBoFQVSDqaVs9hkZEtHCxRoY+CljXKFCOuJ8uxqw1LcA==}
+
+  '@better-upload/client@3.0.5':
+    resolution: {integrity: sha512-fpDLplXM/cAQOe7XtNfZtHjwkHhQjs8W40sgu9oR4zs63EraMHQ1hxFYK80tiw0qePf1dQKCpl4/F7vi1cfotw==}
+    peerDependencies:
+      react: '*'
+
+  '@better-upload/server@3.0.5':
+    resolution: {integrity: sha512-krxL+R2G6tzdj2pictVJYo/DjpRCNqCQUQX/Z/6jX6hqL56heVRXfH72HObRj0O9JjHRFDHgQI5KsEFEfwr3AQ==}
 
   '@biomejs/biome@2.3.8':
     resolution: {integrity: sha512-Qjsgoe6FEBxWAUzwFGFrB+1+M8y/y5kwmg5CHac+GSVOdmOIqsAiXM5QMVGZJ1eCUCLlPZtq4aFAQ0eawEUuUA==}
@@ -2650,6 +2677,9 @@ packages:
     resolution: {integrity: sha512-6t10qk83GOG8p0vKmaCr8eiilZwO171AvbROMtvvNiwrTly62t+7XkA8RdIIVbpMhCASAsxgAzdRSwh6nw/5Dg==}
     engines: {node: '>=4'}
 
+  aws4fetch@1.0.20:
+    resolution: {integrity: sha512-/djoAN709iY65ETD6LKCtyyEI04XIBP5xVvfmNxsEP0uJB5tyaGBztSryRr4HqMStr9R06PisQE7m9zDTXKu6g==}
+
   babel-dead-code-elimination@1.0.10:
     resolution: {integrity: sha512-DV5bdJZTzZ0zn0DC24v3jD7Mnidh6xhKa4GfKCbq3sfW8kaWhDdZjP3i81geA8T33tdYqWKw4D3fVv0CwEgKVA==}
 
@@ -3027,6 +3057,10 @@ packages:
 
   exsolve@1.0.8:
     resolution: {integrity: sha512-LmDxfWXwcTArk8fUEnOfSZpHOJ6zOMUJKOtFLFqJLoKJetuQG874Uc7/Kki7zFLzYybmZhp1M7+98pfMqeX8yA==}
+
+  fast-xml-parser@5.3.2:
+    resolution: {integrity: sha512-n8v8b6p4Z1sMgqRmqLJm3awW4NX7NkaKPfb3uJIBTSH7Pdvufi3PQ3/lJLQrvxcMYl7JI2jnDO90siPEpD8JBA==}
+    hasBin: true
 
   fdir@6.5.0:
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
@@ -3692,6 +3726,9 @@ packages:
     resolution: {integrity: sha512-gmBGslpoQJtgnMAvOVqGZpEz9dyoKTCzy2nfz/n8aIFhN/jCE/rCmcxabB6jOOHV+0WNnylOxaxBQPSvcWklhA==}
     engines: {node: '>=12'}
 
+  strnum@2.1.1:
+    resolution: {integrity: sha512-7ZvoFTiCnGxBtDqJ//Cu6fWtZtc7Y3x+QOirG15wztbdngGSkht27o2pyGWrVy0b4WAy3jbKmnoK6g5VlVNUUw==}
+
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
@@ -4297,6 +4334,16 @@ snapshots:
   '@better-auth/utils@0.3.0': {}
 
   '@better-fetch/fetch@1.1.18': {}
+
+  '@better-upload/client@3.0.5(react@19.1.2)':
+    dependencies:
+      react: 19.1.2
+
+  '@better-upload/server@3.0.5':
+    dependencies:
+      aws4fetch: 1.0.20
+      fast-xml-parser: 5.3.2
+      zod: 4.1.13
 
   '@biomejs/biome@2.3.8':
     optionalDependencies:
@@ -6298,6 +6345,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
+  aws4fetch@1.0.20: {}
+
   babel-dead-code-elimination@1.0.10:
     dependencies:
       '@babel/core': 7.28.5
@@ -6626,6 +6675,10 @@ snapshots:
 
   exsolve@1.0.8: {}
 
+  fast-xml-parser@5.3.2:
+    dependencies:
+      strnum: 2.1.1
+
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
       picomatch: 4.0.3
@@ -6895,7 +6948,7 @@ snapshots:
 
   nf3@0.1.12: {}
 
-  nitro@3.0.1-alpha.1(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3))(rollup@4.53.3)(vite@7.2.6(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2)):
+  nitro@3.0.1-alpha.1(aws4fetch@1.0.20)(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3))(rollup@4.53.3)(vite@7.2.6(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2)):
     dependencies:
       consola: 3.4.2
       crossws: 0.4.1(srvx@0.9.7)
@@ -6910,7 +6963,7 @@ snapshots:
       srvx: 0.9.7
       undici: 7.16.0
       unenv: 2.0.0-rc.24
-      unstorage: 2.0.0-alpha.4(db0@0.3.4(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3)))(ofetch@2.0.0-alpha.3)
+      unstorage: 2.0.0-alpha.4(aws4fetch@1.0.20)(db0@0.3.4(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3)))(ofetch@2.0.0-alpha.3)
     optionalDependencies:
       rollup: 4.53.3
       vite: 7.2.6(@types/node@22.19.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2)
@@ -7325,6 +7378,8 @@ snapshots:
     dependencies:
       ansi-regex: 6.2.2
 
+  strnum@2.1.1: {}
+
   symbol-tree@3.2.4: {}
 
   tabbable@6.3.0: {}
@@ -7429,8 +7484,9 @@ snapshots:
       picomatch: 4.0.3
       webpack-virtual-modules: 0.6.2
 
-  unstorage@2.0.0-alpha.4(db0@0.3.4(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3)))(ofetch@2.0.0-alpha.3):
+  unstorage@2.0.0-alpha.4(aws4fetch@1.0.20)(db0@0.3.4(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3)))(ofetch@2.0.0-alpha.3):
     optionalDependencies:
+      aws4fetch: 1.0.20
       db0: 0.3.4(drizzle-orm@0.44.7(@types/pg@8.15.6)(kysely@0.28.8)(pg@8.16.3))
       ofetch: 2.0.0-alpha.3
 
