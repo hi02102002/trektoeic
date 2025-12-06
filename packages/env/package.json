@@ -1,5 +1,5 @@
 {
-	"name": "@trektoiec/uploads",
+	"name": "@trektoiec/env",
 	"exports": {
 		".": {
 			"default": "./src/index.ts"
@@ -17,8 +17,7 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"@better-upload/client": "^3.0.5",
-		"@better-upload/server": "^3.0.5",
-		"@trektoiec/env": "workspace:*"
+		"dotenv": "catalog:",
+		"zod": "^4.1.11"
 	}
 }

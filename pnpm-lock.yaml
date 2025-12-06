@@ -322,6 +322,22 @@ importers:
         specifier: ^0.31.2
         version: 0.31.8
 
+  packages/env:
+    dependencies:
+      dotenv:
+        specifier: 'catalog:'
+        version: 17.2.3
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+      zod:
+        specifier: ^4.1.11
+        version: 4.1.13
+    devDependencies:
+      '@trektoiec/config':
+        specifier: workspace:*
+        version: link:../config
+
   packages/uploads:
     dependencies:
       '@better-upload/client':
@@ -330,6 +346,9 @@ importers:
       '@better-upload/server':
         specifier: ^3.0.5
         version: 3.0.5
+      '@trektoiec/env':
+        specifier: workspace:*
+        version: link:../env
       typescript:
         specifier: ^5
         version: 5.9.3
