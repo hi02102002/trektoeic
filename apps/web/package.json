@@ -38,6 +38,7 @@
 		"@tanstack/router-plugin": "^1.132.31",
 		"@trektoiec/api": "workspace:*",
 		"@trektoiec/auth": "workspace:*",
+		"@trektoiec/uploads": "workspace:*",
 		"ahooks": "^3.9.6",
 		"better-auth": "catalog:",
 		"class-variance-authority": "^0.7.1",
