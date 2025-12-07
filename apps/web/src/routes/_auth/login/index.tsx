@@ -1,6 +1,9 @@
 /** biome-ignore-all lint/a11y/useValidAnchor: <no link> */
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ChevronLeft } from "lucide-react";
 import { Logo } from "@/components/logo";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { LoginForm } from "./_components/login-form";
 
 export const Route = createFileRoute("/_auth/login/")({
@@ -9,7 +12,19 @@ export const Route = createFileRoute("/_auth/login/")({
 
 function RouteComponent() {
 	return (
-		<div className="flex min-h-screen items-center justify-center">
+		<div className="relative flex min-h-screen items-center justify-center">
+			<Link
+				className={cn(
+					buttonVariants({
+						variant: "ghost",
+					}),
+					"absolute top-4 left-4",
+				)}
+				to="/"
+			>
+				<ChevronLeft />
+				Trang chủ
+			</Link>
 			<div className="flex flex-1 flex-col justify-center px-4 py-10 lg:px-6">
 				<Logo className="mb-3 flex items-start justify-center" />
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">

@@ -19,4 +19,9 @@ export default defineConfig({
 		}),
 		viteReact(),
 	],
+	build: {
+		rollupOptions: {
+			external: ["pg", "pg-native"],
+		},
+	},
 });
