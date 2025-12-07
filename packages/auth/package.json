@@ -9,7 +9,9 @@
 		}
 	},
 	"type": "module",
-	"scripts": {},
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
 	"devDependencies": {
 		"@trektoiec/config": "workspace:*"
 	},
@@ -18,8 +20,8 @@
 	},
 	"dependencies": {
 		"better-auth": "catalog:",
-		"dotenv": "catalog:",
 		"zod": "^4.1.11",
-		"@trektoiec/db": "workspace:*"
+		"@trektoiec/db": "workspace:*",
+		"@trektoiec/env": "workspace:*"
 	}
 }

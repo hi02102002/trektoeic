@@ -9,7 +9,9 @@
 		}
 	},
 	"type": "module",
-	"scripts": {},
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
 	"devDependencies": {
 		"@trektoiec/config": "workspace:*"
 	},
@@ -17,7 +19,7 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"dotenv": "catalog:",
+		"@t3-oss/env-core": "^0.13.8",
 		"zod": "^4.1.11"
 	}
 }

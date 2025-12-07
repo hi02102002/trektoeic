@@ -10,11 +10,13 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Toaster } from "@/components/ui/sonner";
+import { getUser } from "@/functions/get-user";
 import type { orpc } from "@/utils/orpc";
 import appCss from "../index.css?url";
 export interface RouterAppContext {
 	orpc: typeof orpc;
 	queryClient: QueryClient;
+	user: Awaited<ReturnType<typeof getUser>>;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -38,7 +40,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			},
 		],
 	}),
+	async beforeLoad() {
+		const user = await getUser();
 
+		return {
+			user,
+		};
+	},
 	component: RootDocument,
 });
 

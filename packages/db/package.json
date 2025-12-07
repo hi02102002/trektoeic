@@ -13,7 +13,9 @@
 		"db:push": "drizzle-kit push",
 		"db:studio": "drizzle-kit studio",
 		"db:generate": "drizzle-kit generate",
-		"db:migrate": "drizzle-kit migrate"
+		"db:migrate": "drizzle-kit migrate",
+		"db:pull": "drizzle-kit pull",
+		"check-types": "tsc --noEmit"
 	},
 	"devDependencies": {
 		"drizzle-kit": "^0.31.2",
@@ -26,7 +28,7 @@
 	"dependencies": {
 		"drizzle-orm": "^0.44.2",
 		"pg": "^8.14.1",
-		"dotenv": "catalog:",
-		"zod": "^4.1.11"
+		"zod": "^4.1.11",
+		"@trektoiec/env": "workspace:*"
 	}
 }

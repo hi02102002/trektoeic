@@ -9,7 +9,9 @@
 		}
 	},
 	"type": "module",
-	"scripts": {},
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
 	"devDependencies": {
 		"@trektoiec/config": "workspace:*"
 	},
@@ -21,7 +23,6 @@
 		"@orpc/client": "catalog:",
 		"@orpc/openapi": "catalog:",
 		"@orpc/zod": "catalog:",
-		"dotenv": "catalog:",
 		"zod": "^4.1.11",
 		"@trektoiec/auth": "workspace:*",
 		"@trektoiec/db": "workspace:*"

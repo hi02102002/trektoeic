@@ -1,7 +1,10 @@
 import type { auth } from "@trektoiec/auth";
-import { inferAdditionalFields } from "better-auth/client/plugins";
+import {
+	inferAdditionalFields,
+	magicLinkClient,
+} from "better-auth/client/plugins";
 import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({
-	plugins: [inferAdditionalFields<typeof auth>()],
+	plugins: [inferAdditionalFields<typeof auth>(), magicLinkClient()],
 });
