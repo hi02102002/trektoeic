@@ -7,5 +7,6 @@
 if [[ "$VERCEL_GIT_COMMIT_REF" == "main"]]; then
   exit 1  # build
 else
+  echo "Skipping build on branch: $VERCEL_GIT_COMMIT_REF"
   exit 0
 fi
