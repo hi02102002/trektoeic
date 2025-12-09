@@ -17,10 +17,5 @@ export default defineConfig({
 		nitro(),
 		viteReact(),
 	],
-	build: {
-		rollupOptions: {
-			external: ["pg", "pg-native"],
-		},
-	},
 	nitro: {},
 });
