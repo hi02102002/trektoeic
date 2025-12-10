@@ -28,7 +28,8 @@
 		"db:studio": "turbo -F @trektoiec/db db:studio",
 		"db:generate": "turbo -F @trektoiec/db db:generate",
 		"db:migrate": "turbo -F @trektoiec/db db:migrate",
-		"db:pull": "turbo -F @trektoiec/db db:pull"
+		"db:pull": "turbo -F @trektoiec/db db:pull",
+		"dev:mailer": "turbo -F @trektoiec/mailer dev:mailer"
 	},
 	"dependencies": {
 		"dotenv": "^17.2.2",

@@ -1,6 +1,7 @@
 import { db } from "@trektoiec/db";
 import * as schema from "@trektoiec/db/schema/auth";
 import { env } from "@trektoiec/env";
+import { sendMagicLink } from "@trektoiec/mailer";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { magicLink } from "better-auth/plugins";
@@ -19,7 +20,10 @@ export const auth = betterAuth({
 		tanstackStartCookies(),
 		magicLink({
 			sendMagicLink(data) {
-				console.log("Magic link requested: hoho", data);
+				sendMagicLink({
+					email: data.email,
+					url: data.url,
+				});
 			},
 		}),
 	],
