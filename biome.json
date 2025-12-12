@@ -26,7 +26,8 @@
 			"!**/wrangler.jsonc",
 			"!**/.source",
 			"!**/node_modules",
-			"!**/.output"
+			"!**/.output",
+			"!**/data/*.json"
 		]
 	},
 	"formatter": {

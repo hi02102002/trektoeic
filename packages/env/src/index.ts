@@ -2,8 +2,15 @@ import { createEnv } from "@t3-oss/env-core";
 import { config } from "dotenv";
 import { z } from "zod";
 
+const getEnvPath = () => {
+	if (process.env.NODE_ENV === "production") {
+		return "../../apps/web/.env.prod";
+	}
+	return "../../apps/web/.env";
+};
+
 config({
-	path: "../../apps/web/.env",
+	path: getEnvPath(),
 });
 
 export const env = createEnv({

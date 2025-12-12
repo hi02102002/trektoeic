@@ -523,6 +523,9 @@ importers:
       '@trektoeic/crawler':
         specifier: workspace:*
         version: link:../crawler
+      '@trektoeic/db':
+        specifier: workspace:*
+        version: link:../db
       '@trektoeic/env':
         specifier: workspace:*
         version: link:../env
