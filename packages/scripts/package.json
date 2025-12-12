@@ -1,0 +1,24 @@
+{
+	"name": "@trektoeic/scripts",
+	"type": "module",
+	"scripts": {
+		"check-types": "tsc --noEmit",
+		"with-script": "dotenv -e ../../apps/web/.env -- tsx",
+		"toiecmax:courses": "pnpm with-script src/toiecmax/get-all-courses.ts",
+		"toiecmax:mock-tests": "pnpm with-script src/toiecmax/get-all-mock-tests.ts",
+		"toiecmax:listenings": "pnpm with-script src/toiecmax/get-all-listenings.ts",
+		"toiecmax:sentences": "pnpm with-script src/toiecmax/get-all-sentences.ts",
+		"toiecmax:vocabs": "pnpm with-script src/toiecmax/get-all-vocabs.ts",
+		"toiecmax:refresh-token": "pnpm with-script src/toiecmax/refresh-token.ts"
+	},
+	"devDependencies": {
+		"@trektoeic/config": "workspace:*"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@trektoeic/env": "workspace:*",
+		"@trektoeic/crawler": "workspace:*"
+	}
+}

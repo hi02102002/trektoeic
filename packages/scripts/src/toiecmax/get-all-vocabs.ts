@@ -1,5 +1,6 @@
 // with-script scripts/toeicmax/get-all-vocabs.ts
-import { getAllVocabs } from "../../packages/crawler/src/toeic-max/crawler/crawl-voca";
+
+import { getAllVocabs } from "@trektoeic/crawler/toeic-max";
 
 const main = async () => {
 	await getAllVocabs();

@@ -1,5 +1,6 @@
 // with-script scripts/toeicmax/get-all-sentences.ts
-import { getAllSentences } from "../../packages/crawler/src/toeic-max/crawler/crawl-sentence";
+
+import { getAllSentences } from "@trektoeic/crawler/toeic-max";
 
 const main = async () => {
 	await getAllSentences();

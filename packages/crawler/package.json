@@ -7,6 +7,12 @@
 		},
 		"./*": {
 			"default": "./src/*.ts"
+		},
+		"./toeic-max": {
+			"default": "./src/toeic-max/index.ts"
+		},
+		"./toeic-max/*": {
+			"default": "./src/toeic-max/*.ts"
 		}
 	},
 	"scripts": {

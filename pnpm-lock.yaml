@@ -518,6 +518,22 @@ importers:
         specifier: workspace:*
         version: link:../config
 
+  packages/scripts:
+    dependencies:
+      '@trektoeic/crawler':
+        specifier: workspace:*
+        version: link:../crawler
+      '@trektoeic/env':
+        specifier: workspace:*
+        version: link:../env
+      typescript:
+        specifier: ^5
+        version: 5.9.3
+    devDependencies:
+      '@trektoeic/config':
+        specifier: workspace:*
+        version: link:../config
+
   packages/uploads:
     dependencies:
       '@better-upload/client':
