@@ -4,9 +4,9 @@ import { z } from "zod";
 
 const getEnvPath = () => {
 	if (process.env.NODE_ENV === "production") {
-		return "../../apps/web/.env.prod";
+		return "../../apps/web/.env";
 	}
-	return "../../apps/web/.env";
+	return "../../apps/web/.env.local";
 };
 
 config({
