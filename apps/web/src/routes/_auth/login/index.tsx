@@ -1,8 +1,7 @@
 /** biome-ignore-all lint/a11y/useValidAnchor: <no link> */
 
-import { CaretLeft } from "@phosphor-icons/react";
+import { CaretLeftIcon } from "@phosphor-icons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Logo } from "@/components/logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { LoginForm } from "./_components/login-form";
@@ -24,11 +23,10 @@ function RouteComponent() {
 				//@ts-expect-error
 				to="/"
 			>
-				<CaretLeft />
+				<CaretLeftIcon />
 				Trang chủ
 			</Link>
 			<div className="flex flex-1 flex-col justify-center px-4 py-10 lg:px-6">
-				<Logo className="mb-3 flex items-start justify-center" />
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<div className="mb-4">
 						<h2 className="text-center font-semibold text-foreground text-xl">
