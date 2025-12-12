@@ -4,12 +4,12 @@
 	"scripts": {
 		"check-types": "tsc --noEmit",
 		"with-script": "dotenv -e ../../apps/web/.env -- tsx",
-		"toiecmax:courses": "pnpm with-script src/toiecmax/get-all-courses.ts",
-		"toiecmax:mock-tests": "pnpm with-script src/toiecmax/get-all-mock-tests.ts",
-		"toiecmax:listenings": "pnpm with-script src/toiecmax/get-all-listenings.ts",
-		"toiecmax:sentences": "pnpm with-script src/toiecmax/get-all-sentences.ts",
-		"toiecmax:vocabs": "pnpm with-script src/toiecmax/get-all-vocabs.ts",
-		"toiecmax:refresh-token": "pnpm with-script src/toiecmax/refresh-token.ts"
+		"toeicmax:courses": "pnpm with-script src/toeicmax/get-all-courses.ts",
+		"toeicmax:mock-tests": "pnpm with-script src/toeicmax/get-all-mock-tests.ts",
+		"toeicmax:listenings": "pnpm with-script src/toeicmax/get-all-listenings.ts",
+		"toeicmax:sentences": "pnpm with-script src/toeicmax/get-all-sentences.ts",
+		"toeicmax:vocabs": "pnpm with-script src/toeicmax/get-all-vocabs.ts",
+		"toeicmax:refresh-token": "pnpm with-script src/toeicmax/refresh-token.ts"
 	},
 	"devDependencies": {
 		"@trektoeic/config": "workspace:*"
