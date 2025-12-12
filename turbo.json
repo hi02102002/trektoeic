@@ -21,6 +21,10 @@
 			"cache": false,
 			"persistent": true
 		},
+		"db:push:prod": {
+			"cache": false,
+			"persistent": true
+		},
 		"db:studio": {
 			"cache": false,
 			"persistent": true

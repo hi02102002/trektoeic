@@ -1,0 +1,30 @@
+{
+	"name": "@trektoeic/scripts",
+	"type": "module",
+	"scripts": {
+		"check-types": "tsc --noEmit",
+		"with-script": "dotenv -e ../../apps/web/.env -- tsx",
+		"with-script:prod": "dotenv -e ../../apps/web/.env.prod -- tsx",
+		"toeicmax:courses": "pnpm with-script src/toeicmax/get-all-courses.ts",
+		"toeicmax:mock-tests": "pnpm with-script src/toeicmax/get-all-mock-tests.ts",
+		"toeicmax:listenings": "pnpm with-script src/toeicmax/get-all-listenings.ts",
+		"toeicmax:sentences": "pnpm with-script src/toeicmax/get-all-sentences.ts",
+		"toeicmax:vocabs": "pnpm with-script src/toeicmax/get-all-vocabs.ts",
+		"toeicmax:refresh-token": "pnpm with-script src/toeicmax/refresh-token.ts",
+		"seed:mock-tests": "pnpm with-script src/seeds/toeicmax/seed-mock-test.ts",
+		"seed:vocabs": "pnpm with-script src/seeds/toeicmax/seed-vocabularies.ts",
+		"seed:mock-tests:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-mock-test.ts",
+		"seed:vocabs:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-vocabularies.ts"
+	},
+	"devDependencies": {
+		"@trektoeic/config": "workspace:*"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@trektoeic/env": "workspace:*",
+		"@trektoeic/crawler": "workspace:*",
+		"@trektoeic/db": "workspace:*"
+	}
+}

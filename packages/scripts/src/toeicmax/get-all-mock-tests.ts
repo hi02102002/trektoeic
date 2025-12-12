@@ -1,5 +1,6 @@
 //  with-script scripts/toeicmax/get-all-mock-tests.ts
-import { getAllMockTests } from "../../packages/crawler/src/toeic-max/crawler/crawl-mock-test";
+
+import { getAllMockTests } from "@trektoeic/crawler/toeic-max";
 
 const main = async () => {
 	await getAllMockTests();

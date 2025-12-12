@@ -58,5 +58,11 @@ export function writeToFile(filePath: string, value: unknown) {
 		fs.rmSync(filePath, { recursive: true });
 	}
 
+	if (!fs.existsSync(filePath)) {
+		fs.mkdirSync(filePath.substring(0, filePath.lastIndexOf("/")), {
+			recursive: true,
+		});
+	}
+
 	fs.writeFileSync(filePath, JSON.stringify(value, null, 2));
 }
