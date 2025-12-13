@@ -8,7 +8,6 @@ import {
 import { RPCHandler } from "@orpc/server/fetch";
 import {
 	cors,
-	csrfProtection,
 	logger,
 	openapi,
 	responseHeader,
@@ -47,7 +46,6 @@ export const createOpenApiHandler = <T extends Context>(
 		openapi(),
 		smartCoercion<T>(),
 		logger(),
-		csrfProtection(),
 		responseHeader(),
 	].filter((p) => p !== null);
 
