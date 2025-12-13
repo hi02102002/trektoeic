@@ -1,10 +1,10 @@
 import { eq } from "drizzle-orm";
-import { db } from "../../db";
 import { toeicMaxTokens } from "../../schema";
+import { withDb } from "../../utils";
 import { getToken } from "./get-token";
 
-export const upsertToken = async (token: string) => {
-	const existing = await getToken();
+export const upsertToken = withDb((db) => async (token: string) => {
+	const existing = await getToken()();
 
 	if (existing) {
 		const updated = await db
@@ -25,4 +25,4 @@ export const upsertToken = async (token: string) => {
 		.returning();
 
 	return created;
-};
+});

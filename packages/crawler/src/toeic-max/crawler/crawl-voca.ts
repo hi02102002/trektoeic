@@ -3,7 +3,7 @@ import { callApi } from "../api";
 import { runBatchesWithCount, writeToFile } from "../utils";
 
 export async function getGroups(token?: string) {
-	const _token = token || (await getToken());
+	const _token = token || (await getToken()());
 	const res = await callApi({
 		url: "https://dictionary.scandict.com/api/voca/group",
 		method: "GET",
@@ -18,7 +18,7 @@ export async function getGroups(token?: string) {
 }
 
 export async function getVocabsById(id: string, token?: string) {
-	const _token = token || (await getToken());
+	const _token = token || (await getToken()());
 	const res = await callApi({
 		url: `https://dictionary.scandict.com/api/voca/word/${id}`,
 		method: "GET",
@@ -33,7 +33,7 @@ export async function getVocabsById(id: string, token?: string) {
 }
 
 export async function getAllVocabs() {
-	const token = await getToken();
+	const token = await getToken()();
 
 	if (!token) {
 		return;

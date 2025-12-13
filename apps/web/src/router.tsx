@@ -1,4 +1,7 @@
-import { createRouter as createTanStackRouter } from "@tanstack/react-router";
+import {
+	createRouter as createTanStackRouter,
+	ErrorComponent,
+} from "@tanstack/react-router";
 import "./index.css";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { routeTree } from "./routeTree.gen";
@@ -17,6 +20,7 @@ export const getRouter = () => {
 		Wrap: ({ children }) => (
 			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
 		),
+		defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
 	});
 	return router;
 };

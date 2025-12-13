@@ -67,6 +67,11 @@ export const env = createEnv({
 		 */
 		TOIECMAX_APP_MIX: z.string().min(1),
 		TOIECMAX_API_URL: z.string().min(1),
+
+		/**
+		 * REDIS
+		 */
+		REDIS_URL: z.string().min(1),
 	},
 	clientPrefix: "VITE_",
 	client: {},

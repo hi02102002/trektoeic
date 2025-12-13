@@ -1,13 +1,18 @@
-import { ORPCError } from "@orpc/server";
-import { o } from "../procedures/o";
+import { ORPCError, os } from "@orpc/server";
+import type { auth } from "@trektoeic/auth";
 
-export const requireAuth = o.middleware(async ({ context, next }) => {
-	if (!context.session?.user) {
-		throw new ORPCError("UNAUTHORIZED");
-	}
-	return next({
-		context: {
-			session: context.session,
-		},
+export const requireAuth = os
+	.$context<{
+		session: Awaited<ReturnType<typeof auth.api.getSession>>;
+	}>()
+	.middleware(async ({ context, next }) => {
+		if (!context.session?.user) {
+			throw new ORPCError("UNAUTHORIZED");
+		}
+		return next({
+			context: {
+				...context,
+				session: context.session,
+			},
+		});
 	});
-});

@@ -1,6 +1,6 @@
-import { db } from "../../db";
+import { withDb } from "../../utils";
 
-export const getToken = async () => {
+export const getToken = withDb((db) => async () => {
 	const token = await db.query.toeicMaxTokens.findFirst();
 	return token?.token ?? null;
-};
+});

@@ -13,7 +13,7 @@ export const HeroSection = () => {
 					transition={{ duration: 0.5 }}
 				>
 					<motion.div
-						className="mb-2 inline-flex cursor-default items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1 font-medium text-slate-600 text-xs shadow-sm transition-colors hover:border-slate-300"
+						className="mb-2 inline-flex cursor-default items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1 font-medium text-slate-600 text-xs shadow-sm transition-colors hover:border-slate-300"
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.4, delay: 0.1 }}
@@ -207,7 +207,7 @@ export const HeroSection = () => {
 					/>
 					{/* Main App Interface Card */}
 					<motion.div
-						className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)]"
+						className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-md border border-slate-200/80 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)]"
 						initial={{ opacity: 0, scale: 0.95 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.5, delay: 0.4 }}
@@ -363,7 +363,7 @@ export const HeroSection = () => {
 								</div>
 								<div className="space-y-3">
 									<div className="flex items-center gap-3">
-										<div className="flex h-8 w-8 items-center justify-center rounded border border-green-100 bg-green-50 text-green-600">
+										<div className="flex h-8 w-8 items-center justify-center rounded-md border border-green-100 bg-green-50 text-green-600">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												aria-hidden="true"
@@ -395,7 +395,7 @@ export const HeroSection = () => {
 										</div>
 									</div>
 									<div className="flex items-center gap-3">
-										<div className="flex h-8 w-8 items-center justify-center rounded border border-orange-100 bg-orange-50 text-orange-600">
+										<div className="flex h-8 w-8 items-center justify-center rounded-md border border-orange-100 bg-orange-50 text-orange-600">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												aria-hidden="true"
@@ -433,7 +433,7 @@ export const HeroSection = () => {
 						</div>
 					</motion.div>
 					<motion.div
-						className="-right-14 glass-panel absolute bottom-20 z-20 hidden rounded-xl border border-white/50 bg-white p-3 shadow-lg md:block"
+						className="-right-14 glass-panel absolute bottom-20 z-20 hidden rounded-md border border-white/50 bg-white p-3 shadow-lg md:block"
 						initial={{ opacity: 0, x: 20, y: 20 }}
 						animate={{ opacity: 1, x: 0, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.6 }}
@@ -453,7 +453,7 @@ export const HeroSection = () => {
 						</div>
 					</motion.div>
 					<motion.div
-						className="-left-6 glass-panel absolute top-36 z-20 hidden rounded-xl border border-white/50 bg-white p-3 shadow-lg md:block"
+						className="-left-6 glass-panel absolute top-36 z-20 hidden rounded-md border border-white/50 bg-white p-3 shadow-lg md:block"
 						initial={{ opacity: 0, x: -20, y: 20 }}
 						animate={{ opacity: 1, x: 0, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.8 }}

@@ -4,7 +4,7 @@ import { callApi, publicApi } from "./api";
 import { RECORD_TO_REGISTER } from "./constants";
 
 export const deleteAccount = async () => {
-	const token = await getToken();
+	const token = await getToken()();
 
 	if (!token) {
 		return;
@@ -51,11 +51,11 @@ export const loginAccount = async () => {
 		return;
 	}
 
-	await upsertToken(token);
+	await upsertToken()(token);
 };
 
 export const registerCourse = async (courseId: number) => {
-	const token = await getToken();
+	const token = await getToken()();
 
 	if (!token) {
 		return;
