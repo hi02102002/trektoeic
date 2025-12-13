@@ -1,3 +1,4 @@
+import { env } from "@trektoeic/env";
 import { Redis } from "@upstash/redis";
 
 let client: Redis | null = null;
@@ -9,8 +10,8 @@ export const getRedisClient = (): Redis => {
 		}
 
 		client = new Redis({
-			url: "https://settling-molly-14808.upstash.io",
-			token: "ATnYAAIncDFkYWNmNTgwZTE4OTg0MzAwOGM2YjU3NmQ3OTRlODc3MXAxMTQ4MDg",
+			url: env.UPSTASH_REDIS_REST_URL,
+			token: env.UPSTASH_REDIS_REST_TOKEN,
 		});
 
 		return client;
