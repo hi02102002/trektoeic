@@ -1,2 +1,7 @@
-export * from "./get-token";
-export * from "./upsert-token";
+import { getToken } from "./get-token";
+import { upsertToken } from "./upsert-token";
+
+export const toiecMaxTokensQueries = {
+	getToken,
+	upsertToken,
+};

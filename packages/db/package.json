@@ -16,6 +16,9 @@
 		},
 		"./queries/toeic-max-tokens": {
 			"default": "./src/queries/toeic-max-tokens/index.ts"
+		},
+		"./queries": {
+			"default": "./src/queries/index.ts"
 		}
 	},
 	"scripts": {
@@ -28,18 +31,20 @@
 		"check-types": "tsc --noEmit"
 	},
 	"devDependencies": {
-		"drizzle-kit": "^0.31.2",
+		"@trektoeic/config": "workspace:*",
 		"@types/pg": "^8.11.11",
-		"@trektoeic/config": "workspace:*"
+		"drizzle-kit": "^0.31.2"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"drizzle-orm": "^0.44.2",
-		"pg": "^8.14.1",
-		"zod": "^4.1.11",
 		"@trektoeic/env": "workspace:*",
-		"@trektoeic/utils": "workspace:*"
+		"@trektoeic/utils": "workspace:*",
+		"drizzle-orm": "^0.44.2",
+		"drizzle-orm-helpers": "^0.7.6",
+		"pg": "^8.14.1",
+		"type-fest": "^5.3.1",
+		"zod": "^4.1.11"
 	}
 }
