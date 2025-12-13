@@ -3,11 +3,27 @@ import {
 	ErrorComponent,
 } from "@tanstack/react-router";
 import "./index.css";
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryCache, QueryClient } from "@tanstack/react-query";
+import { routerWithQueryClient } from "@tanstack/react-router-with-query";
+import { toast } from "sonner";
 import { routeTree } from "./routeTree.gen";
-import { orpc, queryClient } from "./utils/orpc";
+import { orpc } from "./utils/orpc";
 
 export const getRouter = () => {
+	const queryClient = new QueryClient({
+		queryCache: new QueryCache({
+			onError: (error) => {
+				toast.error(`Error: ${error.message}`, {
+					action: {
+						label: "retry",
+						onClick: () => {
+							queryClient.invalidateQueries();
+						},
+					},
+				});
+			},
+		}),
+	});
 	const router = createTanStackRouter({
 		routeTree,
 		scrollRestoration: true,
@@ -17,12 +33,12 @@ export const getRouter = () => {
 			queryClient,
 			user: null,
 		},
-		Wrap: ({ children }) => (
-			<QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-		),
 		defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
 	});
-	return router;
+
+	const routerWithquery = routerWithQueryClient(router, queryClient);
+
+	return routerWithquery;
 };
 
 declare module "@tanstack/react-router" {

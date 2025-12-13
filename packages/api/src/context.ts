@@ -2,10 +2,10 @@ import type { LoggerContext } from "@orpc/experimental-pino";
 import { auth } from "@trektoeic/auth";
 import type { getRedisClient } from "./libs/ioredis";
 
-export async function createContext({ req }: { req: Request }) {
+export async function createContext({ headers }: { headers: any }) {
 	try {
 		const session = await auth.api.getSession({
-			headers: req.headers,
+			headers: headers,
 		});
 		return {
 			session,

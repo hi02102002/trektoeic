@@ -3,35 +3,21 @@ import { RPCLink } from "@orpc/client/fetch";
 import type { RouterClient } from "@orpc/server";
 import { createRouterClient } from "@orpc/server";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
-import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { createIsomorphicFn } from "@tanstack/react-start";
+import { getRequestHeaders } from "@tanstack/react-start/server";
 import { createContext } from "@trektoeic/api/context";
 import { appRouter } from "@trektoeic/api/routers/index";
-import { toast } from "sonner";
-
-export const queryClient = new QueryClient({
-	queryCache: new QueryCache({
-		onError: (error) => {
-			toast.error(`Error: ${error.message}`, {
-				action: {
-					label: "retry",
-					onClick: () => {
-						queryClient.invalidateQueries();
-					},
-				},
-			});
-		},
-	}),
-});
 
 const getORPCClient = createIsomorphicFn()
-	.server(() =>
-		createRouterClient(appRouter, {
+	.server(() => {
+		return createRouterClient(appRouter, {
 			context: async ({ req }) => {
-				return createContext({ req });
+				const headers = req?.headers ?? getRequestHeaders();
+
+				return createContext({ headers });
 			},
-		}),
-	)
+		});
+	})
 	.client((): RouterClient<typeof appRouter> => {
 		const link = new RPCLink({
 			url: `${window.location.origin}/api/rpc`,

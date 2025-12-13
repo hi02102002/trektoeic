@@ -1,9 +1,14 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+import { Suspense } from "react";
 import { orpc } from "@/utils/orpc";
 
 export const Route = createFileRoute("/_protected/app/_dashboard/")({
-	component: RouteComponent,
+	component: () => (
+		<Suspense fallback={<div>Loading dashboard data...</div>}>
+			<RouteComponent />
+		</Suspense>
+	),
 });
 
 function RouteComponent() {
