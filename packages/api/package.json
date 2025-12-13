@@ -6,6 +6,15 @@
 		},
 		"./*": {
 			"default": "./src/*.ts"
+		},
+		"./polyfill": {
+			"default": "./src/shared/polyfill.ts"
+		},
+		"./shared/*": {
+			"default": "./src/shared/*.ts"
+		},
+		"./routers/*": {
+			"default": "./src/routers/*.ts"
 		}
 	},
 	"type": "module",
@@ -19,12 +28,14 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"@orpc/server": "catalog:",
 		"@orpc/client": "catalog:",
+		"@orpc/json-schema": "catalog:",
 		"@orpc/openapi": "catalog:",
+		"@orpc/server": "catalog:",
 		"@orpc/zod": "catalog:",
-		"zod": "^4.1.11",
 		"@trektoeic/auth": "workspace:*",
-		"@trektoeic/db": "workspace:*"
+		"@trektoeic/db": "workspace:*",
+		"@trektoeic/env": "workspace:*",
+		"zod": "^4.1.11"
 	}
 }

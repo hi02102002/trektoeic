@@ -1,0 +1,9 @@
+import { experimental_SmartCoercionPlugin as SmartCoercionPlugin } from "@orpc/json-schema";
+import type { Context } from "@orpc/server";
+import { ZodToJsonSchemaConverter } from "@orpc/zod/zod4";
+
+export const smartCoercion = <T extends Context>(): SmartCoercionPlugin<T> => {
+	return new SmartCoercionPlugin({
+		schemaConverters: [new ZodToJsonSchemaConverter()],
+	});
+};
