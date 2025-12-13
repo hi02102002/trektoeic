@@ -3,20 +3,20 @@ import "@trektoeic/api/polyfill";
 import { createFileRoute } from "@tanstack/react-router";
 import { createContext } from "@trektoeic/api/context";
 import { appRouter } from "@trektoeic/api/routers/index";
-import { createRpcHandler } from "@trektoeic/api/shared/handlers";
+import { createOpenApiHandler } from "@trektoeic/api/shared/handlers";
 
-const handler = createRpcHandler(appRouter);
+const handler = createOpenApiHandler(appRouter);
 
-export const Route = createFileRoute("/api/rpc/$")({
+export const Route = createFileRoute("/api/$")({
 	server: {
 		handlers: {
 			ANY: async ({ request }) => {
 				const { response } = await handler.handle(request, {
-					prefix: "/api/rpc",
+					prefix: "/api",
 					context: await createContext({ req: request }),
 				});
 
-				return response ?? new Response("Not Found", { status: 404 });
+				return response ?? new Response("Not found", { status: 404 });
 			},
 		},
 	},

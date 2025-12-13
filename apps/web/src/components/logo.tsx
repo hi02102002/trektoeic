@@ -1,6 +1,5 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
-import { MountainIcon } from "./icons/mountain-icon";
 
 type LogoProps = ComponentProps<"div"> & {
 	classNames?: {
@@ -23,7 +22,6 @@ export const Logo = ({
 				className,
 			)}
 		>
-			<MountainIcon className={cn("size-6", classNames?.icon)} />
 			{isShowText && (
 				<span>
 					<span>Trek</span>

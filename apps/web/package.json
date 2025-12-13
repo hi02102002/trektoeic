@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "vite build",
 		"serve": "vite preview",
-		"dev": "vite dev --port=3000",
+		"dev": "vite dev --port=3000 | npx pino-pretty",
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
@@ -13,9 +13,8 @@
 		"@fontsource-variable/montserrat": "^5.2.8",
 		"@hookform/resolvers": "^5.2.2",
 		"@orpc/client": "catalog:",
-		"@orpc/openapi": "catalog:",
 		"@orpc/server": "catalog:",
-		"@orpc/tanstack-query": "^1.10.0",
+		"@orpc/tanstack-query": "catalog:",
 		"@orpc/zod": "catalog:",
 		"@phosphor-icons/react": "^2.1.10",
 		"@radix-ui/react-accordion": "^1.2.12",

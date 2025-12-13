@@ -1,0 +1,25 @@
+{
+	"name": "@trektoeic/logger",
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"type": "module",
+	"scripts": {
+		"check-types": "tsc --noEmit"
+	},
+	"devDependencies": {
+		"@trektoeic/config": "workspace:*"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@trektoeic/env": "workspace:*",
+		"pino": "^10.1.0"
+	}
+}

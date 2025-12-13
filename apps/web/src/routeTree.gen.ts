@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as marketingMarketingRouteImport } from './routes/(marketing)/_marketing'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 import { Route as ApiUploadCloudflareRouteImport } from './routes/api/upload/cloudflare'
@@ -43,6 +44,11 @@ const ProtectedAppRoute = ProtectedAppRouteImport.update({
   id: '/app',
   path: '/app',
   getParentRoute: () => ProtectedRoute,
+} as any)
+const ApiSplatRoute = ApiSplatRouteImport.update({
+  id: '/api/$',
+  path: '/api/$',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const marketingMarketingRoute = marketingMarketingRouteImport.update({
   id: '/(marketing)/_marketing',
@@ -127,6 +133,7 @@ const ProtectedAppDashboardIndexRouteRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/api/$': typeof ApiSplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
   '/app': typeof ProtectedAppDashboardIndexRouteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/app/vocabularies': typeof ProtectedAppDashboardVocabulariesRouteRoute
 }
 export interface FileRoutesByTo {
+  '/api/$': typeof ApiSplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
   '/app': typeof ProtectedAppDashboardIndexRouteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -159,6 +167,7 @@ export interface FileRoutesById {
   '/_auth': typeof AuthRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
   '/(marketing)/_marketing': typeof marketingMarketingRouteWithChildren
+  '/api/$': typeof ApiSplatRoute
   '/(marketing)/_marketing/': typeof marketingMarketingIndexRouteRoute
   '/(marketing)/_marketing/about': typeof marketingMarketingAboutRouteRoute
   '/_protected/app': typeof ProtectedAppRouteWithChildren
@@ -178,6 +187,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/api/$'
     | '/about'
     | '/app'
     | '/api/auth/$'
@@ -192,6 +202,7 @@ export interface FileRouteTypes {
     | '/app/vocabularies'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/api/$'
     | '/about'
     | '/app'
     | '/api/auth/$'
@@ -209,6 +220,7 @@ export interface FileRouteTypes {
     | '/_auth'
     | '/_protected'
     | '/(marketing)/_marketing'
+    | '/api/$'
     | '/(marketing)/_marketing/'
     | '/(marketing)/_marketing/about'
     | '/_protected/app'
@@ -230,6 +242,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
   marketingMarketingRoute: typeof marketingMarketingRouteWithChildren
+  ApiSplatRoute: typeof ApiSplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
   ApiUploadBackblazeRoute: typeof ApiUploadBackblazeRoute
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app'
       preLoaderRoute: typeof ProtectedAppRouteImport
       parentRoute: typeof ProtectedRoute
+    }
+    '/api/$': {
+      id: '/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof ApiSplatRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/(marketing)/_marketing': {
       id: '/(marketing)/_marketing'
@@ -446,6 +466,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
   marketingMarketingRoute: marketingMarketingRouteWithChildren,
+  ApiSplatRoute: ApiSplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   ApiUploadBackblazeRoute: ApiUploadBackblazeRoute,

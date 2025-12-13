@@ -21,7 +21,6 @@ import {
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	useSidebar,
 } from "@/components/ui/sidebar";
 import { authClient } from "@/lib/auth-client";
 
@@ -29,7 +28,6 @@ export function NavUser() {
 	const { user } = useRouteContext({
 		strict: false,
 	});
-	const { isMobile } = useSidebar();
 	const router = useRouter();
 
 	const handleLogout = async () => {
@@ -53,7 +51,7 @@ export function NavUser() {
 									alt={user?.user.name || "User Avatar"}
 								/>
 								<AvatarFallback className="rounded-lg">
-									{user?.user.name}
+									{user?.user.name.charAt(0) || "U"}
 								</AvatarFallback>
 							</Avatar>
 							<div className="grid flex-1 text-left text-sm leading-tight">
@@ -69,8 +67,8 @@ export function NavUser() {
 					</DropdownMenuTrigger>
 					<DropdownMenuContent
 						className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-						side={isMobile ? "bottom" : "right"}
-						align="end"
+						side={"top"}
+						align="center"
 						sideOffset={4}
 					>
 						<DropdownMenuLabel className="p-0 font-normal">
@@ -81,7 +79,7 @@ export function NavUser() {
 										alt={user?.user.name || "User Avatar"}
 									/>
 									<AvatarFallback className="rounded-lg">
-										{user?.user.name}
+										{user?.user.name.charAt(0) || "U"}
 									</AvatarFallback>
 								</Avatar>
 								<div className="grid flex-1 text-left text-sm leading-tight">
