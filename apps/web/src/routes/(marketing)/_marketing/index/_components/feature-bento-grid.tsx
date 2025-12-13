@@ -1,4 +1,5 @@
 import { Briefcase, ChartLine, Ear, Timer } from "@phosphor-icons/react";
+import { IconBadge } from "@/components/icon-badge";
 
 export const FeaturesBentoGrid = () => {
 	return (
@@ -14,11 +15,11 @@ export const FeaturesBentoGrid = () => {
 					</p>
 				</div>
 				<div className="grid gap-6 md:grid-cols-3">
-					<div className="group relative overflow-hidden rounded-md border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md md:col-span-2">
+					<div className="group relative overflow-hidden rounded-md border border-slate-200 bg-white p-8 transition-shadow hover:shadow md:col-span-2">
 						<div className="relative z-10">
-							<div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-blue-100 bg-blue-50 text-blue-600">
+							<IconBadge className="mb-4">
 								<Ear size={20} weight="duotone" />
-							</div>
+							</IconBadge>
 							<h3 className="mb-2 font-semibold text-slate-900 text-xl">
 								Luyện Nghe Chuyên Sâu
 							</h3>
@@ -74,10 +75,10 @@ export const FeaturesBentoGrid = () => {
 							/>
 						</div>
 					</div>
-					<div className="rounded-md border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
-						<div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-orange-100 bg-orange-50 text-orange-600">
+					<div className="rounded-md border border-slate-200 bg-white p-8 transition-shadow hover:shadow">
+						<IconBadge className="mb-4" color="amber">
 							<Timer size={20} weight="duotone" />
-						</div>
+						</IconBadge>
 						<h3 className="mb-2 font-semibold text-slate-900 text-xl">
 							Chiến Thuật Làm Bài Nhanh
 						</h3>
@@ -86,10 +87,10 @@ export const FeaturesBentoGrid = () => {
 							bài để tối đa hóa điểm số trong kỳ thi TOEIC.
 						</p>
 					</div>
-					<div className="rounded-md border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md">
-						<div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-emerald-100 bg-emerald-50 text-emerald-600">
+					<div className="rounded-md border border-slate-200 bg-white p-8 transition-shadow hover:shadow">
+						<IconBadge className="mb-4" color="emerald">
 							<Briefcase size={20} weight="duotone" />
-						</div>
+						</IconBadge>
 						<h3 className="mb-2 font-semibold text-slate-900 text-xl">
 							Từ Vựng Chuyên Ngành
 						</h3>
@@ -98,11 +99,11 @@ export const FeaturesBentoGrid = () => {
 							kinh doanh và công sở.
 						</p>
 					</div>
-					<div className="flex flex-col items-center gap-8 rounded-md border border-slate-200 bg-white p-8 shadow-sm transition-shadow hover:shadow-md md:col-span-2 md:flex-row">
+					<div className="flex flex-col items-center gap-8 rounded-md border border-slate-200 bg-white p-8 transition-shadow hover:shadow md:col-span-2 md:flex-row">
 						<div className="flex-1">
-							<div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-purple-100 bg-purple-50 text-purple-600">
+							<IconBadge className="mb-4" color="purple">
 								<ChartLine size={20} weight="duotone" />
-							</div>
+							</IconBadge>
 							<h3 className="mb-2 font-semibold text-slate-900 text-xl">
 								Ước Lượng Điểm Số TOEIC
 							</h3>

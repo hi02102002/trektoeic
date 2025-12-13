@@ -4,7 +4,6 @@ import {
 	AppWindowIcon,
 	CheckerboardIcon,
 	ExamIcon,
-	HeadphonesIcon,
 	NotepadIcon,
 	ReadCvLogoIcon,
 } from "@phosphor-icons/react";
@@ -29,16 +28,10 @@ const dashboardRoutes: Route[] = [
 		link: "/app",
 	},
 	{
-		id: "listening",
-		title: "Listening",
-		icon: <HeadphonesIcon weight="duotone" />,
-		link: "/app/listening",
-	},
-	{
-		id: "reading",
-		title: "Reading",
+		id: "practices",
+		title: "Luyện tập",
 		icon: <ReadCvLogoIcon weight="duotone" />,
-		link: "/app/reading",
+		link: "/app/practices",
 	},
 	{
 		id: "vocabularies",

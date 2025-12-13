@@ -1,5 +1,14 @@
-import { Flame, Target } from "@phosphor-icons/react";
+import {
+	BookOpenTextIcon,
+	ChartLineUpIcon,
+	CheckIcon,
+	FlameIcon,
+	HeadphonesIcon,
+	TargetIcon,
+	WarningCircleIcon,
+} from "@phosphor-icons/react";
 import { motion } from "motion/react";
+import { IconBadge } from "@/components/icon-badge";
 import { Button } from "@/components/ui/button";
 
 export const HeroSection = () => {
@@ -191,28 +200,24 @@ export const HeroSection = () => {
 						</div>
 					</motion.div>
 				</motion.div>
-				{/* Hero Visual */}
 				<motion.div
 					className="relative flex h-[500px] w-full items-center justify-center lg:justify-end"
 					initial={{ opacity: 0, x: 50 }}
 					animate={{ opacity: 1, x: 0 }}
 					transition={{ duration: 0.6, delay: 0.2 }}
 				>
-					{/* Background Glow */}
 					<motion.div
 						className="-z-10 absolute inset-0 translate-x-10 transform rounded-full bg-gradient-to-tr from-blue-100/50 to-indigo-50/50 blur-[80px]"
 						initial={{ opacity: 0, scale: 0.8 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 1, delay: 0.3 }}
 					/>
-					{/* Main App Interface Card */}
 					<motion.div
 						className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-md border border-slate-200/80 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)]"
 						initial={{ opacity: 0, scale: 0.95 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.5, delay: 0.4 }}
 					>
-						{/* Fake Browser/App Header */}
 						<div className="flex h-12 items-center justify-between border-slate-100 border-b bg-slate-50/50 px-5">
 							<div className="flex gap-1.5">
 								<div className="h-2.5 w-2.5 rounded-full bg-slate-200" />
@@ -223,9 +228,7 @@ export const HeroSection = () => {
 								Dashboard
 							</div>
 						</div>
-						{/* App Content */}
 						<div className="p-6">
-							{/* Score Header */}
 							<div className="mb-8 flex items-start justify-between">
 								<div>
 									<h3 className="mb-1 font-medium text-slate-500 text-xs uppercase tracking-wide">
@@ -262,54 +265,15 @@ export const HeroSection = () => {
 										</span>
 									</div>
 								</div>
-								<div className="flex h-10 w-10 items-center justify-center rounded-full border border-slate-100 bg-slate-50">
-									<svg
-										xmlns="http://www.w3.org/2000/svg"
-										aria-hidden="true"
-										role="img"
-										width={20}
-										height={20}
-										viewBox="0 0 24 24"
-										data-icon="lucide:bar-chart-2"
-										data-width={20}
-										className="iconify iconify--lucide text-slate-400"
-									>
-										<path
-											fill="none"
-											stroke="currentColor"
-											strokeLinecap="round"
-											strokeLinejoin="round"
-											strokeWidth={2}
-											d="M5 21v-6m7 6V3m7 18V9"
-										/>
-									</svg>
-								</div>
+								<IconBadge className="rounded-full">
+									<ChartLineUpIcon />
+								</IconBadge>
 							</div>
-							{/* Charts/Bars */}
 							<div className="space-y-5">
 								<div className="space-y-2">
 									<div className="flex justify-between font-medium text-xs">
 										<span className="flex items-center gap-1.5 text-slate-700">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												aria-hidden="true"
-												role="img"
-												width={12}
-												height={12}
-												viewBox="0 0 24 24"
-												data-icon="lucide:headphones"
-												data-width={12}
-												className="iconify iconify--lucide text-blue-500"
-											>
-												<path
-													fill="none"
-													stroke="currentColor"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth={2}
-													d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"
-												/>
-											</svg>{" "}
+											<HeadphonesIcon className="size-3" />
 											Listening
 										</span>
 										<span className="text-slate-900">445 / 495</span>
@@ -324,26 +288,7 @@ export const HeroSection = () => {
 								<div className="space-y-2">
 									<div className="flex justify-between font-medium text-xs">
 										<span className="flex items-center gap-1.5 text-slate-700">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												aria-hidden="true"
-												role="img"
-												width={12}
-												height={12}
-												viewBox="0 0 24 24"
-												data-icon="lucide:book-open"
-												data-width={12}
-												className="iconify iconify--lucide text-indigo-500"
-											>
-												<path
-													fill="none"
-													stroke="currentColor"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth={2}
-													d="M12 7v14m-9-3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4a4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3a3 3 0 0 0-3-3z"
-												/>
-											</svg>{" "}
+											<BookOpenTextIcon className="size-3" />
 											Reading
 										</span>
 										<span className="text-slate-900">440 / 495</span>
@@ -356,35 +301,15 @@ export const HeroSection = () => {
 									</div>
 								</div>
 							</div>
-							{/* Recent Activity Mini List */}
 							<div className="mt-8 border-slate-50 border-t pt-6">
 								<div className="mb-3 font-semibold text-[10px] text-slate-400 uppercase tracking-widest">
 									Hoạt động gần đây
 								</div>
 								<div className="space-y-3">
 									<div className="flex items-center gap-3">
-										<div className="flex h-8 w-8 items-center justify-center rounded-md border border-green-100 bg-green-50 text-green-600">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												aria-hidden="true"
-												role="img"
-												width={14}
-												height={14}
-												viewBox="0 0 24 24"
-												data-icon="lucide:check"
-												data-width={14}
-												className="iconify iconify--lucide"
-											>
-												<path
-													fill="none"
-													stroke="currentColor"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth={2}
-													d="M20 6L9 17l-5-5"
-												/>
-											</svg>
-										</div>
+										<IconBadge className="size-8" color="green">
+											<CheckIcon className="size-3.5" />
+										</IconBadge>
 										<div className="flex-1">
 											<div className="font-medium text-slate-900 text-xs">
 												Part 5: Grammar
@@ -395,30 +320,9 @@ export const HeroSection = () => {
 										</div>
 									</div>
 									<div className="flex items-center gap-3">
-										<div className="flex h-8 w-8 items-center justify-center rounded-md border border-orange-100 bg-orange-50 text-orange-600">
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												aria-hidden="true"
-												role="img"
-												width={14}
-												height={14}
-												viewBox="0 0 24 24"
-												data-icon="lucide:alert-circle"
-												data-width={14}
-												className="iconify iconify--lucide"
-											>
-												<g
-													fill="none"
-													stroke="currentColor"
-													strokeLinecap="round"
-													strokeLinejoin="round"
-													strokeWidth={2}
-												>
-													<circle cx={12} cy={12} r={10} />
-													<path d="M12 8v4m0 4h.01" />
-												</g>
-											</svg>
-										</div>
+										<IconBadge className="size-8" color="orange">
+											<WarningCircleIcon className="size-3.5" />
+										</IconBadge>
 										<div className="flex-1">
 											<div className="font-medium text-slate-900 text-xs">
 												Part 7: Reading Comp
@@ -440,7 +344,7 @@ export const HeroSection = () => {
 					>
 						<div className="flex items-center gap-3">
 							<div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-orange-400 to-red-500 text-white shadow-sm">
-								<Flame size={20} />
+								<FlameIcon size={20} />
 							</div>
 							<div>
 								<div className="font-semibold text-slate-500 text-xs">
@@ -460,7 +364,7 @@ export const HeroSection = () => {
 					>
 						<div className="flex items-center gap-3">
 							<div className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-100 bg-white text-blue-600 shadow-sm">
-								<Target size={20} />
+								<TargetIcon size={20} />
 							</div>
 							<div className="pr-2">
 								<div className="font-semibold text-slate-500 text-xs">Goal</div>

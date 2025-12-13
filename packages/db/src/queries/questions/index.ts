@@ -1,9 +1,20 @@
-import { and, eq, getTableColumns, sql } from "drizzle-orm";
+import { and, count, eq, getTableColumns, sql } from "drizzle-orm";
 import { questions, subQuestions } from "../../schema";
 import { jsonAggBuildObjectWithOrder, withDb } from "../../utils";
 
-//TODO: Need to integrate with histories table to get only un completed questions
-export const getByPart = withDb(
+const getTotalQuestionsEachPart = withDb((db) => async () => {
+	const result = await db
+		.select({
+			part: questions.part,
+			totalQuestions: count(questions.id),
+		})
+		.from(questions)
+		.groupBy(questions.part);
+
+	return result;
+});
+
+const getRandomQuestionsByPart = withDb(
 	(db) =>
 		async ({ part, limit = 10 }: { part: number; limit?: number }) => {
 			const records = await db
@@ -24,3 +35,8 @@ export const getByPart = withDb(
 			return records;
 		},
 );
+
+export const questionsQueries = {
+	getTotalQuestionsEachPart,
+	getRandomQuestionsByPart,
+};
