@@ -37,7 +37,7 @@ export const IconBadge = ({
 	return (
 		<div
 			className={cn(
-				"flex size-10 items-center justify-center rounded-sm border",
+				"flex size-10 items-center justify-center rounded-md border",
 				MAP_COLORS[color],
 				className,
 			)}

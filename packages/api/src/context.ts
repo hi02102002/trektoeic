@@ -10,9 +10,7 @@ export async function createContext({ headers }: { headers: any }) {
 		return {
 			session,
 		};
-	} catch (e) {
-		console.log("Error fetching session:", e);
-
+	} catch {
 		return {
 			session: null,
 		};

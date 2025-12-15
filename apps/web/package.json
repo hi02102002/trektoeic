@@ -53,6 +53,8 @@
 		"@trektoeic/api": "workspace:*",
 		"@trektoeic/auth": "workspace:*",
 		"@trektoeic/uploads": "workspace:*",
+		"@trektoeic/utils": "workspace:*",
+		"@trektoeic/schemas": "workspace:*",
 		"ahooks": "^3.9.6",
 		"better-auth": "catalog:",
 		"class-variance-authority": "^0.7.1",

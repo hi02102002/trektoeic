@@ -46,8 +46,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 			},
 		],
 	}),
-	async beforeLoad() {
-		const user = await getUser();
+	async beforeLoad({ context }) {
+		const user = await context.queryClient.ensureQueryData({
+			queryKey: ["current-user"],
+			queryFn: async () => {
+				return getUser();
+			},
+		});
 
 		return {
 			user,

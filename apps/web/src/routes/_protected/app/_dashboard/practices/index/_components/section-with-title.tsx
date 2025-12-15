@@ -15,12 +15,12 @@ export const SectionWithTitle = ({
 }) => {
 	return (
 		<section className={cn(className)}>
-			<div className="mb-6 flex items-center gap-3 border-slate-200 border-b pb-4">
+			<div className="mb-6 flex items-center gap-3 border-neutral-200 border-b pb-4">
 				{iconBadge}
-				<h2 className="font-medium text-lg text-slate-900 tracking-tight">
+				<h2 className="font-medium text-lg text-neutral-900 tracking-tight">
 					{title}
 				</h2>
-				<span className="ml-auto font-medium text-slate-400 text-xs">
+				<span className="ml-auto font-medium text-neutral-400 text-xs">
 					{subtitle}
 				</span>
 			</div>

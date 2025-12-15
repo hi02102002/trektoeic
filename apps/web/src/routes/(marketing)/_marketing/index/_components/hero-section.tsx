@@ -22,7 +22,7 @@ export const HeroSection = () => {
 					transition={{ duration: 0.5 }}
 				>
 					<motion.div
-						className="mb-2 inline-flex cursor-default items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1 font-medium text-slate-600 text-xs shadow-sm transition-colors hover:border-slate-300"
+						className="mb-2 inline-flex cursor-default items-center gap-2 rounded-md border border-neutral-200 bg-white px-3 py-1 font-medium text-neutral-600 text-xs shadow-sm transition-colors hover:border-neutral-300"
 						initial={{ opacity: 0, scale: 0.9 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.4, delay: 0.1 }}
@@ -31,7 +31,7 @@ export const HeroSection = () => {
 						Cấu trúc đề 2024
 					</motion.div>
 					<motion.h1
-						className="mb-6 font-semibold text-5xl text-slate-900 leading-[1.05] tracking-tight sm:text-6xl"
+						className="mb-6 font-semibold text-5xl text-neutral-900 leading-[1.05] tracking-tight sm:text-6xl"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.2 }}
@@ -42,7 +42,7 @@ export const HeroSection = () => {
 						</span>
 					</motion.h1>
 					<motion.p
-						className="mb-8 max-w-md text-lg text-slate-500 leading-relaxed"
+						className="mb-8 max-w-md text-lg text-neutral-500 leading-relaxed"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.3 }}
@@ -60,7 +60,7 @@ export const HeroSection = () => {
 						<Button variant="outline">Tìm hiểu thêm</Button>
 					</motion.div>
 					<motion.div
-						className="mt-10 flex items-center gap-4 font-medium text-slate-500 text-xs"
+						className="mt-10 flex items-center gap-4 font-medium text-neutral-500 text-xs"
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.5 }}
@@ -69,19 +69,19 @@ export const HeroSection = () => {
 							<img
 								src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
 								alt=""
-								className="h-9 w-9 rounded-full border-2 border-white bg-slate-100"
+								className="h-9 w-9 rounded-full border-2 border-white bg-neutral-100"
 							/>
 							<img
 								src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
 								alt=""
-								className="h-9 w-9 rounded-full border-2 border-white bg-slate-100"
+								className="h-9 w-9 rounded-full border-2 border-white bg-neutral-100"
 							/>
 							<img
 								src="https://api.dicebear.com/7.x/avataaars/svg?seed=John"
 								alt=""
-								className="h-9 w-9 rounded-full border-2 border-white bg-slate-100"
+								className="h-9 w-9 rounded-full border-2 border-white bg-neutral-100"
 							/>
-							<div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-slate-100 font-bold text-[10px] text-slate-600">
+							<div className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-neutral-100 font-bold text-[10px] text-neutral-600">
 								+2k
 							</div>
 						</div>
@@ -195,7 +195,7 @@ export const HeroSection = () => {
 							</div>
 							<p>
 								Avg. score increase:{" "}
-								<span className="font-bold text-slate-900">+150 pts</span>
+								<span className="font-bold text-neutral-900">+150 pts</span>
 							</p>
 						</div>
 					</motion.div>
@@ -213,29 +213,29 @@ export const HeroSection = () => {
 						transition={{ duration: 1, delay: 0.3 }}
 					/>
 					<motion.div
-						className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-md border border-slate-200/80 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)]"
+						className="relative z-10 w-full max-w-[420px] overflow-hidden rounded-md border border-neutral-200/80 bg-white shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)]"
 						initial={{ opacity: 0, scale: 0.95 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.5, delay: 0.4 }}
 					>
-						<div className="flex h-12 items-center justify-between border-slate-100 border-b bg-slate-50/50 px-5">
+						<div className="flex h-12 items-center justify-between border-neutral-100 border-b bg-neutral-50/50 px-5">
 							<div className="flex gap-1.5">
-								<div className="h-2.5 w-2.5 rounded-full bg-slate-200" />
-								<div className="h-2.5 w-2.5 rounded-full bg-slate-200" />
-								<div className="h-2.5 w-2.5 rounded-full bg-slate-200" />
+								<div className="h-2.5 w-2.5 rounded-full bg-neutral-200" />
+								<div className="h-2.5 w-2.5 rounded-full bg-neutral-200" />
+								<div className="h-2.5 w-2.5 rounded-full bg-neutral-200" />
 							</div>
-							<div className="font-semibold text-[10px] text-slate-400 uppercase tracking-widest">
+							<div className="font-semibold text-[10px] text-neutral-400 uppercase tracking-widest">
 								Dashboard
 							</div>
 						</div>
 						<div className="p-6">
 							<div className="mb-8 flex items-start justify-between">
 								<div>
-									<h3 className="mb-1 font-medium text-slate-500 text-xs uppercase tracking-wide">
+									<h3 className="mb-1 font-medium text-neutral-500 text-xs uppercase tracking-wide">
 										Điểm hiện tại
 									</h3>
 									<div className="flex items-baseline gap-2">
-										<span className="font-bold text-5xl text-slate-900 tracking-tighter">
+										<span className="font-bold text-5xl text-neutral-900 tracking-tighter">
 											885
 										</span>
 										<span className="flex items-center gap-1 rounded-full border border-green-100 bg-green-50 px-2 py-0.5 font-medium text-green-600 text-sm">
@@ -272,13 +272,13 @@ export const HeroSection = () => {
 							<div className="space-y-5">
 								<div className="space-y-2">
 									<div className="flex justify-between font-medium text-xs">
-										<span className="flex items-center gap-1.5 text-slate-700">
+										<span className="flex items-center gap-1.5 text-neutral-700">
 											<HeadphonesIcon className="size-3" />
 											Listening
 										</span>
-										<span className="text-slate-900">445 / 495</span>
+										<span className="text-neutral-900">445 / 495</span>
 									</div>
-									<div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
+									<div className="h-2 w-full overflow-hidden rounded-full bg-neutral-100">
 										<div
 											className="h-full rounded-full bg-blue-600"
 											style={{ width: "89%" }}
@@ -287,22 +287,22 @@ export const HeroSection = () => {
 								</div>
 								<div className="space-y-2">
 									<div className="flex justify-between font-medium text-xs">
-										<span className="flex items-center gap-1.5 text-slate-700">
+										<span className="flex items-center gap-1.5 text-neutral-700">
 											<BookOpenTextIcon className="size-3" />
 											Reading
 										</span>
-										<span className="text-slate-900">440 / 495</span>
+										<span className="text-neutral-900">440 / 495</span>
 									</div>
-									<div className="h-2 w-full overflow-hidden rounded-full bg-slate-100">
+									<div className="h-2 w-full overflow-hidden rounded-full bg-neutral-100">
 										<div
-											className="h-full rounded-full bg-slate-800"
+											className="h-full rounded-full bg-neutral-800"
 											style={{ width: "88%" }}
 										/>
 									</div>
 								</div>
 							</div>
-							<div className="mt-8 border-slate-50 border-t pt-6">
-								<div className="mb-3 font-semibold text-[10px] text-slate-400 uppercase tracking-widest">
+							<div className="mt-8 border-neutral-50 border-t pt-6">
+								<div className="mb-3 font-semibold text-[10px] text-neutral-400 uppercase tracking-widest">
 									Hoạt động gần đây
 								</div>
 								<div className="space-y-3">
@@ -311,10 +311,10 @@ export const HeroSection = () => {
 											<CheckIcon className="size-3.5" />
 										</IconBadge>
 										<div className="flex-1">
-											<div className="font-medium text-slate-900 text-xs">
+											<div className="font-medium text-neutral-900 text-xs">
 												Part 5: Grammar
 											</div>
-											<div className="text-[10px] text-slate-500">
+											<div className="text-[10px] text-neutral-500">
 												2 phút trước • 95% chính xác
 											</div>
 										</div>
@@ -324,10 +324,10 @@ export const HeroSection = () => {
 											<WarningCircleIcon className="size-3.5" />
 										</IconBadge>
 										<div className="flex-1">
-											<div className="font-medium text-slate-900 text-xs">
+											<div className="font-medium text-neutral-900 text-xs">
 												Part 7: Reading Comp
 											</div>
-											<div className="text-[10px] text-slate-500">
+											<div className="text-[10px] text-neutral-500">
 												1 giờ trước • 70% chính xác
 											</div>
 										</div>
@@ -347,10 +347,10 @@ export const HeroSection = () => {
 								<FlameIcon size={20} />
 							</div>
 							<div>
-								<div className="font-semibold text-slate-500 text-xs">
+								<div className="font-semibold text-neutral-500 text-xs">
 									Day Streak
 								</div>
-								<div className="glass-panel font-bold text-slate-900 text-sm leading-none">
+								<div className="glass-panel font-bold text-neutral-900 text-sm leading-none">
 									14 ngày
 								</div>
 							</div>
@@ -363,12 +363,14 @@ export const HeroSection = () => {
 						transition={{ duration: 0.5, delay: 0.8 }}
 					>
 						<div className="flex items-center gap-3">
-							<div className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-100 bg-white text-blue-600 shadow-sm">
+							<div className="flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-100 bg-white text-blue-600 shadow-sm">
 								<TargetIcon size={20} />
 							</div>
 							<div className="pr-2">
-								<div className="font-semibold text-slate-500 text-xs">Goal</div>
-								<div className="font-bold text-slate-900 text-sm">
+								<div className="font-semibold text-neutral-500 text-xs">
+									Goal
+								</div>
+								<div className="font-bold text-neutral-900 text-sm">
 									900+ Club
 								</div>
 							</div>

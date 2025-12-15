@@ -3,11 +3,15 @@ import { config } from "dotenv";
 import { z } from "zod";
 
 const getEnvPath = () => {
+	console.log("process.env.NODE_ENV:", process.env.NODE_ENV);
+
 	if (process.env.NODE_ENV === "production") {
 		return "../../apps/web/.env";
 	}
 	return "../../apps/web/.env.local";
 };
+
+console.log("Loading env from:", getEnvPath());
 
 config({
 	path: getEnvPath(),
@@ -43,8 +47,14 @@ export const env = createEnv({
 		 * AUTH
 		 */
 		BETTER_AUTH_SECRET: z.string().min(1),
-		BETTER_AUTH_URL: z.url().min(1),
-		CORS_ORIGIN: z.string().min(1),
+		BETTER_AUTH_URL: z
+			.url()
+			.min(1)
+			.transform((val) => val.split(",").map((url) => url.trim())),
+		CORS_ORIGIN: z
+			.string()
+			.min(1)
+			.transform((val) => val.split(",").map((url) => url.trim())),
 
 		/**
 		 * DATABASE

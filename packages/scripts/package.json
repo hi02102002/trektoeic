@@ -3,8 +3,8 @@
 	"type": "module",
 	"scripts": {
 		"check-types": "tsc --noEmit",
-		"with-script": "dotenv -e ../../apps/web/.env -- tsx",
-		"with-script:prod": "dotenv -e ../../apps/web/.env.prod -- tsx",
+		"with-script": "dotenv -e ../../apps/web/.env.local -- tsx",
+		"with-script:prod": "dotenv -e ../../apps/web/.env -- tsx",
 		"toeicmax:courses": "pnpm with-script src/toeicmax/get-all-courses.ts",
 		"toeicmax:mock-tests": "pnpm with-script src/toeicmax/get-all-mock-tests.ts",
 		"toeicmax:listenings": "pnpm with-script src/toeicmax/get-all-listenings.ts",
@@ -14,7 +14,9 @@
 		"seed:mock-tests": "pnpm with-script src/seeds/toeicmax/seed-mock-test.ts",
 		"seed:vocabs": "pnpm with-script src/seeds/toeicmax/seed-vocabularies.ts",
 		"seed:mock-tests:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-mock-test.ts",
-		"seed:vocabs:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-vocabularies.ts"
+		"seed:vocabs:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-vocabularies.ts",
+		"seed:sections": "pnpm with-script src/seeds/toeicmax/seed-sections.ts",
+		"seed:sections:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-sections.ts"
 	},
 	"devDependencies": {
 		"@trektoeic/config": "workspace:*"

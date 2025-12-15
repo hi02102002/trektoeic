@@ -11,7 +11,7 @@ const DEFAULT_CURRENCY = "USD";
 const DEFAULT_LOCALE = "en-US";
 
 const NUMERIC_MASK_PATTERNS =
-	/^(phone|zipCode|zipCodeExtended|ssn|ein|time|date|creditCard|creditCardExpiry)$/;
+	/^(phone|zipCode|zipCodeExtended|ssn|ein|time|date|creditCard|creditCardExpiry|minutes-seconds)$/;
 const CURRENCY_PERCENTAGE_SYMBOLS = /[€$%]/;
 
 interface CurrencySymbols {
@@ -49,6 +49,7 @@ const REGEX_CACHE = {
 	macAddress: /^[A-F0-9]{12}$/,
 	currencyValidation: /^\d+(\.\d{1,2})?$/,
 	ipv4Segment: /^\d{1,3}$/,
+	"minutes-seconds": /^\d{4}$/,
 } as const;
 
 function getCachedFormatter(
@@ -200,7 +201,8 @@ type MaskPatternKey =
 	| "ipv4"
 	| "macAddress"
 	| "isbn"
-	| "ein";
+	| "ein"
+	| "minutes-seconds";
 
 const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 	phone: {
@@ -510,6 +512,17 @@ const MASK_PATTERNS: Record<MaskPatternKey, MaskPattern> = {
 		transform: (value) => value.replace(REGEX_CACHE.nonDigits, ""),
 		validate: (value) =>
 			REGEX_CACHE.ein.test(value.replace(REGEX_CACHE.nonDigits, "")),
+	},
+	"minutes-seconds": {
+		pattern: "##:##",
+		transform: (value) => value.replace(REGEX_CACHE.nonDigits, ""),
+		validate: (value) => {
+			const cleaned = value.replace(REGEX_CACHE.nonDigits, "");
+			if (cleaned.length !== 4) return false;
+			const minutes = Number.parseInt(cleaned.substring(0, 2), 10);
+			const seconds = Number.parseInt(cleaned.substring(2, 4), 10);
+			return minutes >= 0 && seconds >= 0 && seconds < 60;
+		},
 	},
 };
 
@@ -1469,9 +1482,10 @@ function MaskInput(props: MaskInputProps) {
 			data-slot="mask-input"
 			{...inputProps}
 			className={cn(
-				"flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs outline-none transition-[color,box-shadow] selection:bg-primary selection:text-primary-foreground file:inline-flex file:h-7 file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm dark:bg-input/30",
-				"focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
-				"aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40",
+				"flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+				"aria-invalid:border-destructive aria-invalid:ring-destructive aria-invalid:focus-visible:ring-destructive dark:aria-invalid:ring-destructive dark:aria-invalid:focus-visible:ring-destructive",
+				"placeholder:text-sm",
+				"dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100 dark:focus-visible:ring-neutral-500/50",
 				className,
 			)}
 			placeholder={placeholderValue}
