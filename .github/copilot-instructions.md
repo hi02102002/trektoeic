@@ -183,3 +183,17 @@ When generating code, Copilot must follow this priority order:
 3. **Patterns in the rest of the monorepo**
 4. **Instructions in this file** (fallback)
 5. **General TypeScript/React best practices** (lowest priority)
+
+## 14. Commit Message Conventions
+1. Use the imperative mood (e.g., "Add feature", "Fix bug").
+2. Keep the message concise and descriptive.
+3. Reference relevant issue numbers when applicable (e.g., "Fixes #123").
+4. Use prefixes for clarity:
+   - `feat:` for new features
+   - `fix:` for bug fixes
+   - `docs:` for documentation changes
+   - `style:` for code style changes (formatting, missing semi-colons, etc.)
+   - `refactor:` for code refactoring without changing functionality
+   - `test:` for adding or updating tests
+   - `chore:` for maintenance tasks (build process, dependencies, etc.)
+5. Commit should be two line message

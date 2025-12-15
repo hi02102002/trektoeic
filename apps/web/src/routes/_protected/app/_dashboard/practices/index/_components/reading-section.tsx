@@ -26,7 +26,7 @@ export const ReadingSection = () => {
 						key={part}
 						to="/app/practices/part-{$part}"
 						params={{
-							part,
+							part: +part,
 						}}
 						className="block"
 					>

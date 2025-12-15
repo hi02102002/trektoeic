@@ -41,6 +41,7 @@ export const getAllMockTests = async () => {
 	const res = await getAllKits(token);
 
 	const hashedKits = new Map<number, any>(res.map((kit: any) => [kit.id, kit]));
+	const sections: any[] = [];
 
 	const questions = await runBatchesWithCount(
 		Array.from(hashedKits.keys()),
@@ -65,6 +66,8 @@ export const getAllMockTests = async () => {
 
 		if (kit) {
 			kit.questions.push(question);
+		} else {
+			sections.push(question);
 		}
 	});
 
@@ -72,6 +75,8 @@ export const getAllMockTests = async () => {
 		"data/toeic-max-mock-tests.json",
 		Array.from(hashedKits.values()),
 	);
+
+	writeToFile("data/toeic-max-mock-test-sections.json", sections);
 
 	return Array.from(hashedKits.values());
 };

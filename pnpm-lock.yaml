@@ -198,9 +198,15 @@ importers:
       '@trektoeic/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@trektoeic/schemas':
+        specifier: workspace:*
+        version: link:../../packages/schemas
       '@trektoeic/uploads':
         specifier: workspace:*
         version: link:../../packages/uploads
+      '@trektoeic/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
       ahooks:
         specifier: ^3.9.6
         version: 3.9.6(react-dom@19.1.2(react@19.1.2))(react@19.1.2)
