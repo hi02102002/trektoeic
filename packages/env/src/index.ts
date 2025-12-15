@@ -47,8 +47,14 @@ export const env = createEnv({
 		 * AUTH
 		 */
 		BETTER_AUTH_SECRET: z.string().min(1),
-		BETTER_AUTH_URL: z.url().min(1),
-		CORS_ORIGIN: z.string().min(1),
+		BETTER_AUTH_URL: z
+			.url()
+			.min(1)
+			.transform((val) => val.split(",").map((url) => url.trim())),
+		CORS_ORIGIN: z
+			.string()
+			.min(1)
+			.transform((val) => val.split(",").map((url) => url.trim())),
 
 		/**
 		 * DATABASE
