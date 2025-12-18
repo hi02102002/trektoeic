@@ -474,6 +474,9 @@ importers:
       drizzle-orm-helpers:
         specifier: ^0.7.6
         version: 0.7.6(drizzle-orm@0.44.7(@types/pg@8.15.6)(@upstash/redis@1.35.8)(kysely@0.28.8)(pg@8.16.3))(zod@4.1.13)
+      kysely:
+        specifier: ^0.28.8
+        version: 0.28.8
       pg:
         specifier: ^8.14.1
         version: 8.16.3
