@@ -29,6 +29,7 @@ import { Route as ProtectedAppDashboardGrammarRouteRouteImport } from './routes/
 import { Route as ProtectedAppDashboardIndexRouteRouteImport } from './routes/_protected/app/_dashboard/index/route'
 import { Route as ProtectedAppDashboardPracticesPartChar123partChar125RouteRouteImport } from './routes/_protected/app/_dashboard/practices/part-{$part}/route'
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
+import { Route as ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/route'
 
 const ProtectedAppRouteImport = createFileRoute('/_protected/app')()
 
@@ -131,6 +132,12 @@ const ProtectedAppDashboardPracticesIndexRouteRoute =
     path: '/practices',
     getParentRoute: () => ProtectedAppDashboardRoute,
   } as any)
+const ProtectedAppPracticesPracticesPartSessionIdRouteRoute =
+  ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport.update({
+    id: '/_practices/practices/$part/$session-id',
+    path: '/practices/$part/$session-id',
+    getParentRoute: () => ProtectedAppRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/api/$': typeof ApiSplatRoute
@@ -146,6 +153,7 @@ export interface FileRoutesByFullPath {
   '/app/vocabularies': typeof ProtectedAppDashboardVocabulariesRouteRoute
   '/app/practices': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
+  '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
 }
 export interface FileRoutesByTo {
   '/api/$': typeof ApiSplatRoute
@@ -161,6 +169,7 @@ export interface FileRoutesByTo {
   '/app/vocabularies': typeof ProtectedAppDashboardVocabulariesRouteRoute
   '/app/practices': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
+  '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -183,6 +192,7 @@ export interface FileRoutesById {
   '/_protected/app/_dashboard/vocabularies': typeof ProtectedAppDashboardVocabulariesRouteRoute
   '/_protected/app/_dashboard/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/_protected/app/_dashboard/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
+  '/_protected/app/_practices/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/app/vocabularies'
     | '/app/practices'
     | '/app/practices/part-{$part}'
+    | '/app/practices/$part/$session-id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/api/$'
@@ -215,6 +226,7 @@ export interface FileRouteTypes {
     | '/app/vocabularies'
     | '/app/practices'
     | '/app/practices/part-{$part}'
+    | '/app/practices/$part/$session-id'
   id:
     | '__root__'
     | '/_auth'
@@ -236,6 +248,7 @@ export interface FileRouteTypes {
     | '/_protected/app/_dashboard/vocabularies'
     | '/_protected/app/_dashboard/practices/'
     | '/_protected/app/_dashboard/practices/part-{$part}'
+    | '/_protected/app/_practices/practices/$part/$session-id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAppDashboardPracticesIndexRouteRouteImport
       parentRoute: typeof ProtectedAppDashboardRoute
     }
+    '/_protected/app/_practices/practices/$part/$session-id': {
+      id: '/_protected/app/_practices/practices/$part/$session-id'
+      path: '/practices/$part/$session-id'
+      fullPath: '/app/practices/$part/$session-id'
+      preLoaderRoute: typeof ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport
+      parentRoute: typeof ProtectedAppRoute
+    }
   }
 }
 
@@ -427,10 +447,13 @@ const ProtectedAppDashboardRouteWithChildren =
 
 interface ProtectedAppRouteChildren {
   ProtectedAppDashboardRoute: typeof ProtectedAppDashboardRouteWithChildren
+  ProtectedAppPracticesPracticesPartSessionIdRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
 }
 
 const ProtectedAppRouteChildren: ProtectedAppRouteChildren = {
   ProtectedAppDashboardRoute: ProtectedAppDashboardRouteWithChildren,
+  ProtectedAppPracticesPracticesPartSessionIdRouteRoute:
+    ProtectedAppPracticesPracticesPartSessionIdRouteRoute,
 }
 
 const ProtectedAppRouteWithChildren = ProtectedAppRoute._addFileChildren(

@@ -6,7 +6,7 @@ import {
 	SignOutIcon,
 	SparkleIcon,
 } from "@phosphor-icons/react";
-import { useRouteContext, useRouter } from "@tanstack/react-router";
+import { useRouteContext } from "@tanstack/react-router";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	DropdownMenu,
@@ -28,12 +28,11 @@ export function NavUser() {
 	const { user } = useRouteContext({
 		strict: false,
 	});
-	const router = useRouter();
 
 	const handleLogout = async () => {
 		await authClient.signOut();
 
-		await router.invalidate();
+		window.location.href = "/login";
 	};
 
 	return (

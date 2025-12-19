@@ -100,3 +100,7 @@ export const MAP_PART_PRO_TIPS = [
 ] as const;
 
 export const UNSET_VALUE = "__UNSET_VALUE__";
+
+export const KV_KEYS = {
+	PRACTICE_SESSION_CONFIG: "practice-session-config",
+};

@@ -1,6 +1,7 @@
-import { and, count, eq, getTableColumns, sql } from "drizzle-orm";
+import { and, count, eq, getTableColumns, notInArray, sql } from "drizzle-orm";
 import { questions, subQuestions } from "../../schema";
 import { jsonAggBuildObjectWithOrder, withDb } from "../../utils";
+import { sqlTrue } from "../../utils/sql-true";
 
 const getTotalQuestionsEachPart = withDb((db) => async () => {
 	const result = await db
@@ -16,7 +17,18 @@ const getTotalQuestionsEachPart = withDb((db) => async () => {
 
 const getRandomQuestionsByPart = withDb(
 	(db) =>
-		async ({ part, limit = 10 }: { part: number; limit?: number }) => {
+		async ({
+			part,
+			limit = 10,
+			ignores = [],
+		}: {
+			part: number;
+			limit?: number;
+			/**
+			 * A list of question IDs to ignore when selecting random questions
+			 */
+			ignores?: string[];
+		}) => {
 			const records = await db
 				.select({
 					...getTableColumns(questions),
@@ -27,7 +39,12 @@ const getRandomQuestionsByPart = withDb(
 				})
 				.from(questions)
 				.leftJoin(subQuestions, eq(questions.id, subQuestions.questionId))
-				.where(and(eq(questions.part, part)))
+				.where(
+					and(
+						eq(questions.part, part),
+						ignores.length > 0 ? notInArray(questions.id, ignores) : sqlTrue,
+					),
+				)
 				.limit(limit)
 				.orderBy(sql`RANDOM()`)
 				.groupBy(questions.id);

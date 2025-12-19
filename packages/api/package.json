@@ -43,6 +43,7 @@
 		"@trektoeic/utils": "workspace:*",
 		"@upstash/redis": "^1.35.8",
 		"ioredis": "^5.8.2",
+		"unstorage": "^1.17.3",
 		"zod": "^4.1.11"
 	}
 }

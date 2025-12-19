@@ -1,5 +1,6 @@
 import { relations } from "drizzle-orm";
 import { account, session, user } from "./auth";
+import { history } from "./history";
 import { kits } from "./kit";
 import { questions, subQuestions } from "./question";
 import { vocabularies, vocabularyCategories } from "./vocabulary";
@@ -7,6 +8,7 @@ import { vocabularies, vocabularyCategories } from "./vocabulary";
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
+	histories: many(history),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -61,5 +63,12 @@ export const vocabulariesRelations = relations(vocabularies, ({ one }) => ({
 	category: one(vocabularyCategories, {
 		fields: [vocabularies.categoryId],
 		references: [vocabularyCategories.id],
+	}),
+}));
+
+export const historyRelations = relations(history, ({ one }) => ({
+	user: one(user, {
+		fields: [history.userId],
+		references: [user.id],
 	}),
 }));
