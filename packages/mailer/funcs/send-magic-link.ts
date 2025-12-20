@@ -1,4 +1,4 @@
-import { transporter } from "../libs/transporter";
+import { unosend } from "../libs/unosend";
 
 export const sendMagicLink = async ({
 	email,
@@ -7,18 +7,18 @@ export const sendMagicLink = async ({
 	email: string;
 	url: string;
 }) => {
-	try {
-		const res = await transporter.sendMail({
-			from: "hoanghuy.dev0210@gmail.com",
-			to: email,
-			subject: "Your Magic Link",
-			html: `<p>Click the link below to log in:</p><a href="${url}">${url}</a>`,
-		});
+	const { data, error } = await unosend.emails.send({
+		from: "trektoeic@support.trektoeic.io.vn",
+		to: email,
+		subject: "Your Magic Link",
+		html: `<p>Click the link below to log in:</p><a href="${url}">${url}</a>`,
+	});
 
-		console.log("Successfully sent magic link via SMTP:", res.messageId);
-
-		return res;
-	} catch (smtpError) {
-		console.error("SMTP send failed, attempting via Unosend:", smtpError);
+	if (error) {
+		console.error("Failed to send:", error.message);
+		return null;
 	}
+
+	console.log("Email sent:", data?.id);
+	return data;
 };
