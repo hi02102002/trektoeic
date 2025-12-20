@@ -1,6 +1,7 @@
 import type { LoggerContext } from "@orpc/experimental-pino";
 import { auth } from "@trektoeic/auth";
 import type { getRedisClient } from "./libs/ioredis";
+import type { storage } from "./libs/storage";
 
 export async function createContext({ headers }: { headers: any }) {
 	try {
@@ -22,4 +23,5 @@ type AuthContext = NonNullable<Awaited<ReturnType<typeof createContext>>>;
 export interface Context extends LoggerContext {
 	session: AuthContext["session"];
 	redis?: ReturnType<typeof getRedisClient>;
+	kv?: typeof storage;
 }

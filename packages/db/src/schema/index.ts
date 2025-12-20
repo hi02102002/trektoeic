@@ -1,4 +1,5 @@
 export * from "./auth";
+export * from "./history";
 export * from "./kit";
 export * from "./question";
 export * from "./relations";

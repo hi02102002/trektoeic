@@ -17,7 +17,7 @@ export const Logo = ({
 	return (
 		<div
 			className={cn(
-				"flex items-start gap-1 font-semibold text-lg text-primary",
+				"flex items-start gap-1 font-semibold text-lg text-primary uppercase",
 				classNames?.container,
 				className,
 			)}

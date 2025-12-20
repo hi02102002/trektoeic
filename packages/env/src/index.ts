@@ -35,6 +35,8 @@ export const env = createEnv({
 		CLOUDFLARE_ACCOUNT_ID: z.string().min(1),
 		CLOUDFLARE_ACCESS_KEY_ID: z.string().min(1),
 		CLOUDFLARE_SECRET_ACCESS_KEY: z.string().min(1),
+		CLOUDFLARE_API_TOKEN_KV: z.string().min(1),
+		CLOUDFLARE_KV_NAMESPACE_ID: z.string().min(1),
 
 		/**
 		 * BACKBLAZE
@@ -47,10 +49,7 @@ export const env = createEnv({
 		 * AUTH
 		 */
 		BETTER_AUTH_SECRET: z.string().min(1),
-		BETTER_AUTH_URL: z
-			.url()
-			.min(1)
-			.transform((val) => val.split(",").map((url) => url.trim())),
+		BETTER_AUTH_URL: z.string().min(1),
 		CORS_ORIGIN: z
 			.string()
 			.min(1)

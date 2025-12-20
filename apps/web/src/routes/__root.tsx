@@ -9,6 +9,7 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { Analytics } from "@vercel/analytics/react";
 import { NProgress } from "@/components/nprogress";
 import { Toaster } from "@/components/ui/sonner";
 import { getUser } from "@/functions/get-user";

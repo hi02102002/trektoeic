@@ -1,6 +1,7 @@
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
+import { createId } from "@trektoeic/utils/create-id";
 import { calculateEstimatedDurationMs } from "@trektoeic/utils/toeic-timing";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useTransition } from "react";
 import { Controller, useForm } from "react-hook-form";
 import z from "zod";
 import { Button } from "@/components/ui/button";
@@ -38,12 +39,31 @@ export const ConfigSession = () => {
 	const { part } = useParams({
 		from: "/_protected/app/_dashboard/practices/part-{$part}",
 	});
+	const navigate = useNavigate();
 	const form = useForm<TConfigSessionForm>({
-		defaultValues: {},
+		defaultValues: {
+			mode: "normal",
+			numberOfQuestions: 10,
+		},
 	});
 
-	const handleStartSession = form.handleSubmit((data) => {
-		console.log("Start session with config: ", data);
+	const [isPending, startTransition] = useTransition();
+
+	const handleStartSession = form.handleSubmit(async (data) => {
+		startTransition(async () => {
+			await navigate({
+				to: "/app/practices/$part/$session-id",
+				params: {
+					part: `${part}`,
+					"session-id": createId(),
+				},
+				search: {
+					mode: data.mode,
+					duration: data.limitTime,
+					numberOfQuestions: data.numberOfQuestions,
+				},
+			});
+		});
 	});
 
 	const mode = form.watch("mode");
@@ -142,7 +162,13 @@ export const ConfigSession = () => {
 								</span>
 							</p>
 						)}
-						<Button type="submit">Bắt đầu làm bài</Button>
+						<Button
+							type="submit"
+							loading={isPending}
+							loadingText={"Chờ chút nhé..."}
+						>
+							Bắt đầu làm bài
+						</Button>
 					</FieldGroup>
 				</form>
 			</div>
