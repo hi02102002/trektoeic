@@ -17,7 +17,9 @@ type Props = {
 		title: string;
 		questions: Array<{
 			id: string;
-			number: number;
+			idx: number;
+			pIdx: number;
+			parentId: string;
 		}>;
 	}>;
 	mappedQuestions: Record<
@@ -26,11 +28,18 @@ type Props = {
 			status: "current" | "unanswered" | "flagged" | "answered";
 		}
 	>;
+	onQuestionClick?: (opts: {
+		questionId: string;
+		idx: number;
+		pIdx: number;
+		parentId: string;
+	}) => void;
+	className?: string;
 };
 
 const navigatorButtonVariants = cva(
 	cn(
-		"flex aspect-square cursor-pointer items-center justify-center rounded p-0 font-medium text-xs transition-colors",
+		"flex aspect-square size-8 cursor-pointer items-center justify-center rounded p-0 font-medium text-xs transition-colors",
 	),
 	{
 		variants: {
@@ -49,28 +58,44 @@ const navigatorButtonVariants = cva(
 );
 
 const NavigatorButton = ({
-	id,
 	number,
 	status,
+	onClick,
+	elId,
 }: {
 	id: string;
 	number: number;
 	status: ButtonNavigatorStatus;
+	onClick?: () => void;
+	elId?: string;
 }) => {
 	return (
 		<button
 			type="button"
+			id={elId}
 			className={navigatorButtonVariants({ status })}
-			id={`questions-navigator-question-${id}`}
+			data-status={status}
+			aria-label={`Đi tới câu hỏi ${number}`}
+			onClick={onClick}
 		>
 			{number}
 		</button>
 	);
 };
 
-export const Navigator = ({ groupedQuestions, mappedQuestions }: Props) => {
+export const Navigator = ({
+	groupedQuestions,
+	mappedQuestions,
+	onQuestionClick,
+	className,
+}: Props) => {
 	return (
-		<aside className="hidden w-64 flex-col border-border border-l bg-white xl:flex">
+		<aside
+			className={cn(
+				"hidden w-64 flex-col border-border border-l bg-white xl:flex",
+				className,
+			)}
+		>
 			<div className="border-border border-b p-4">
 				<h3 className="font-semibold text-primary text-xs uppercase tracking-wider">
 					Câu hỏi
@@ -97,18 +122,27 @@ export const Navigator = ({ groupedQuestions, mappedQuestions }: Props) => {
 					{groupedQuestions.map(({ questions, title }) => {
 						return (
 							<Fragment key={title}>
-								<div className="col-span-5 pt-1 pb-1">
+								<div className="col-span-5">
 									<span className="font-medium text-muted-foreground text-xs">
 										{title}
 									</span>
 								</div>
-								{questions.map(({ id, number }) => {
+								{questions.map(({ id, idx, pIdx, parentId }) => {
 									return (
 										<NavigatorButton
 											key={id}
 											id={id}
-											number={number}
+											elId={`questions-navigator-question-${id}-parent-${parentId}`}
+											number={idx + 1}
 											status={mappedQuestions[id]?.status || "unanswered"}
+											onClick={() => {
+												onQuestionClick?.({
+													questionId: id,
+													idx: pIdx,
+													pIdx,
+													parentId,
+												});
+											}}
 										/>
 									);
 								})}

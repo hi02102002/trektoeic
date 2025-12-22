@@ -2,38 +2,71 @@
  * Question timer utility to track time spent on each question
  */
 export class QuestionTimer {
-	private questionTimers: Map<string, { startTime: number; elapsed: number }> =
-		new Map();
+	private questionTimers: Map<
+		string,
+		{ startTime: number; elapsed: number; answered: boolean }
+	> = new Map();
 	private currentQuestionId: string | null = null;
 	private sessionStartTime: number = Date.now();
 
 	startQuestion(questionId: string): void {
+		const existing = this.questionTimers.get(questionId);
+		if (existing?.answered) {
+			return;
+		}
+
 		if (this.currentQuestionId) {
 			this.pauseQuestion(this.currentQuestionId);
 		}
 
-		const existing = this.questionTimers.get(questionId);
 		this.questionTimers.set(questionId, {
 			startTime: Date.now(),
 			elapsed: existing?.elapsed || 0,
+			answered: false,
 		});
 		this.currentQuestionId = questionId;
 	}
 
 	pauseQuestion(questionId: string): void {
 		const timer = this.questionTimers.get(questionId);
-		if (!timer) return;
+		if (!timer || timer.answered) return;
 
 		const now = Date.now();
 		const additionalTime = Math.floor((now - timer.startTime) / 1000);
 		this.questionTimers.set(questionId, {
 			startTime: timer.startTime,
 			elapsed: timer.elapsed + additionalTime,
+			answered: timer.answered,
 		});
 
 		if (this.currentQuestionId === questionId) {
 			this.currentQuestionId = null;
 		}
+	}
+	markAsAnswered(questionId: string): void {
+		const timer = this.questionTimers.get(questionId);
+		if (!timer) return;
+
+		if (this.currentQuestionId === questionId) {
+			const now = Date.now();
+			const additionalTime = Math.floor((now - timer.startTime) / 1000);
+			this.questionTimers.set(questionId, {
+				startTime: timer.startTime,
+				elapsed: timer.elapsed + additionalTime,
+				answered: true,
+			});
+			this.currentQuestionId = null;
+		} else {
+			this.questionTimers.set(questionId, {
+				...timer,
+				answered: true,
+			});
+		}
+	}
+
+	isAnswered(questionId: string): boolean {
+		const timer = this.questionTimers.get(questionId);
+		return timer?.answered ?? false;
 	}
 
 	getQuestionTime(questionId: string): number {

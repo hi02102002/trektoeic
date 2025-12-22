@@ -24,7 +24,7 @@ const getPartPractice = requiredAuthProcedure
 
 		const key = `part-practice:part:${part}:limit:${limit || "all"}:unique:${unique ?? createId()}-user:${context.session.user.id}`;
 
-		if (await context.kv.has(key)) {
+		if (await context.kv.has(key).catch(() => false)) {
 			return z.array(QuestionWithSubsSchema).parse(await context.kv.get(key));
 		}
 

@@ -1,7 +1,7 @@
+// biome-ignore lint/correctness/noUnusedImports: <pending>
+
 import type { QueryClient } from "@tanstack/react-query";
-
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 import {
 	createRootRouteWithContext,
 	HeadContent,
@@ -10,6 +10,8 @@ import {
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Analytics } from "@vercel/analytics/react";
+import { useMount } from "ahooks";
+import { scan } from "react-scan";
 import { NProgress } from "@/components/nprogress";
 import { Toaster } from "@/components/ui/sonner";
 import { getUser } from "@/functions/get-user";
@@ -63,6 +65,12 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 });
 
 function RootDocument() {
+	useMount(() => {
+		scan({
+			enabled: true,
+		});
+	});
+
 	return (
 		<html lang="en">
 			<head>

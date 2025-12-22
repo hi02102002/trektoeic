@@ -2,11 +2,15 @@ import { createFileRoute } from "@tanstack/react-router";
 import z from "zod";
 import { Header } from "@/components/practices/header";
 import {
-	type ButtonNavigatorStatus,
-	Navigator,
-} from "@/components/practices/navigator";
-import { Timer } from "@/components/practices/timer";
-import { Button } from "@/components/ui/button";
+	AnswersProvider,
+	CurrentQuestionProvider,
+	QuestionTimerProvider,
+} from "@/stores/attempt";
+import { PracticeActions } from "./_components/practice-actions";
+import { PracticeQuestionsList } from "./_components/practice-questions-list";
+import { PracticeTimer } from "./_components/practice-timer";
+import { PracticeActionBar } from "./_components/pratice-action-bar";
+import { QuestionsNavigator } from "./_components/questions-navigator";
 
 export const Route = createFileRoute(
 	"/_protected/app/_practices/practices/$part/$session-id",
@@ -36,72 +40,44 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-	const { questions } = Route.useLoaderData();
 	const { part } = Route.useParams();
-	const search = Route.useSearch();
-
-	const flattenedQuestions = questions.flatMap((q) => q.subs);
+	const { questions } = Route.useLoaderData();
 
 	return (
-		<div className="flex flex-col">
-			<Header
-				title={`Part ${part}`}
-				timer={
-					search?.mode === "timed" ? (
-						<Timer
-							mode="down"
-							duration={search.duration ?? 0}
-							onDone={() => {
-								// will be handle
-							}}
-							className="-translate-x-1/2 absolute left-1/2 transform"
-						/>
-					) : (
-						<Timer
-							mode="up"
-							className="-translate-x-1/2 absolute left-1/2 transform"
-						/>
-					)
-				}
-				action={
-					<div className="flex items-center gap-2">
-						<Button variant="outline" size="sm">
-							Tạm dừng
-						</Button>
-						<Button variant="default" size="sm">
-							Kết thúc
-						</Button>
+		<CurrentQuestionProvider
+			value={{
+				initialIdx: 0,
+				questions: questions.map((q) => ({
+					id: q.id,
+				})),
+			}}
+		>
+			<AnswersProvider
+				questions={questions.map((q) => {
+					return {
+						id: q.id,
+						subs: q.subs.map((sub) => {
+							return { id: sub.id };
+						}),
+					};
+				})}
+			>
+				<QuestionTimerProvider>
+					<Header
+						title={`Part ${part}`}
+						timer={<PracticeTimer />}
+						action={<PracticeActions />}
+						className="fixed top-0 right-0 left-0"
+					/>
+					<div className="flex flex-col pt-16">
+						<QuestionsNavigator />
+						<div className="ml-64 min-h-[calc(100svh_-_4rem)]">
+							<PracticeQuestionsList />
+						</div>
 					</div>
-				}
-			/>
-			<div>
-				<Navigator
-					mappedQuestions={questions.reduce<
-						Record<string, { status: ButtonNavigatorStatus }>
-					>((acc, question) => {
-						acc[question.id] = {
-							status:
-								Math.random() < 0.5
-									? "answered"
-									: Math.random() < 0.5
-										? "flagged"
-										: Math.random() < 0.5
-											? "current"
-											: "unanswered",
-						};
-						return acc;
-					}, {})}
-					groupedQuestions={[
-						{
-							title: `Part ${part} - Câu hỏi`,
-							questions: flattenedQuestions.map((question, index) => ({
-								id: question.id,
-								number: index + 1,
-							})),
-						},
-					]}
-				/>
-			</div>
-		</div>
+					<PracticeActionBar />
+				</QuestionTimerProvider>
+			</AnswersProvider>
+		</CurrentQuestionProvider>
 	);
 }
