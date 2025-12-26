@@ -1,5 +1,3 @@
-// biome-ignore lint/correctness/noUnusedImports: <pending>
-
 import type { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {

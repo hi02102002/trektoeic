@@ -1,7 +1,12 @@
-import { PartPracticeContentSchema } from "@trektoeic/schemas/part-practice-schema";
+import { InsertOrUpdateResult } from "@trektoeic/schemas/db";
+import {
+	type InputPartPracticeHistory,
+	PartPracticeContentSchema,
+} from "@trektoeic/schemas/part-practice-schema";
 import { and, eq, sql } from "drizzle-orm";
+import z from "zod";
 import { history } from "../../schema";
-import { withDb } from "../../utils";
+import { withDb, withDbAndUser } from "../../utils";
 import { questionsQueries } from "../questions";
 
 const getPartPractices = withDb(
@@ -45,6 +50,27 @@ const getPartPractices = withDb(
 		},
 );
 
+const createPartPracticeHistory = withDbAndUser(
+	({ db, userId }) =>
+		async ({ contents, metadata, id }: InputPartPracticeHistory) => {
+			const record = await db
+				?.insert(history)
+				.values({
+					userId,
+					metadata,
+					contents,
+					action: "practice_part",
+					id,
+				})
+				.returning({
+					id: history.id,
+				});
+
+			return InsertOrUpdateResult(z.object({ id: z.string() })).parse(record);
+		},
+);
+
 export const partPracticesQueries = {
 	getPartPractices,
+	createPartPracticeHistory,
 };

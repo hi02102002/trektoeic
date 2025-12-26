@@ -250,7 +250,6 @@ export function AudioPlayerProvider<TData = unknown>({
 			setPlaybackRate,
 		}),
 		[
-			audioRef,
 			duration,
 			error,
 			isPlaying,

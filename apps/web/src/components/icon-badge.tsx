@@ -1,3 +1,4 @@
+import { cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const MAP_COLORS = {
@@ -25,22 +26,38 @@ const MAP_COLORS = {
 	stone: "border-stone-100 bg-stone-50 text-stone-600",
 };
 
+export const iconBadgeVariants = cva(
+	"flex size-10 items-center justify-center rounded-md border",
+	{
+		variants: {
+			color: MAP_COLORS,
+		},
+		defaultVariants: {
+			color: "blue",
+		},
+	},
+);
+
+type IconBadgeProps = React.ComponentProps<"div"> & {
+	color?: keyof typeof MAP_COLORS;
+};
+
 export const IconBadge = ({
 	color = "blue",
 	className,
 	children,
-}: {
-	color?: keyof typeof MAP_COLORS;
-	className?: string;
-	children?: React.ReactNode;
-}) => {
+	...props
+}: IconBadgeProps) => {
 	return (
 		<div
 			className={cn(
-				"flex size-10 items-center justify-center rounded-md border",
+				iconBadgeVariants({
+					color,
+				}),
 				MAP_COLORS[color],
 				className,
 			)}
+			{...props}
 		>
 			{children}
 		</div>

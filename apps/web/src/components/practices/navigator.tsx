@@ -6,11 +6,7 @@ export const getButtonNavigatorId = (questionId: string) => {
 	return `questions-navigator-question-${questionId}`;
 };
 
-export type ButtonNavigatorStatus =
-	| "current"
-	| "unanswered"
-	| "flagged"
-	| "answered";
+export type ButtonNavigatorStatus = "current" | "unanswered" | "answered";
 
 type Props = {
 	groupedQuestions: Array<{
@@ -25,7 +21,8 @@ type Props = {
 	mappedQuestions: Record<
 		string,
 		{
-			status: "current" | "unanswered" | "flagged" | "answered";
+			status: "current" | "unanswered" | "answered";
+			flagged?: boolean;
 		}
 	>;
 	onQuestionClick?: (opts: {
@@ -39,7 +36,7 @@ type Props = {
 
 const navigatorButtonVariants = cva(
 	cn(
-		"flex aspect-square size-8 cursor-pointer items-center justify-center rounded p-0 font-medium text-xs transition-colors",
+		"relative flex aspect-square size-8 cursor-pointer items-center justify-center rounded p-0 font-medium text-xs transition-colors",
 	),
 	{
 		variants: {
@@ -53,6 +50,9 @@ const navigatorButtonVariants = cva(
 				answered:
 					"border border-indigo-100 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:text-indigo-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2",
 			},
+			isFlagged: {
+				true: "after:-top-1 after:-right-1 after:absolute after:h-2 after:w-2 after:rounded-full after:bg-amber-500",
+			},
 		},
 	},
 );
@@ -62,18 +62,20 @@ const NavigatorButton = ({
 	status,
 	onClick,
 	elId,
+	isFlagged,
 }: {
 	id: string;
 	number: number;
 	status: ButtonNavigatorStatus;
 	onClick?: () => void;
 	elId?: string;
+	isFlagged?: boolean;
 }) => {
 	return (
 		<button
 			type="button"
 			id={elId}
-			className={navigatorButtonVariants({ status })}
+			className={navigatorButtonVariants({ status, isFlagged })}
 			data-status={status}
 			aria-label={`Đi tới câu hỏi ${number}`}
 			onClick={onClick}
@@ -143,6 +145,7 @@ export const Navigator = ({
 													parentId,
 												});
 											}}
+											isFlagged={mappedQuestions[id]?.flagged}
 										/>
 									);
 								})}

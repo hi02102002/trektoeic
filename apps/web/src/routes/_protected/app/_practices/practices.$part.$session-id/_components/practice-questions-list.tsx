@@ -2,6 +2,7 @@ import { getRouteApi } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef } from "react";
 import {
 	QuestionAudio,
+	QuestionFlagButton,
 	QuestionImage,
 	QuestionPos,
 	QuestionProvider,
@@ -64,7 +65,7 @@ export const PracticeQuestionsList = () => {
 			top: 0,
 			behavior: "smooth",
 		});
-	}, [currentQuestionIdx]);
+	}, []);
 
 	useEffect(() => {
 		if (!currentQuestion) return;
@@ -91,7 +92,20 @@ export const PracticeQuestionsList = () => {
 					})}
 					ref={leftSideRef}
 				>
-					<QuestionPos externalPos={`${currentQuestionIdx + 1}`} />
+					<div className="flex items-center justify-between">
+						<QuestionPos externalPos={`${currentQuestionIdx + 1}`} />
+						{currentQuestion.subs.length === 1 && (
+							<QuestionFlagButton
+								isAdded={
+									answers.answers[currentQuestion.subs[0].id]?.isFlagged ??
+									false
+								}
+								onToggle={() =>
+									answers.toggleFlagged(currentQuestion.subs[0].id)
+								}
+							/>
+						)}
+					</div>
 					<QuestionAudio />
 					<QuestionImage />
 					<QuestionTeaser />
@@ -106,28 +120,37 @@ export const PracticeQuestionsList = () => {
 				>
 					{({ index, subQuestionId }) => {
 						const currentAnswer = answers.answers[subQuestionId];
+						const externalPos =
+							currentQuestion.subs.length > 1
+								? `${currentQuestionIdx + 1}.${index + 1}`
+								: `${currentQuestionIdx + 1}`;
+						const value = currentAnswer
+							? {
+									choice: currentAnswer.choice,
+									isCorrect: currentAnswer.isCorrect,
+									subQuestionId: currentAnswer.subQuestionId,
+									questionId: currentAnswer.parentQuestionId,
+								}
+							: null;
 						return (
 							<div className="space-y-3" key={subQuestionId}>
 								<QuestionSubText
-									externalPos={
-										currentQuestion.subs.length > 1
-											? `${currentQuestionIdx + 1}.${index + 1}`
-											: `${index + 1}`
+									externalPos={externalPos}
+									flag={
+										currentQuestion.subs.length > 1 ? (
+											<QuestionFlagButton
+												isAdded={
+													answers.answers[subQuestionId]?.isFlagged ?? false
+												}
+												onToggle={() => answers.toggleFlagged(subQuestionId)}
+											/>
+										) : null
 									}
 								/>
 								<QuestionSubOptions
 									mode={mode === "timed" ? "exam" : "practice"}
 									isDisabledAfterSelect={mode === "normal"}
-									value={
-										currentAnswer
-											? {
-													choice: currentAnswer.choice,
-													isCorrect: currentAnswer.isCorrect,
-													subQuestionId: currentAnswer.subQuestionId,
-													questionId: currentAnswer.parentQuestionId,
-												}
-											: null
-									}
+									value={value}
 									onValueChange={(opts) => {
 										if (!opts) {
 											return;
