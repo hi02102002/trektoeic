@@ -1,4 +1,5 @@
-import { partPracticesQueries } from "@trektoeic/db/queries/index";
+import { partPracticesQueries } from "@trektoeic/db/queries";
+import { InputPartPracticeHistorySchema } from "@trektoeic/schemas/part-practice-schema";
 import { QuestionWithSubsSchema } from "@trektoeic/schemas/question-schema";
 import { createId } from "@trektoeic/utils/create-id";
 import z from "zod";
@@ -41,6 +42,21 @@ const getPartPractice = requiredAuthProcedure
 		return z.array(QuestionWithSubsSchema).parse(records);
 	});
 
+const createPartPracticeHistory = requiredAuthProcedure
+	.route({
+		method: "POST",
+		tags,
+	})
+	.input(InputPartPracticeHistorySchema)
+	.handler(async ({ input, context }) => {
+		const record = await partPracticesQueries.createPartPracticeHistory(
+			context.session.user.id,
+		)(input);
+
+		return record;
+	});
+
 export const partPractices = {
 	getPartPractice,
+	createPartPracticeHistory,
 };

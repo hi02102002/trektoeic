@@ -1,3 +1,4 @@
+import { FlagIcon } from "@phosphor-icons/react";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import type { QuestionWithSubs } from "@trektoeic/schemas/question-schema";
 import { useMount } from "ahooks";
@@ -10,6 +11,7 @@ import {
 	useMemo,
 } from "react";
 import { cn } from "@/lib/utils";
+import { iconBadgeVariants } from "./icon-badge";
 import { ImageZoom } from "./kibo-ui/image-zoom";
 import {
 	AudioPlayerButton,
@@ -82,6 +84,30 @@ export const QuestionPos = ({ externalPos }: { externalPos?: string }) => {
 		<span className="inline-flex items-center justify-center rounded border border-neutral-200 bg-neutral-100 px-2 py-1 font-bold text-[10px] text-neutral-500">
 			Q. {pos}
 		</span>
+	);
+};
+
+export const QuestionFlagButton = ({
+	isAdded,
+	onToggle,
+}: {
+	isAdded?: boolean;
+	onToggle?: () => void;
+}) => {
+	return (
+		<button
+			className={cn(
+				iconBadgeVariants({
+					color: isAdded ? "yellow" : "slate",
+				}),
+				"size-8 cursor-pointer rounded-md hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+			)}
+			onClick={onToggle}
+			aria-label={isAdded ? "Bỏ đánh dấu" : "Đánh dấu"}
+			type="button"
+		>
+			<FlagIcon className="size-4" weight="duotone" />
+		</button>
 	);
 };
 
@@ -250,7 +276,13 @@ export const QuestionSubs = ({
 	);
 };
 
-export const QuestionSubText = ({ externalPos }: { externalPos?: string }) => {
+export const QuestionSubText = ({
+	externalPos,
+	flag,
+}: {
+	externalPos?: string;
+	flag?: ReactNode;
+}) => {
 	const { sub } = useQuestionSubContext();
 	const { question } = useQuestionContext();
 
@@ -272,11 +304,14 @@ export const QuestionSubText = ({ externalPos }: { externalPos?: string }) => {
 
 	return (
 		<div className="space-y-2">
-			{PART_WITHOUT_SUB_POS.has(question.part) ? null : (
-				<span className="inline-flex items-center justify-center rounded border border-neutral-200 bg-neutral-100 px-2 py-1 font-bold text-[10px] text-neutral-500">
-					Q. {externalPos ?? sub.position}
-				</span>
-			)}
+			<div className="flex items-center justify-between">
+				{PART_WITHOUT_SUB_POS.has(question.part) ? null : (
+					<span className="inline-flex items-center justify-center rounded border border-neutral-200 bg-neutral-100 px-2 py-1 font-bold text-[10px] text-neutral-500">
+						Q. {externalPos ?? sub.position}
+					</span>
+				)}
+				{flag}
+			</div>
 			<p className="font-medium text-base text-primary leading-relaxed">
 				{renderContent()}
 			</p>

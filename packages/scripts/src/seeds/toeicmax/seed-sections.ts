@@ -1,6 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
 import { db, sections, sql } from "@trektoeic/db";
-import fs from "fs";
-import path from "path";
 
 const main = async () => {
 	const data = fs.readFileSync(

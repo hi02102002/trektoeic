@@ -17,7 +17,7 @@ export const getRedisClient = (): Redis => {
 		return client;
 	} catch (error) {
 		throw new Error(
-			"Failed to create Redis client: " + (error as Error).message,
+			`Failed to create Redis client: ${(error as Error).message}`,
 		);
 	}
 };

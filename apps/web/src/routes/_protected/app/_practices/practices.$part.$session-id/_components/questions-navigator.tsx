@@ -47,10 +47,6 @@ export const QuestionsNavigator = () => {
 
 		const answer = answers[subQuestionId];
 
-		if (answer.isFlagged) {
-			return "flagged";
-		}
-
 		if (answer.choice) {
 			return "answered";
 		}
@@ -58,14 +54,23 @@ export const QuestionsNavigator = () => {
 		return "unanswered";
 	};
 
+	const isFlagged = (subQuestionId: string) => {
+		const answer = answers[subQuestionId];
+		return answer?.isFlagged ?? false;
+	};
+
 	const mappedQuestions: Record<string, { status: ButtonNavigatorStatus }> =
 		(() => {
-			const results = {} as Record<string, { status: ButtonNavigatorStatus }>;
+			const results = {} as Record<
+				string,
+				{ status: ButtonNavigatorStatus; flagged: boolean }
+			>;
 
 			questions.forEach((q, pIdx) => {
 				q.subs.forEach((sub, subIdx) => {
 					results[sub.id] = {
 						status: getStatus(sub.id, pIdx + subIdx, pIdx),
+						flagged: isFlagged(sub.id),
 					};
 				});
 			});

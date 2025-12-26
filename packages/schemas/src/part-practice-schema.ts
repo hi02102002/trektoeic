@@ -26,7 +26,16 @@ export const PartPracticeHistorySchema = z.object({
 	action: z.literal("practice_part"),
 });
 
+export const InputPartPracticeHistorySchema = z.object({
+	metadata: PartPracticeMetadataSchema,
+	contents: z.array(PartPracticeContentSchema),
+	id: z.string().optional(),
+});
+
 export type PartPracticeMode = z.infer<typeof PartPracticeModeSchema>;
 export type PartPracticeHistory = z.infer<typeof PartPracticeHistorySchema>;
 export type PartPracticeContent = z.infer<typeof PartPracticeContentSchema>;
 export type PartPracticeMetadata = z.infer<typeof PartPracticeMetadataSchema>;
+export type InputPartPracticeHistory = z.infer<
+	typeof InputPartPracticeHistorySchema
+>;
