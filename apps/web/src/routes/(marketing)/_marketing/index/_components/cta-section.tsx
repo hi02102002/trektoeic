@@ -5,7 +5,7 @@ export const CtaSection = () => {
 	return (
 		<section className="px-6 py-20">
 			<div className="relative mx-auto max-w-5xl overflow-hidden rounded-md bg-neutral-900 p-12 text-center md:p-20">
-				<div className="-translate-x-1/2 absolute top-0 left-1/2 h-[300px] w-[600px] rounded-full bg-blue-600/20 blur-[100px]" />
+				<div className="absolute top-0 left-1/2 h-[300px] w-[600px] -translate-x-1/2 rounded-full bg-blue-600/20 blur-[100px]" />
 				<div className="relative z-10">
 					<h2 className="mb-6 font-semibold text-3xl text-white tracking-tight md:text-5xl">
 						Bắt đầu hành trình chinh phục TOEIC ngay hôm nay!

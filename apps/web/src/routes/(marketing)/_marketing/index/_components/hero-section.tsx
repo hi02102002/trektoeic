@@ -65,7 +65,7 @@ export const HeroSection = () => {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.5 }}
 					>
-						<div className="-space-x-3 flex">
+						<div className="flex -space-x-3">
 							<img
 								src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
 								alt=""
@@ -207,7 +207,7 @@ export const HeroSection = () => {
 					transition={{ duration: 0.6, delay: 0.2 }}
 				>
 					<motion.div
-						className="-z-10 absolute inset-0 translate-x-10 transform rounded-full bg-gradient-to-tr from-blue-100/50 to-indigo-50/50 blur-[80px]"
+						className="absolute inset-0 -z-10 translate-x-10 transform rounded-full bg-gradient-to-tr from-blue-100/50 to-indigo-50/50 blur-[80px]"
 						initial={{ opacity: 0, scale: 0.8 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 1, delay: 0.3 }}
@@ -337,7 +337,7 @@ export const HeroSection = () => {
 						</div>
 					</motion.div>
 					<motion.div
-						className="-right-14 glass-panel absolute bottom-20 z-20 hidden rounded-md border border-white/50 bg-white p-3 shadow-lg md:block"
+						className="glass-panel absolute -right-14 bottom-20 z-20 hidden rounded-md border border-white/50 bg-white p-3 shadow-lg md:block"
 						initial={{ opacity: 0, x: 20, y: 20 }}
 						animate={{ opacity: 1, x: 0, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.6 }}
@@ -357,7 +357,7 @@ export const HeroSection = () => {
 						</div>
 					</motion.div>
 					<motion.div
-						className="-left-6 glass-panel absolute top-36 z-20 hidden rounded-md border border-white/50 bg-white p-3 shadow-lg md:block"
+						className="glass-panel absolute top-36 -left-6 z-20 hidden rounded-md border border-white/50 bg-white p-3 shadow-lg md:block"
 						initial={{ opacity: 0, x: -20, y: 20 }}
 						animate={{ opacity: 1, x: 0, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.8 }}

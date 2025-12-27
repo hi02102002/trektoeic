@@ -51,7 +51,7 @@ const navigatorButtonVariants = cva(
 					"border border-indigo-100 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 hover:text-indigo-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300 focus-visible:ring-offset-2",
 			},
 			isFlagged: {
-				true: "after:-top-1 after:-right-1 after:absolute after:h-2 after:w-2 after:rounded-full after:bg-amber-500",
+				true: "after:absolute after:-top-1 after:-right-1 after:h-2 after:w-2 after:rounded-full after:bg-amber-500",
 			},
 		},
 	},

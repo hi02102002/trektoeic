@@ -120,7 +120,7 @@ export const FeaturesBentoGrid = () => {
 								<div className="font-bold text-2xl text-neutral-400">650</div>
 							</div>
 							<div className="relative h-[1px] w-24 bg-gradient-to-r from-neutral-200 to-green-500">
-								<div className="-right-1 -top-1 absolute h-2 w-2 rounded-full bg-green-500" />
+								<div className="absolute -top-1 -right-1 h-2 w-2 rounded-full bg-green-500" />
 							</div>
 							<div className="text-center">
 								<div className="mb-1 font-bold text-green-600 text-xs uppercase">

@@ -1,4 +1,4 @@
-import { FlagIcon } from "@phosphor-icons/react";
+import { CaretDown, FlagIcon } from "@phosphor-icons/react";
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
 import type { QuestionWithSubs } from "@trektoeic/schemas/question-schema";
 import { useMount } from "ahooks";
@@ -23,6 +23,11 @@ import {
 	useAudioPlayer,
 } from "./ui/audio-player";
 import { Button } from "./ui/button";
+import {
+	Collapsible,
+	CollapsibleContent,
+	CollapsibleTrigger,
+} from "./ui/collapsible";
 
 const PART_WITHOUT_TEXT = new Set([1, 2]);
 const PART_WITHOUT_SUB_POS = new Set([1, 2, 5]);
@@ -286,8 +291,12 @@ export const QuestionSubText = ({
 	const { sub } = useQuestionSubContext();
 	const { question } = useQuestionContext();
 
-	const renderContent = useCallback(() => {
+	const content = useMemo(() => {
 		if (PART_WITHOUT_SUB_POS.has(question.part)) {
+			if (PART_WITHOUT_TEXT.has(question.part)) {
+				return "";
+			}
+
 			return sub.question.replace(/^\d+\.\s*/, "");
 		}
 
@@ -302,21 +311,25 @@ export const QuestionSubText = ({
 		return sub.question.replace(/^\d+\.\s*/, "");
 	}, [sub, question, externalPos]);
 
-	return (
+	const isShowPos = !PART_WITHOUT_SUB_POS.has(question.part);
+
+	return isShowPos || content ? (
 		<div className="space-y-2">
-			<div className="flex items-center justify-between">
-				{PART_WITHOUT_SUB_POS.has(question.part) ? null : (
+			{isShowPos ? (
+				<div className="flex items-center justify-between">
 					<span className="inline-flex items-center justify-center rounded border border-neutral-200 bg-neutral-100 px-2 py-1 font-bold text-[10px] text-neutral-500">
 						Q. {externalPos ?? sub.position}
 					</span>
-				)}
-				{flag}
-			</div>
-			<p className="font-medium text-base text-primary leading-relaxed">
-				{renderContent()}
-			</p>
+					{flag}
+				</div>
+			) : null}
+			{content ? (
+				<p className="font-medium text-base text-primary leading-relaxed">
+					{content}
+				</p>
+			) : null}
 		</div>
-	);
+	) : null;
 };
 
 export const QuestionSubOptions = ({
@@ -486,5 +499,55 @@ export const QuestionSubOptions = ({
 				);
 			})}
 		</ul>
+	);
+};
+
+export const QuestionSubExplanation = ({
+	mode,
+	isAnswerSelected,
+	defaultOpen = false,
+}: {
+	mode: "practice" | "review" | "exam";
+	isAnswerSelected?: boolean;
+	defaultOpen?: boolean;
+}) => {
+	const { sub } = useQuestionSubContext();
+
+	if (!sub.translation || Object.keys(sub.translation).length === 0) {
+		return null;
+	}
+
+	// Only show explanation when:
+	// - In review mode (always)
+	// - In practice mode after an answer is selected
+	// - Never in exam mode
+	const shouldShow =
+		mode === "review" || (mode === "practice" && isAnswerSelected);
+
+	if (!shouldShow) {
+		return null;
+	}
+
+	return (
+		<Collapsible defaultOpen={defaultOpen}>
+			<div className="rounded-md border-green-500 border-l-4 bg-green-50/50 p-4">
+				<CollapsibleTrigger className="group flex w-full cursor-pointer items-center justify-between">
+					<h3 className="font-semibold text-green-700 text-sm">
+						Đáp án và giải thích
+					</h3>
+					<CaretDown
+						className="size-4 text-green-700 transition-transform duration-200 group-data-[state=open]:rotate-180"
+						weight="bold"
+					/>
+				</CollapsibleTrigger>
+				<CollapsibleContent className="mt-2">
+					<div>
+						<p className="whitespace-pre-line text-primary text-sm leading-relaxed">
+							{sub.translation.vi}
+						</p>
+					</div>
+				</CollapsibleContent>
+			</div>
+		</Collapsible>
 	);
 };

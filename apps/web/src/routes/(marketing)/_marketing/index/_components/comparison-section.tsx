@@ -60,7 +60,7 @@ export const ComparisonSection = () => {
 									Chi phí hàng tháng
 								</td>
 								<td className="py-4 text-center font-medium text-blue-600">
-									$12 / tháng
+									$3 / tháng
 								</td>
 								<td className="py-4 text-center text-neutral-500">
 									$50+ mỗi cuốn

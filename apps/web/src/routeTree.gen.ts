@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createFileRoute } from '@tanstack/react-router'
-
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
@@ -31,8 +29,6 @@ import { Route as ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
 import { Route as ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/route'
 
-const ProtectedAppRouteImport = createFileRoute('/_protected/app')()
-
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
   getParentRoute: () => rootRouteImport,
@@ -40,11 +36,6 @@ const ProtectedRoute = ProtectedRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRouteImport,
-} as any)
-const ProtectedAppRoute = ProtectedAppRouteImport.update({
-  id: '/app',
-  path: '/app',
-  getParentRoute: () => ProtectedRoute,
 } as any)
 const ApiSplatRoute = ApiSplatRouteImport.update({
   id: '/api/$',
@@ -81,8 +72,9 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtectedAppDashboardRoute = ProtectedAppDashboardRouteImport.update({
-  id: '/_dashboard',
-  getParentRoute: () => ProtectedAppRoute,
+  id: '/app/_dashboard',
+  path: '/app',
+  getParentRoute: () => ProtectedRoute,
 } as any)
 const marketingMarketingAboutRouteRoute =
   marketingMarketingAboutRouteRouteImport.update({
@@ -134,9 +126,9 @@ const ProtectedAppDashboardPracticesIndexRouteRoute =
   } as any)
 const ProtectedAppPracticesPracticesPartSessionIdRouteRoute =
   ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport.update({
-    id: '/_practices/practices/$part/$session-id',
-    path: '/practices/$part/$session-id',
-    getParentRoute: () => ProtectedAppRoute,
+    id: '/app/_practices/practices/$part/$session-id',
+    path: '/app/practices/$part/$session-id',
+    getParentRoute: () => ProtectedRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
@@ -179,7 +171,6 @@ export interface FileRoutesById {
   '/api/$': typeof ApiSplatRoute
   '/(marketing)/_marketing/': typeof marketingMarketingIndexRouteRoute
   '/(marketing)/_marketing/about': typeof marketingMarketingAboutRouteRoute
-  '/_protected/app': typeof ProtectedAppRouteWithChildren
   '/_protected/app/_dashboard': typeof ProtectedAppDashboardRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
@@ -235,7 +226,6 @@ export interface FileRouteTypes {
     | '/api/$'
     | '/(marketing)/_marketing/'
     | '/(marketing)/_marketing/about'
-    | '/_protected/app'
     | '/_protected/app/_dashboard'
     | '/api/auth/$'
     | '/api/rpc/$'
@@ -277,13 +267,6 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/_protected/app': {
-      id: '/_protected/app'
-      path: '/app'
-      fullPath: '/app'
-      preLoaderRoute: typeof ProtectedAppRouteImport
-      parentRoute: typeof ProtectedRoute
     }
     '/api/$': {
       id: '/api/$'
@@ -339,7 +322,7 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof ProtectedAppDashboardRouteImport
-      parentRoute: typeof ProtectedAppRoute
+      parentRoute: typeof ProtectedRoute
     }
     '/(marketing)/_marketing/about': {
       id: '/(marketing)/_marketing/about'
@@ -399,10 +382,10 @@ declare module '@tanstack/react-router' {
     }
     '/_protected/app/_practices/practices/$part/$session-id': {
       id: '/_protected/app/_practices/practices/$part/$session-id'
-      path: '/practices/$part/$session-id'
+      path: '/app/practices/$part/$session-id'
       fullPath: '/app/practices/$part/$session-id'
       preLoaderRoute: typeof ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport
-      parentRoute: typeof ProtectedAppRoute
+      parentRoute: typeof ProtectedRoute
     }
   }
 }
@@ -445,27 +428,15 @@ const ProtectedAppDashboardRouteWithChildren =
     ProtectedAppDashboardRouteChildren,
   )
 
-interface ProtectedAppRouteChildren {
+interface ProtectedRouteChildren {
   ProtectedAppDashboardRoute: typeof ProtectedAppDashboardRouteWithChildren
   ProtectedAppPracticesPracticesPartSessionIdRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
 }
 
-const ProtectedAppRouteChildren: ProtectedAppRouteChildren = {
+const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedAppDashboardRoute: ProtectedAppDashboardRouteWithChildren,
   ProtectedAppPracticesPracticesPartSessionIdRouteRoute:
     ProtectedAppPracticesPracticesPartSessionIdRouteRoute,
-}
-
-const ProtectedAppRouteWithChildren = ProtectedAppRoute._addFileChildren(
-  ProtectedAppRouteChildren,
-)
-
-interface ProtectedRouteChildren {
-  ProtectedAppRoute: typeof ProtectedAppRouteWithChildren
-}
-
-const ProtectedRouteChildren: ProtectedRouteChildren = {
-  ProtectedAppRoute: ProtectedAppRouteWithChildren,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(

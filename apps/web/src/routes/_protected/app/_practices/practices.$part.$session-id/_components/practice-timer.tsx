@@ -15,9 +15,9 @@ export const PracticeTimer = () => {
 			onDone={() => {
 				// will be handle
 			}}
-			className="-translate-x-1/2 absolute left-1/2 transform"
+			className="absolute left-1/2 -translate-x-1/2 transform"
 		/>
 	) : (
-		<Timer mode="up" className="-translate-x-1/2 absolute left-1/2 transform" />
+		<Timer mode="up" className="absolute left-1/2 -translate-x-1/2 transform" />
 	);
 };

@@ -30,7 +30,9 @@
 		"db:generate": "turbo -F @trektoeic/db db:generate",
 		"db:migrate": "turbo -F @trektoeic/db db:migrate",
 		"db:pull": "turbo -F @trektoeic/db db:pull",
-		"dev:mailer": "turbo -F @trektoeic/mailer dev:mailer"
+		"dev:mailer": "turbo -F @trektoeic/mailer dev:mailer",
+		"clean": "pnpm -r exec rm -rf node_modules .next dist build && rm -rf node_modules pnpm-lock.yaml",
+		"reset": "pnpm run clean && pnpm store prune && pnpm install"
 	},
 	"dependencies": {
 		"dotenv": "^17.2.2",

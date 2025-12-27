@@ -72,7 +72,7 @@ function RouteComponent() {
 					/>
 					<div className="flex flex-col pt-16">
 						<QuestionsNavigator />
-						<div className="ml-64 min-h-[calc(100svh_-_4rem)]">
+						<div className="ml-64">
 							<PracticeQuestionsList />
 						</div>
 					</div>
