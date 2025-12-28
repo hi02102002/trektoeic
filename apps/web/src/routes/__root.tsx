@@ -46,6 +46,21 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 				href: appCss,
 			},
 		],
+		scripts: [
+			{
+				async: true,
+				scr: "https://www.googletagmanager.com/gtag/js?id=G-11Z12V1WLY",
+			},
+			{
+				id: "google-analytics",
+				children: `
+					  window.dataLayer = window.dataLayer || [];
+  					function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+						gtag('config', 'G-11Z12V1WLY');
+				`,
+			},
+		],
 	}),
 	async beforeLoad({ context }) {
 		const user = await context.queryClient.ensureQueryData({
