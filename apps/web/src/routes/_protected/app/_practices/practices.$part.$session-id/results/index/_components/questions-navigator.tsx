@@ -9,50 +9,15 @@ import { useAnswers, useCurrentQuestion } from "@/stores/attempt";
 const PART_HAVE_MULTIPLE_SUBS = new Set([3, 4, 6, 7]);
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id",
+	"/_protected/app/_practices/practices/$part/$session-id/results/",
 );
 
 export const QuestionsNavigator = () => {
 	const gotoQuestion = useCurrentQuestion((s) => s.goto);
 	const setSubQuestionIdx = useCurrentQuestion((s) => s.setSubQuestionIdx);
-	const currentSubQuestionIdx = useCurrentQuestion((s) => s.subQuestionIdx);
-	const currentQuestionIdx = useCurrentQuestion((s) => s.idx);
 	const { questions } = Route.useLoaderData();
 	const { part } = Route.useParams();
 	const answers = useAnswers((s) => s.answers);
-
-	const getStatus = (
-		subQuestionId: string,
-		subIndex: number,
-		parentIndex: number,
-	): ButtonNavigatorStatus => {
-		console.log(
-			currentQuestionIdx,
-			parentIndex,
-			currentSubQuestionIdx,
-			subIndex,
-		);
-
-		if (
-			currentSubQuestionIdx === subIndex &&
-			parentIndex === currentQuestionIdx
-		) {
-			console.log(
-				currentSubQuestionIdx === subIndex &&
-					parentIndex === currentQuestionIdx,
-			);
-
-			return "current";
-		}
-
-		const answer = answers[subQuestionId];
-
-		if (answer.choice) {
-			return "answered";
-		}
-
-		return "unanswered";
-	};
 
 	const isFlagged = (subQuestionId: string) => {
 		const answer = answers[subQuestionId];
@@ -66,10 +31,10 @@ export const QuestionsNavigator = () => {
 				{ status: ButtonNavigatorStatus; flagged: boolean }
 			>;
 
-			questions.forEach((q, pIdx) => {
-				q.subs.forEach((sub, subIdx) => {
+			questions.forEach((q) => {
+				q.subs.forEach((sub) => {
 					results[sub.id] = {
-						status: getStatus(sub.id, pIdx + subIdx, pIdx),
+						status: "wrong",
 						flagged: isFlagged(sub.id),
 					};
 				});
@@ -120,6 +85,7 @@ export const QuestionsNavigator = () => {
 				}, 100);
 			}}
 			className="fixed top-16 h-screen overflow-y-auto border-input border-r"
+			mode="result"
 		/>
 	);
 };

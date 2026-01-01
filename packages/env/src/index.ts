@@ -3,15 +3,11 @@ import { config } from "dotenv";
 import { z } from "zod";
 
 const getEnvPath = () => {
-	console.log("process.env.NODE_ENV:", process.env.NODE_ENV);
-
 	if (process.env.NODE_ENV === "production") {
 		return "../../apps/web/.env";
 	}
 	return "../../apps/web/.env.local";
 };
-
-console.log("Loading env from:", getEnvPath());
 
 config({
 	path: getEnvPath(),

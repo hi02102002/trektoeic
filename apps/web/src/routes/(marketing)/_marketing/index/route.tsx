@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ScrollToTop } from "@/components/scroll-to-top";
-import { generateMetadata } from "@/lib/meta";
+import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { ComparisonSection } from "./_components/comparison-section";
 import { CtaSection } from "./_components/cta-section";
 import { FeaturesBentoGrid } from "./_components/feature-bento-grid";
@@ -8,7 +8,7 @@ import { HeroSection } from "./_components/hero-section";
 
 export const Route = createFileRoute("/(marketing)/_marketing/")({
 	component: HomeComponent,
-	head: () => {
+	head: ({ match }) => {
 		const { meta, links } = generateMetadata({
 			title: "Nền tảng học TOEIC trực tuyến hiệu quả",
 			description:
@@ -24,21 +24,13 @@ export const Route = createFileRoute("/(marketing)/_marketing/")({
 				"luyện TOEIC từng phần",
 				"thi thử TOEIC",
 			],
-			openGraph: {
-				type: "website",
-				url: "/",
-				title: "TrekToeic - Nền tảng học TOEIC trực tuyến hiệu quả",
-				description:
-					"Học TOEIC hiệu quả với TrekToeic - nền tảng luyện thi TOEIC trực tuyến. Luyện tập từng phần, làm đề thi thử, học từ vựng và ngữ pháp.",
-			},
-			twitter: {
-				card: "summary_large_image",
-				title: "TrekToeic - Nền tảng học TOEIC trực tuyến hiệu quả",
-				description:
-					"Học TOEIC hiệu quả với TrekToeic - nền tảng luyện thi TOEIC trực tuyến. Luyện tập từng phần, làm đề thi thử, học từ vựng và ngữ pháp.",
-			},
+			...createOpenGraphData(
+				"TrekToeic - Nền tảng học TOEIC trực tuyến hiệu quả",
+				"Học TOEIC hiệu quả với TrekToeic - nền tảng luyện thi TOEIC trực tuyến. Luyện tập từng phần, làm đề thi thử, học từ vựng và ngữ pháp.",
+				match.pathname,
+			),
 			alternates: {
-				canonical: "/",
+				canonical: match.pathname,
 			},
 		});
 

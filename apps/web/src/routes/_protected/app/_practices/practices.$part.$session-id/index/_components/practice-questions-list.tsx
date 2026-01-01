@@ -20,7 +20,7 @@ import {
 } from "@/stores/attempt";
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id",
+	"/_protected/app/_practices/practices/$part/$session-id/",
 );
 
 const PART_LAYOUT_HORIZONTAL = new Set([6, 7]);
@@ -120,12 +120,8 @@ export const PracticeQuestionsList = () => {
 					}}
 					ref={rightSideRef}
 				>
-					{({ index, subQuestionId }) => {
+					{({ subQuestionId }) => {
 						const currentAnswer = answers.answers[subQuestionId];
-						const externalPos =
-							currentQuestion.subs.length > 1
-								? `${currentQuestionIdx + 1}.${index + 1}`
-								: `${currentQuestionIdx + 1}`;
 						const value = currentAnswer
 							? {
 									choice: currentAnswer.choice,
@@ -137,7 +133,6 @@ export const PracticeQuestionsList = () => {
 						return (
 							<div className="space-y-3" key={subQuestionId}>
 								<QuestionSubText
-									externalPos={externalPos}
 									flag={
 										currentQuestion.subs.length > 1 ? (
 											<QuestionFlagButton
@@ -170,7 +165,7 @@ export const PracticeQuestionsList = () => {
 								/>
 								<Activity mode={currentAnswer.choice ? "visible" : "hidden"}>
 									<QuestionSubExplanation
-										mode="practice"
+										mode={mode === "timed" ? "exam" : "practice"}
 										isAnswerSelected={!!currentAnswer.choice}
 									/>
 								</Activity>

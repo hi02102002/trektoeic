@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as OgDotpngRouteImport } from './routes/og[.]png'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
@@ -28,11 +29,17 @@ import { Route as ProtectedAppDashboardGrammarRouteRouteImport } from './routes/
 import { Route as ProtectedAppDashboardIndexRouteRouteImport } from './routes/_protected/app/_dashboard/index/route'
 import { Route as ProtectedAppDashboardPracticesPartChar123partChar125RouteRouteImport } from './routes/_protected/app/_dashboard/practices/part-{$part}/route'
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
-import { Route as ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/route'
+import { Route as ProtectedAppPracticesPracticesPartSessionIdIndexRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/index/route'
+import { Route as ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/results/index/route'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OgDotpngRoute = OgDotpngRouteImport.update({
+  id: '/og.png',
+  path: '/og.png',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtectedRoute = ProtectedRouteImport.update({
@@ -130,14 +137,23 @@ const ProtectedAppDashboardPracticesIndexRouteRoute =
     path: '/practices',
     getParentRoute: () => ProtectedAppDashboardRoute,
   } as any)
-const ProtectedAppPracticesPracticesPartSessionIdRouteRoute =
-  ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport.update({
-    id: '/app/_practices/practices/$part/$session-id',
+const ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute =
+  ProtectedAppPracticesPracticesPartSessionIdIndexRouteRouteImport.update({
+    id: '/app/_practices/practices/$part/$session-id/',
     path: '/app/practices/$part/$session-id',
     getParentRoute: () => ProtectedRoute,
   } as any)
+const ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute =
+  ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRouteImport.update(
+    {
+      id: '/app/_practices/practices/$part/$session-id/results/',
+      path: '/app/practices/$part/$session-id/results',
+      getParentRoute: () => ProtectedRoute,
+    } as any,
+  )
 
 export interface FileRoutesByFullPath {
+  '/og.png': typeof OgDotpngRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/$': typeof ApiSplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
@@ -152,9 +168,11 @@ export interface FileRoutesByFullPath {
   '/app/vocabularies': typeof ProtectedAppDashboardVocabulariesRouteRoute
   '/app/practices': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
-  '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
+  '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  '/app/practices/$part/$session-id/results': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
 }
 export interface FileRoutesByTo {
+  '/og.png': typeof OgDotpngRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/$': typeof ApiSplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
@@ -169,12 +187,14 @@ export interface FileRoutesByTo {
   '/app/vocabularies': typeof ProtectedAppDashboardVocabulariesRouteRoute
   '/app/practices': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
-  '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
+  '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  '/app/practices/$part/$session-id/results': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
+  '/og.png': typeof OgDotpngRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/(marketing)/_marketing': typeof marketingMarketingRouteWithChildren
   '/api/$': typeof ApiSplatRoute
@@ -192,11 +212,13 @@ export interface FileRoutesById {
   '/_protected/app/_dashboard/vocabularies': typeof ProtectedAppDashboardVocabulariesRouteRoute
   '/_protected/app/_dashboard/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/_protected/app/_dashboard/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
-  '/_protected/app/_practices/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
+  '/_protected/app/_practices/practices/$part/$session-id/': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  '/_protected/app/_practices/practices/$part/$session-id/results/': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/og.png'
     | '/sitemap.xml'
     | '/api/$'
     | '/about'
@@ -212,8 +234,10 @@ export interface FileRouteTypes {
     | '/app/practices'
     | '/app/practices/part-{$part}'
     | '/app/practices/$part/$session-id'
+    | '/app/practices/$part/$session-id/results'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/og.png'
     | '/sitemap.xml'
     | '/api/$'
     | '/about'
@@ -229,10 +253,12 @@ export interface FileRouteTypes {
     | '/app/practices'
     | '/app/practices/part-{$part}'
     | '/app/practices/$part/$session-id'
+    | '/app/practices/$part/$session-id/results'
   id:
     | '__root__'
     | '/_auth'
     | '/_protected'
+    | '/og.png'
     | '/sitemap.xml'
     | '/(marketing)/_marketing'
     | '/api/$'
@@ -250,12 +276,14 @@ export interface FileRouteTypes {
     | '/_protected/app/_dashboard/vocabularies'
     | '/_protected/app/_dashboard/practices/'
     | '/_protected/app/_dashboard/practices/part-{$part}'
-    | '/_protected/app/_practices/practices/$part/$session-id'
+    | '/_protected/app/_practices/practices/$part/$session-id/'
+    | '/_protected/app/_practices/practices/$part/$session-id/results/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
+  OgDotpngRoute: typeof OgDotpngRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   marketingMarketingRoute: typeof marketingMarketingRouteWithChildren
   ApiSplatRoute: typeof ApiSplatRoute
@@ -272,6 +300,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og.png': {
+      id: '/og.png'
+      path: '/og.png'
+      fullPath: '/og.png'
+      preLoaderRoute: typeof OgDotpngRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_protected': {
@@ -400,11 +435,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAppDashboardPracticesIndexRouteRouteImport
       parentRoute: typeof ProtectedAppDashboardRoute
     }
-    '/_protected/app/_practices/practices/$part/$session-id': {
-      id: '/_protected/app/_practices/practices/$part/$session-id'
+    '/_protected/app/_practices/practices/$part/$session-id/': {
+      id: '/_protected/app/_practices/practices/$part/$session-id/'
       path: '/app/practices/$part/$session-id'
       fullPath: '/app/practices/$part/$session-id'
-      preLoaderRoute: typeof ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport
+      preLoaderRoute: typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_protected/app/_practices/practices/$part/$session-id/results/': {
+      id: '/_protected/app/_practices/practices/$part/$session-id/results/'
+      path: '/app/practices/$part/$session-id/results'
+      fullPath: '/app/practices/$part/$session-id/results'
+      preLoaderRoute: typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRouteImport
       parentRoute: typeof ProtectedRoute
     }
   }
@@ -450,13 +492,16 @@ const ProtectedAppDashboardRouteWithChildren =
 
 interface ProtectedRouteChildren {
   ProtectedAppDashboardRoute: typeof ProtectedAppDashboardRouteWithChildren
-  ProtectedAppPracticesPracticesPartSessionIdRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
+  ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedAppDashboardRoute: ProtectedAppDashboardRouteWithChildren,
-  ProtectedAppPracticesPracticesPartSessionIdRouteRoute:
-    ProtectedAppPracticesPracticesPartSessionIdRouteRoute,
+  ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute:
+    ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute,
+  ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute:
+    ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
@@ -479,6 +524,7 @@ const marketingMarketingRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
+  OgDotpngRoute: OgDotpngRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   marketingMarketingRoute: marketingMarketingRouteWithChildren,
   ApiSplatRoute: ApiSplatRoute,

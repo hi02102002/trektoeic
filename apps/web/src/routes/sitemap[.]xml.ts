@@ -19,7 +19,7 @@ interface SitemapUrl {
 const urls: SitemapUrl[] = [
 	{
 		loc: "/",
-		changefreq: "daily",
+		changefreq: "monthly",
 		priority: 1.0,
 	},
 	{

@@ -2,20 +2,14 @@ import { createFileRoute } from "@tanstack/react-router";
 import z from "zod";
 import { Header } from "@/components/practices/header";
 import { generateMetadata } from "@/lib/meta";
-import {
-	AnswersProvider,
-	CurrentQuestionProvider,
-	QuestionTimerProvider,
-} from "@/stores/attempt";
-import { ExitPracticeDialog } from "./_components/exit-practice-dialog";
-import { PracticeActions } from "./_components/practice-actions";
-import { PracticeQuestionsList } from "./_components/practice-questions-list";
+import { AnswersProvider, CurrentQuestionProvider } from "@/stores/attempt";
 import { PracticeTimer } from "./_components/practice-timer";
-import { PracticeActionBar } from "./_components/pratice-action-bar";
 import { QuestionsNavigator } from "./_components/questions-navigator";
+import { ResultActionBar } from "./_components/result-action-bar";
+import { ResultQuestionsList } from "./_components/result-questions-list";
 
 export const Route = createFileRoute(
-	"/_protected/app/_practices/practices/$part/$session-id",
+	"/_protected/app/_practices/practices/$part/$session-id/results/",
 )({
 	validateSearch: z.object({
 		duration: z.coerce.number().optional(),
@@ -38,16 +32,16 @@ export const Route = createFileRoute(
 
 		return { questions };
 	},
-	head: ({ params }) => {
+	head: ({ params, match }) => {
 		const { meta, links } = generateMetadata({
-			title: `Bài luyện tập Phần ${params.part}`,
-			description: `Luyện tập TOEIC Phần ${params.part} với các câu hỏi được chọn lọc kỹ càng. Nâng cao kỹ năng và đạt điểm cao trong kỳ thi TOEIC.`,
+			title: `Kết quả luyện tập Phần ${params.part}`,
+			description: `Xem kết quả luyện tập TOEIC Phần ${params.part} của bạn với phân tích chi tiết và phản hồi để cải thiện kỹ năng.`,
 			robots: {
 				index: false,
 				follow: false,
 			},
 			alternates: {
-				canonical: `/app/practices/${params.part}/${params["session-id"]}`,
+				canonical: match.pathname,
 			},
 		});
 
@@ -79,22 +73,18 @@ function RouteComponent() {
 					};
 				})}
 			>
-				<QuestionTimerProvider>
-					<Header
-						title={`Part ${part}`}
-						timer={<PracticeTimer />}
-						action={<PracticeActions />}
-						className="fixed top-0 right-0 left-0"
-					/>
-					<div className="flex flex-col pt-16">
-						<QuestionsNavigator />
-						<div className="ml-64">
-							<PracticeQuestionsList />
-						</div>
+				<Header
+					title={`Part ${part}`}
+					timer={<PracticeTimer />}
+					className="fixed top-0 right-0 left-0"
+				/>
+				<div className="flex flex-col pt-16">
+					<QuestionsNavigator />
+					<div className="ml-64">
+						<ResultQuestionsList />
 					</div>
-					<PracticeActionBar />
-					<ExitPracticeDialog />
-				</QuestionTimerProvider>
+				</div>
+				<ResultActionBar />
 			</AnswersProvider>
 		</CurrentQuestionProvider>
 	);

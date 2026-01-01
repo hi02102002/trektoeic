@@ -13,6 +13,7 @@ import {
 import { cn } from "@/lib/utils";
 import { iconBadgeVariants } from "./icon-badge";
 import { ImageZoom } from "./kibo-ui/image-zoom";
+import { QuestionOption } from "./question-option";
 import {
 	AudioPlayerButton,
 	AudioPlayerDuration,
@@ -22,7 +23,6 @@ import {
 	AudioPlayerTime,
 	useAudioPlayer,
 } from "./ui/audio-player";
-import { Button } from "./ui/button";
 import {
 	Collapsible,
 	CollapsibleContent,
@@ -297,7 +297,7 @@ export const QuestionSubText = ({
 				return "";
 			}
 
-			return sub.question.replace(/^\d+\.\s*/, "");
+			return sub.question.replace(/^\d+[.)\-:]?\s*/, "");
 		}
 
 		if (PART_WITHOUT_TEXT.has(question.part)) {
@@ -308,7 +308,7 @@ export const QuestionSubText = ({
 			return `${sub.position}.`;
 		}
 
-		return sub.question.replace(/^\d+\.\s*/, "");
+		return sub.question.replace(/^\d+[.)\-:]?\s*/, "");
 	}, [sub, question, externalPos]);
 
 	const isShowPos = !PART_WITHOUT_SUB_POS.has(question.part);
@@ -462,39 +462,28 @@ export const QuestionSubOptions = ({
 		}
 	};
 
+	const isChecked = mode === "practice" && !!internal?.choice;
+
 	return (
-		<ul className="space-y-2">
+		<ul className="space-y-1">
 			{Object.entries(sub.options).map(([key, value]) => {
 				const isSelected = internal?.choice === key;
+				const isCorrect =
+					isCorrectAnswerAvailable(key) || isChooseCorrectAnswer(key);
+				const isWrong = isChooseWrongAnswer(key);
 
 				return (
 					<li key={key}>
-						<Button
-							variant="outline"
-							className={cn("w-full select-none justify-start", {
-								"!border-indigo-700 !bg-indigo/10 !text-indigo-700 focus-visible:ring-indigo-700":
-									isSelected && mode === "exam",
-								"!border-green-500 !bg-green-50 !text-green-700 focus-visible:ring-green-500":
-									isCorrectAnswerAvailable(key) || isChooseCorrectAnswer(key),
-								"!border-red-500 !bg-red-50 !text-red-700 focus-visible:ring-red-500":
-									isChooseWrongAnswer(key),
-								"pointer-events-none": isDisabled,
-							})}
-							data-is-correct={
-								isCorrectAnswerAvailable(key) || isChooseCorrectAnswer(key)
-									? "true"
-									: undefined
-							}
-							data-selected={isSelected ? "true" : undefined}
-							key={key}
-							onClick={() => {
-								handleToggleOption(key);
-							}}
+						<QuestionOption
+							label={key.toUpperCase()}
+							value={PART_WITHOUT_TEXT.has(question.part) ? "" : value}
+							isSelected={isSelected}
+							isCorrect={isCorrect}
+							isWrong={isWrong}
+							isChecked={isChecked}
+							onClick={() => handleToggleOption(key)}
 							disabled={isDisabled}
-						>
-							{key.toUpperCase()}.{" "}
-							{PART_WITHOUT_TEXT.has(question.part) ? "" : value}
-						</Button>
+						/>
 					</li>
 				);
 			})}
@@ -530,21 +519,25 @@ export const QuestionSubExplanation = ({
 
 	return (
 		<Collapsible defaultOpen={defaultOpen}>
-			<div className="rounded-md border-green-500 border-l-4 bg-green-50/50 p-4">
-				<CollapsibleTrigger className="group flex w-full cursor-pointer items-center justify-between">
-					<h3 className="font-semibold text-green-700 text-sm">
-						Đáp án và giải thích
+			<div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+				<CollapsibleTrigger className="group flex w-full cursor-pointer items-center justify-between overflow-hidden px-4 py-3 transition-colors hover:bg-gray-50">
+					<h3 className="font-medium text-gray-900 text-sm">
+						Giải thích đáp án
 					</h3>
 					<CaretDown
-						className="size-4 text-green-700 transition-transform duration-200 group-data-[state=open]:rotate-180"
+						className="size-4 text-gray-500 transition-transform duration-200 group-data-[state=open]:rotate-180"
 						weight="bold"
 					/>
 				</CollapsibleTrigger>
-				<CollapsibleContent className="mt-2">
-					<div>
-						<p className="whitespace-pre-line text-primary text-sm leading-relaxed">
-							{sub.translation.vi}
-						</p>
+				<CollapsibleContent>
+					<div className="border-gray-100 border-t px-4 py-3">
+						<div
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation content>
+							dangerouslySetInnerHTML={{
+								__html: sub.translation.vi as string,
+							}}
+							className="prose prose-sm prose-neutral max-w-none whitespace-break-spaces text-sm [&_li]:text-gray-700 [&_p]:text-gray-700 [&_p]:leading-relaxed [&_strong]:font-semibold [&_strong]:text-gray-900 [&_ul]:space-y-1.5"
+						/>
 					</div>
 				</CollapsibleContent>
 			</div>

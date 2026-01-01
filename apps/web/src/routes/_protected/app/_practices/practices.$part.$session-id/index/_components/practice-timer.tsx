@@ -2,7 +2,7 @@ import { getRouteApi } from "@tanstack/react-router";
 import { Timer } from "@/components/practices/timer";
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id",
+	"/_protected/app/_practices/practices/$part/$session-id/",
 );
 
 export const PracticeTimer = () => {

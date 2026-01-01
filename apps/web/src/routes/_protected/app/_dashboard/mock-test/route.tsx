@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { generateMetadata } from "@/lib/meta";
+import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 
 export const Route = createFileRoute("/_protected/app/_dashboard/mock-test")({
 	component: RouteComponent,
-	head: () => {
+	head: ({ match }) => {
 		const { meta, links } = generateMetadata({
 			title: "Thi thử TOEIC",
 			description:
@@ -16,12 +16,17 @@ export const Route = createFileRoute("/_protected/app/_dashboard/mock-test")({
 				"đề TOEIC miễn phí",
 				"full test TOEIC",
 			],
+			...createOpenGraphData(
+				"Thi thử TOEIC | TrekToeic",
+				"Làm đề thi thử TOEIC theo format chuẩn với thời gian thực tế. Đánh giá trình độ và chuẩn bị tốt nhất cho kỳ thi TOEIC thật.",
+				match.pathname,
+			),
 			robots: {
 				index: false,
 				follow: false,
 			},
 			alternates: {
-				canonical: "/app/mock-test",
+				canonical: match.pathname,
 			},
 		});
 

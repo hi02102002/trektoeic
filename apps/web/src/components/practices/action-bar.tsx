@@ -1,22 +1,20 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
 import {
-	ActionBar,
 	ActionBarGroup,
 	ActionBarItem,
+	ActionBar as ActionBarUI,
 } from "@/components/ui/action-bar";
-import { useCurrentQuestion } from "@/stores/attempt";
 
-export const PracticeActionBar = () => {
-	const { canNext, canPrev, next, prev } = useCurrentQuestion((state) => ({
-		canNext: state.canNext,
-		canPrev: state.canPrev,
-		next: state.next,
-		prev: state.prev,
-		idx: state.idx,
-	}));
+type Props = {
+	canNext: () => boolean;
+	canPrev: () => boolean;
+	next: () => void;
+	prev: () => void;
+};
 
+export const ActionBar = ({ canNext, canPrev, next, prev }: Props) => {
 	return (
-		<ActionBar open>
+		<ActionBarUI open>
 			<ActionBarGroup>
 				<ActionBarItem disabled={!canPrev?.()} onSelect={prev}>
 					<ArrowLeftIcon />
@@ -31,6 +29,6 @@ export const PracticeActionBar = () => {
 					<ArrowRightIcon />
 				</ActionBarItem>
 			</ActionBarGroup>
-		</ActionBar>
+		</ActionBarUI>
 	);
 };

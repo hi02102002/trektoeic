@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { AppContent, AppHeader } from "@/components/layouts/app";
 import { TsrBreadcrumbs } from "@/components/tsr-breadcrumbs";
-import { generateMetadata } from "@/lib/meta";
+import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { ListeningSection } from "./_components/listening-section";
 import { ReadingSection } from "./_components/reading-section";
 
 export const Route = createFileRoute("/_protected/app/_dashboard/practices/")({
 	component: RouteComponent,
-	head: () => {
+	head: ({ match }) => {
 		const { meta, links } = generateMetadata({
 			title: "Luyện tập TOEIC",
 			description:
@@ -19,12 +19,17 @@ export const Route = createFileRoute("/_protected/app/_dashboard/practices/")({
 				"luyện TOEIC part 1-7",
 				"bài tập TOEIC",
 			],
+			...createOpenGraphData(
+				"Luyện tập TOEIC | TrekToeic",
+				"Luyện tập TOEIC theo từng phần - Listening và Reading. Chọn phần cụ thể để tập trung luyện tập và nâng cao kỹ năng TOEIC của bạn.",
+				match.pathname,
+			),
 			robots: {
 				index: false,
 				follow: false,
 			},
 			alternates: {
-				canonical: "/app/practices",
+				canonical: match.pathname,
 			},
 		});
 

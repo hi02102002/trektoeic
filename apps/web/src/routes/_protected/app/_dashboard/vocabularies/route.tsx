@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { generateMetadata } from "@/lib/meta";
+import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 
 export const Route = createFileRoute("/_protected/app/_dashboard/vocabularies")(
 	{
 		component: RouteComponent,
-		head: () => {
+		head: ({ match }) => {
 			const { meta, links } = generateMetadata({
 				title: "Từ vựng TOEIC",
 				description:
@@ -16,12 +16,17 @@ export const Route = createFileRoute("/_protected/app/_dashboard/vocabularies")(
 					"từ vựng theo chủ đề TOEIC",
 					"từ vựng cần thiết TOEIC",
 				],
+				...createOpenGraphData(
+					"Từ vựng TOEIC | TrekToeic",
+					"Học từ vựng TOEIC quan trọng theo chủ đề. Nắm vững vốn từ vựng cần thiết để đạt điểm cao trong kỳ thi TOEIC.",
+					match.pathname,
+				),
 				robots: {
 					index: false,
 					follow: false,
 				},
 				alternates: {
-					canonical: "/app/vocabularies",
+					canonical: match.pathname,
 				},
 			});
 

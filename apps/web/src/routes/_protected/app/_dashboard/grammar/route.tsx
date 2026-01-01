@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { generateMetadata } from "@/lib/meta";
+import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 
 export const Route = createFileRoute("/_protected/app/_dashboard/grammar")({
 	component: RouteComponent,
-	head: () => {
+	head: ({ match }) => {
 		const { meta, links } = generateMetadata({
 			title: "Ngữ pháp TOEIC",
 			description:
@@ -15,12 +15,17 @@ export const Route = createFileRoute("/_protected/app/_dashboard/grammar")({
 				"cấu trúc ngữ pháp TOEIC",
 				"ngữ pháp cơ bản TOEIC",
 			],
+			...createOpenGraphData(
+				"Ngữ pháp TOEIC | TrekToeic",
+				"Học ngữ pháp TOEIC cơ bản đến nâng cao. Nắm vững các cấu trúc ngữ pháp quan trọng để đạt điểm cao.",
+				match.pathname,
+			),
 			robots: {
 				index: false,
 				follow: false,
 			},
 			alternates: {
-				canonical: "/app/grammar",
+				canonical: match.pathname,
 			},
 		});
 
