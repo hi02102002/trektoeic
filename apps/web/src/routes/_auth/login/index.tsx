@@ -3,11 +3,28 @@
 import { CaretLeftIcon } from "@phosphor-icons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { buttonVariants } from "@/components/ui/button";
+import { generateMetadata } from "@/lib/meta";
 import { cn } from "@/lib/utils";
 import { LoginForm } from "./_components/login-form";
 
 export const Route = createFileRoute("/_auth/login/")({
 	component: RouteComponent,
+	head: () => {
+		const { meta, links } = generateMetadata({
+			title: "Đăng nhập",
+			description:
+				"Đăng nhập vào TrekToeic để tiếp tục hành trình chinh phục TOEIC của bạn. Truy cập các bài luyện tập, đề thi thử và theo dõi tiến độ học tập.",
+			robots: {
+				index: false,
+				follow: false,
+			},
+			alternates: {
+				canonical: "/login",
+			},
+		});
+
+		return { meta, links };
+	},
 });
 
 function RouteComponent() {
@@ -30,7 +47,7 @@ function RouteComponent() {
 				<div className="sm:mx-auto sm:w-full sm:max-w-sm">
 					<div className="mb-4">
 						<h2 className="text-center font-semibold text-foreground text-xl">
-							Chào mừng bạn đến với TrekToiec!
+							Chào mừng bạn đến với TrekToeic!
 						</h2>
 						<p className="mt-2 text-center text-muted-foreground text-sm">
 							Đăng nhập để tiếp tục đến với hành trình chinh phục TOEIC của bạn.

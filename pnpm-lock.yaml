@@ -306,6 +306,9 @@ importers:
       tailwindcss:
         specifier: ^4.1.3
         version: 4.1.18
+      tanstack-meta:
+        specifier: ^0.6.1
+        version: 0.6.1
       tw-animate-css:
         specifier: ^1.2.5
         version: 1.4.0
@@ -5898,6 +5901,9 @@ packages:
 
   tailwindcss@4.1.18:
     resolution: {integrity: sha512-4+Z+0yiYyEtUVCScyfHCxOYP06L5Ne+JiHhY2IjR2KWMIWhJOYZKLSGZaP5HkZ8+bY0cxfzwDE5uOmzFXyIwxw==}
+
+  tanstack-meta@0.6.1:
+    resolution: {integrity: sha512-8i2nz4frJSpcVnIPv0D/0tmnBlCL7XVaNThb01PrTmYlfxRvT/ZLzdM4XJKhaxQbhW4CUOvDgl1VIfMenJXM0w==}
 
   tapable@2.3.0:
     resolution: {integrity: sha512-g9ljZiwki/LfxmQADO3dEY1CbpmXT5Hm2fJ+QaGKwSXUylMybePR7/67YW7jOrrvjEgL1Fmz5kzyAjWVWLlucg==}
@@ -11680,6 +11686,8 @@ snapshots:
   tailwind-merge@3.4.0: {}
 
   tailwindcss@4.1.18: {}
+
+  tanstack-meta@0.6.1: {}
 
   tapable@2.3.0: {}
 

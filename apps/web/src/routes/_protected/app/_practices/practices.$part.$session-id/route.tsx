@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import z from "zod";
 import { Header } from "@/components/practices/header";
+import { generateMetadata } from "@/lib/meta";
 import {
 	AnswersProvider,
 	CurrentQuestionProvider,
@@ -36,6 +37,21 @@ export const Route = createFileRoute(
 		);
 
 		return { questions };
+	},
+	head: ({ params }) => {
+		const { meta, links } = generateMetadata({
+			title: `Bài luyện tập Phần ${params.part}`,
+			description: `Luyện tập TOEIC Phần ${params.part} với các câu hỏi được chọn lọc kỹ càng. Nâng cao kỹ năng và đạt điểm cao trong kỳ thi TOEIC.`,
+			robots: {
+				index: false,
+				follow: false,
+			},
+			alternates: {
+				canonical: `/app/practices/${params.part}/${params["session-id"]}`,
+			},
+		});
+
+		return { meta, links };
 	},
 	component: RouteComponent,
 });

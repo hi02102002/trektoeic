@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
@@ -29,6 +30,11 @@ import { Route as ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
 import { Route as ProtectedAppPracticesPracticesPartSessionIdRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/route'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProtectedRoute = ProtectedRouteImport.update({
   id: '/_protected',
   getParentRoute: () => rootRouteImport,
@@ -132,6 +138,7 @@ const ProtectedAppPracticesPracticesPartSessionIdRouteRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/$': typeof ApiSplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
   '/app': typeof ProtectedAppDashboardIndexRouteRoute
@@ -148,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdRouteRoute
 }
 export interface FileRoutesByTo {
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/$': typeof ApiSplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
   '/app': typeof ProtectedAppDashboardIndexRouteRoute
@@ -167,6 +175,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteWithChildren
   '/_protected': typeof ProtectedRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/(marketing)/_marketing': typeof marketingMarketingRouteWithChildren
   '/api/$': typeof ApiSplatRoute
   '/(marketing)/_marketing/': typeof marketingMarketingIndexRouteRoute
@@ -188,6 +197,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/sitemap.xml'
     | '/api/$'
     | '/about'
     | '/app'
@@ -204,6 +214,7 @@ export interface FileRouteTypes {
     | '/app/practices/$part/$session-id'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/sitemap.xml'
     | '/api/$'
     | '/about'
     | '/app'
@@ -222,6 +233,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_auth'
     | '/_protected'
+    | '/sitemap.xml'
     | '/(marketing)/_marketing'
     | '/api/$'
     | '/(marketing)/_marketing/'
@@ -244,6 +256,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   AuthRoute: typeof AuthRouteWithChildren
   ProtectedRoute: typeof ProtectedRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   marketingMarketingRoute: typeof marketingMarketingRouteWithChildren
   ApiSplatRoute: typeof ApiSplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
@@ -254,6 +267,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_protected': {
       id: '/_protected'
       path: ''
@@ -459,6 +479,7 @@ const marketingMarketingRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRouteWithChildren,
   ProtectedRoute: ProtectedRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   marketingMarketingRoute: marketingMarketingRouteWithChildren,
   ApiSplatRoute: ApiSplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,

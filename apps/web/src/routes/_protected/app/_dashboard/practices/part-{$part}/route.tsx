@@ -7,6 +7,7 @@ import { PartInstructions } from "@/components/part-instructions";
 import { ProTips } from "@/components/pro-tips";
 import { TsrBreadcrumbs } from "@/components/tsr-breadcrumbs";
 import { MAP_PART } from "@/constants";
+import { generateMetadata } from "@/lib/meta";
 import { orpc } from "@/utils/orpc";
 import { ConfigSession } from "./_components/config-session";
 import { CurrentProgress } from "./_components/current-progress";
@@ -30,6 +31,36 @@ export const Route = createFileRoute(
 		);
 
 		return { partSection };
+	},
+	head: ({ loaderData }) => {
+		if (!loaderData) {
+			return { meta: [], links: [] };
+		}
+
+		const { partSection } = loaderData;
+		const part = partSection.part;
+		const partTitle = partSection.titleVi || `Phần ${part}`;
+		const { desc } = MAP_PART[`${part}` as "1"];
+
+		const { meta, links } = generateMetadata({
+			title: `Luyện tập ${partTitle}`,
+			description: `${desc} Luyện tập ${partTitle} TOEIC với các bài tập chất lượng cao, theo dõi tiến độ và nhận phản hồi chi tiết.`,
+			keywords: [
+				`TOEIC ${partTitle}`,
+				`luyện tập ${partTitle}`,
+				`bài tập ${partTitle} TOEIC`,
+				`TOEIC part ${part}`,
+			],
+			robots: {
+				index: false,
+				follow: false,
+			},
+			alternates: {
+				canonical: `/app/practices/part-${part}`,
+			},
+		});
+
+		return { meta, links };
 	},
 });
 
