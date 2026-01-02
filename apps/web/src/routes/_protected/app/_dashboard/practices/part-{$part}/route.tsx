@@ -11,6 +11,7 @@ import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { orpc } from "@/utils/orpc";
 import { ConfigSession } from "./_components/config-session";
 import { CurrentProgress } from "./_components/current-progress";
+import { getTime } from "@trektoeic/utils/get-time";
 
 export const Route = createFileRoute(
 	"/_protected/app/_dashboard/practices/part-{$part}",
@@ -71,6 +72,9 @@ export const Route = createFileRoute(
 		"Cache-Control":
 			"public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
 		"CDN-Cache-Control": "max-age=3600",
+	}),
+	staleTime: getTime({
+		hours: 1,
 	}),
 });
 

@@ -97,7 +97,8 @@
 		"vite-plugin-barrel": "^0.4.1",
 		"vite-tsconfig-paths": "^5.1.4",
 		"zod": "^4.1.13",
-		"zustand": "^5.0.9"
+		"zustand": "^5.0.9",
+		"@trektoeic/env": "workspace:*"
 	},
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.19",

@@ -2,16 +2,22 @@ import { createEnv } from "@t3-oss/env-core";
 import { config } from "dotenv";
 import { z } from "zod";
 
-const getEnvPath = () => {
-	if (process.env.NODE_ENV === "production") {
-		return "../../apps/web/.env";
-	}
-	return "../../apps/web/.env.local";
-};
+if (
+	typeof process !== "undefined" &&
+	process.versions != null &&
+	process.versions.node != null
+) {
+	const getEnvPath = () => {
+		if (process.env.NODE_ENV === "production") {
+			return "../../apps/web/.env";
+		}
+		return "../../apps/web/.env.local";
+	};
 
-config({
-	path: getEnvPath(),
-});
+	config({
+		path: getEnvPath(),
+	});
+}
 
 export const env = createEnv({
 	server: {
@@ -80,6 +86,9 @@ export const env = createEnv({
 		UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
 	},
 	clientPrefix: "VITE_",
-	client: {},
-	runtimeEnv: process.env,
+	client: {
+		VITE_BASE_URL: z.string().optional().default("http://localhost:3000"),
+	},
+	runtimeEnv:
+		typeof process !== "undefined" ? process.env : (import.meta as any).env,
 });

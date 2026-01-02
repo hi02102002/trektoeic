@@ -204,6 +204,9 @@ importers:
       '@trektoeic/auth':
         specifier: workspace:*
         version: link:../../packages/auth
+      '@trektoeic/env':
+        specifier: workspace:*
+        version: link:../../packages/env
       '@trektoeic/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas

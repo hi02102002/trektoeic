@@ -135,9 +135,11 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 
 function RootDocument() {
 	useMount(() => {
-		scan({
-			enabled: true,
-		});
+		if (import.meta.env.DEV) {
+			scan({
+				enabled: true,
+			});
+		}
 	});
 
 	return (
