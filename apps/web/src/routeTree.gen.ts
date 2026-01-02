@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as OgDotpngRouteImport } from './routes/og[.]png'
 import { Route as ProtectedRouteImport } from './routes/_protected'
 import { Route as AuthRouteImport } from './routes/_auth'
+import { Route as ProxySplatRouteImport } from './routes/proxy/$'
 import { Route as ApiSplatRouteImport } from './routes/api/$'
 import { Route as marketingMarketingRouteImport } from './routes/(marketing)/_marketing'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
@@ -48,6 +49,11 @@ const ProtectedRoute = ProtectedRouteImport.update({
 } as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProxySplatRoute = ProxySplatRouteImport.update({
+  id: '/proxy/$',
+  path: '/proxy/$',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiSplatRoute = ApiSplatRouteImport.update({
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/og.png': typeof OgDotpngRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/$': typeof ApiSplatRoute
+  '/proxy/$': typeof ProxySplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
   '/app': typeof ProtectedAppDashboardIndexRouteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/og.png': typeof OgDotpngRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/api/$': typeof ApiSplatRoute
+  '/proxy/$': typeof ProxySplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
   '/app': typeof ProtectedAppDashboardIndexRouteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -198,6 +206,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/(marketing)/_marketing': typeof marketingMarketingRouteWithChildren
   '/api/$': typeof ApiSplatRoute
+  '/proxy/$': typeof ProxySplatRoute
   '/(marketing)/_marketing/': typeof marketingMarketingIndexRouteRoute
   '/(marketing)/_marketing/about': typeof marketingMarketingAboutRouteRoute
   '/_protected/app/_dashboard': typeof ProtectedAppDashboardRouteWithChildren
@@ -221,6 +230,7 @@ export interface FileRouteTypes {
     | '/og.png'
     | '/sitemap.xml'
     | '/api/$'
+    | '/proxy/$'
     | '/about'
     | '/app'
     | '/api/auth/$'
@@ -240,6 +250,7 @@ export interface FileRouteTypes {
     | '/og.png'
     | '/sitemap.xml'
     | '/api/$'
+    | '/proxy/$'
     | '/about'
     | '/app'
     | '/api/auth/$'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/(marketing)/_marketing'
     | '/api/$'
+    | '/proxy/$'
     | '/(marketing)/_marketing/'
     | '/(marketing)/_marketing/about'
     | '/_protected/app/_dashboard'
@@ -287,6 +299,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   marketingMarketingRoute: typeof marketingMarketingRouteWithChildren
   ApiSplatRoute: typeof ApiSplatRoute
+  ProxySplatRoute: typeof ProxySplatRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiRpcSplatRoute: typeof ApiRpcSplatRoute
   ApiUploadBackblazeRoute: typeof ApiUploadBackblazeRoute
@@ -321,6 +334,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/proxy/$': {
+      id: '/proxy/$'
+      path: '/proxy/$'
+      fullPath: '/proxy/$'
+      preLoaderRoute: typeof ProxySplatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/$': {
@@ -528,6 +548,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   marketingMarketingRoute: marketingMarketingRouteWithChildren,
   ApiSplatRoute: ApiSplatRoute,
+  ProxySplatRoute: ProxySplatRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiRpcSplatRoute: ApiRpcSplatRoute,
   ApiUploadBackblazeRoute: ApiUploadBackblazeRoute,

@@ -11,6 +11,7 @@ import {
 	useMemo,
 } from "react";
 import { cn } from "@/lib/utils";
+import { getProxiedAudioUrl, getProxiedImageUrl } from "@/utils/proxy-image";
 import { iconBadgeVariants } from "./icon-badge";
 import { ImageZoom } from "./kibo-ui/image-zoom";
 import { QuestionOption } from "./question-option";
@@ -153,7 +154,7 @@ const QuestionAudioContent = ({ onComplete }: { onComplete?: () => void }) => {
 	useMount(() => {
 		player.play({
 			id: question.id,
-			src: question?.audioUrl as string,
+			src: getProxiedAudioUrl(question?.audioUrl) as string,
 		});
 	});
 
@@ -194,7 +195,7 @@ export const QuestionImage = () => {
 			<img
 				alt={`Hình ảnh cho câu hỏi ${question.id}`}
 				className="mx-auto h-80 w-auto rounded-md object-contain"
-				src={question.imageUrl}
+				src={getProxiedImageUrl(question.imageUrl)}
 			/>
 		</ImageZoom>
 	);

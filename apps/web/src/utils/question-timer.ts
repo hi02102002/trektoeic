@@ -32,7 +32,7 @@ export class QuestionTimer {
 		if (!timer || timer.answered) return;
 
 		const now = Date.now();
-		const additionalTime = Math.floor((now - timer.startTime) / 1000);
+		const additionalTime = now - timer.startTime;
 		this.questionTimers.set(questionId, {
 			startTime: timer.startTime,
 			elapsed: timer.elapsed + additionalTime,
@@ -49,7 +49,7 @@ export class QuestionTimer {
 
 		if (this.currentQuestionId === questionId) {
 			const now = Date.now();
-			const additionalTime = Math.floor((now - timer.startTime) / 1000);
+			const additionalTime = now - timer.startTime;
 			this.questionTimers.set(questionId, {
 				startTime: timer.startTime,
 				elapsed: timer.elapsed + additionalTime,
@@ -75,7 +75,7 @@ export class QuestionTimer {
 
 		if (this.currentQuestionId === questionId) {
 			const now = Date.now();
-			const ongoingTime = Math.floor((now - timer.startTime) / 1000);
+			const ongoingTime = now - timer.startTime;
 			return timer.elapsed + ongoingTime;
 		}
 
@@ -91,7 +91,7 @@ export class QuestionTimer {
 	}
 
 	getTotalSessionTime(): number {
-		return Math.floor((Date.now() - this.sessionStartTime) / 1000);
+		return Date.now() - this.sessionStartTime;
 	}
 
 	reset(): void {
@@ -104,7 +104,7 @@ export class QuestionTimer {
 		const times = Object.values(this.getAllQuestionTimes());
 		if (times.length === 0) return 0;
 		const total = times.reduce((sum, time) => sum + time, 0);
-		return Math.floor(total / times.length);
+		return total / times.length;
 	}
 }
 

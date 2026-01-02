@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useMount } from "ahooks";
 import z from "zod";
 import { Header } from "@/components/practices/header";
 import { generateMetadata } from "@/lib/meta";
@@ -7,6 +8,7 @@ import {
 	CurrentQuestionProvider,
 	QuestionTimerProvider,
 } from "@/stores/attempt";
+import { prefetchQuestionMedia } from "@/utils/prefetch-media";
 import { ExitPracticeDialog } from "./_components/exit-practice-dialog";
 import { PracticeActions } from "./_components/practice-actions";
 import { PracticeQuestionsList } from "./_components/practice-questions-list";
@@ -59,6 +61,10 @@ export const Route = createFileRoute(
 function RouteComponent() {
 	const { part } = Route.useParams();
 	const { questions } = Route.useLoaderData();
+
+	useMount(() => {
+		prefetchQuestionMedia(questions);
+	});
 
 	return (
 		<CurrentQuestionProvider

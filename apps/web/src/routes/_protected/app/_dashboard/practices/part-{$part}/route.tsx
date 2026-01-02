@@ -1,6 +1,7 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import type { Part } from "@trektoeic/schemas/part-section-schema";
+import { getTime } from "@trektoeic/utils/get-time";
 import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
 import { PartInstructions } from "@/components/part-instructions";
@@ -11,7 +12,6 @@ import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { orpc } from "@/utils/orpc";
 import { ConfigSession } from "./_components/config-session";
 import { CurrentProgress } from "./_components/current-progress";
-import { getTime } from "@trektoeic/utils/get-time";
 
 export const Route = createFileRoute(
 	"/_protected/app/_dashboard/practices/part-{$part}",
