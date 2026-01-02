@@ -67,6 +67,11 @@ export const Route = createFileRoute(
 
 		return { meta, links };
 	},
+	headers: () => ({
+		"Cache-Control":
+			"public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400",
+		"CDN-Cache-Control": "max-age=3600",
+	}),
 });
 
 function RouteComponent() {

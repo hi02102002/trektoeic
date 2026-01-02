@@ -84,6 +84,7 @@ export const Route = createFileRoute("/og.png")({
 					headers: {
 						"Content-Type": "image/png",
 						"Cache-Control": "public, max-age=31536000, immutable",
+						"CDN-Cache-Control": "max-age=31536000",
 					},
 				});
 			},

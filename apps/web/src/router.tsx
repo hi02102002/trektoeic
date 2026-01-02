@@ -34,6 +34,7 @@ export const getRouter = () => {
 			user: null,
 		},
 		defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
+		defaultPreload: "intent",
 	});
 
 	const routerWithquery = routerWithQueryClient(router, queryClient);
