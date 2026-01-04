@@ -17,11 +17,21 @@ export const Logo = ({
 	return (
 		<div
 			className={cn(
-				"flex items-start gap-1 font-semibold text-lg text-primary uppercase",
+				"flex items-center gap-2 font-semibold text-lg text-primary uppercase",
 				classNames?.container,
 				className,
 			)}
 		>
+			{!isShowText && (
+				<div
+					className={cn(
+						"flex size-8 items-center justify-center rounded-md bg-primary text-primary-foreground",
+						classNames?.icon,
+					)}
+				>
+					<span className="font-bold text-base">T</span>
+				</div>
+			)}
 			{isShowText && (
 				<span>
 					<span>Trek</span>

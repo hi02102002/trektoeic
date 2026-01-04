@@ -63,17 +63,11 @@ export function DashboardSidebar() {
 				className={cn(
 					"flex",
 					isCollapsed
-						? "flex-row items-center justify-between gap-y-4 md:flex-col md:items-center md:justify-center"
+						? "flex-row items-center justify-center gap-y-4 md:flex-col md:items-center md:justify-center"
 						: "flex-row items-center justify-between",
 				)}
 			>
-				<Logo
-					isShowText={!isCollapsed}
-					classNames={{
-						container: "items-start",
-						icon: "hidden",
-					}}
-				/>
+				<Logo isShowText={!isCollapsed} />
 			</SidebarHeader>
 			<SidebarContent className="gap-4 px-2 py-4">
 				<DashboardNavigation routes={dashboardRoutes} />

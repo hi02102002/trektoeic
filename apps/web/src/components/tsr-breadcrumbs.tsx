@@ -9,6 +9,7 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "./ui/breadcrumb";
+import { SidebarTrigger } from "./ui/sidebar";
 
 type Props = {
 	breadcrumbs: Array<
@@ -23,6 +24,7 @@ export const TsrBreadcrumbs = ({ breadcrumbs, className }: Props) => {
 	return (
 		<Breadcrumb className={cn(className)}>
 			<BreadcrumbList>
+				<SidebarTrigger />
 				{breadcrumbs.map((bc, index, arr) => {
 					const isLast = index === arr.length - 1;
 					return (
