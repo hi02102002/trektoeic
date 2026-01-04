@@ -4,17 +4,25 @@ import {
 	type ButtonNavigatorStatus,
 	Navigator,
 } from "@/components/practices/navigator";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useAnswers, useCurrentQuestion } from "@/stores/attempt";
 import { ResultMainScore } from "./result-main-score";
 import { ResultTimeStats } from "./result-time-stats";
 
 const PART_HAVE_MULTIPLE_SUBS = new Set([3, 4, 6, 7]);
+const SCROLL_DELAY_MS = 100;
 
 const Route = getRouteApi(
 	"/_protected/app/_practices/practices/$part/$session-id/results/",
 );
 
-export const QuestionsNavigator = () => {
+export const QuestionsNavigator = ({
+	isOpen,
+	onOpenChange,
+}: {
+	isOpen: boolean;
+	onOpenChange: (open: boolean) => void;
+}) => {
 	const gotoQuestion = useCurrentQuestion((s) => s.goto);
 	const setSubQuestionIdx = useCurrentQuestion((s) => s.setSubQuestionIdx);
 	const { questions } = Route.useLoaderData();
@@ -87,27 +95,56 @@ export const QuestionsNavigator = () => {
 		];
 	}, [part, questions]);
 
-	return (
-		<Navigator
-			mappedQuestions={mappedQuestions}
-			groupedQuestions={groupedQuestions}
-			onQuestionClick={({ pIdx, idx, questionId }) => {
-				gotoQuestion(pIdx);
-				setSubQuestionIdx(idx);
-				setTimeout(() => {
-					const el = document.getElementById(`question-sub-${questionId}`);
+	const handleQuestionClick = ({
+		pIdx,
+		idx,
+		questionId,
+	}: {
+		pIdx: number;
+		idx: number;
+		questionId: string;
+	}) => {
+		gotoQuestion(pIdx);
+		setSubQuestionIdx(idx);
+		onOpenChange(false);
+		setTimeout(() => {
+			const el = document.getElementById(`question-sub-${questionId}`);
+			el?.scrollIntoView({ behavior: "smooth", block: "center" });
+		}, SCROLL_DELAY_MS);
+	};
 
-					el?.scrollIntoView({ behavior: "smooth", block: "center" });
-				}, 100);
-			}}
-			className="fixed top-16 h-screen overflow-y-auto border-input border-r"
-			mode="result"
-			extra={
-				<>
-					<ResultMainScore />
-					<ResultTimeStats />
-				</>
-			}
-		/>
+	return (
+		<>
+			<Navigator
+				mappedQuestions={mappedQuestions}
+				groupedQuestions={groupedQuestions}
+				onQuestionClick={handleQuestionClick}
+				className="fixed top-16 h-screen overflow-y-auto border-input border-r"
+				mode="result"
+				extra={
+					<>
+						<ResultMainScore />
+						<ResultTimeStats />
+					</>
+				}
+			/>
+			<Sheet open={isOpen} onOpenChange={onOpenChange}>
+				<SheetContent side="left" className="w-64 p-0 sm:w-64 xl:hidden">
+					<Navigator
+						mappedQuestions={mappedQuestions}
+						groupedQuestions={groupedQuestions}
+						onQuestionClick={handleQuestionClick}
+						className="flex h-full"
+						mode="result"
+						extra={
+							<>
+								<ResultMainScore />
+								<ResultTimeStats />
+							</>
+						}
+					/>
+				</SheetContent>
+			</Sheet>
+		</>
 	);
 };

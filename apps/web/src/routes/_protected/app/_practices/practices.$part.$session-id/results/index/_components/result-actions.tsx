@@ -1,9 +1,9 @@
+import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
 
-
-export const PracticeActions = () => {
+export const ResultActions = () => {
 	const [isPending, startTransition] = useTransition();
 
 	const handleRetry = () => {
@@ -15,8 +15,13 @@ export const PracticeActions = () => {
 	return (
 		<>
 			<div className="flex items-center gap-2">
-				<Button variant="default" size="sm" onClick={handleRetry}>
-					Làm lại bài
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={handleRetry}
+					leadingIcon={<ArrowCounterClockwiseIcon />}
+				>
+					Làm lại
 				</Button>
 			</div>
 			<LoadingOverlay open={isPending} message="Bạn chờ chút nhé..." />

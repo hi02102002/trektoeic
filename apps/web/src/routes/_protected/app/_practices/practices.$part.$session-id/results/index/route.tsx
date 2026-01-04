@@ -1,4 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { Header } from "@/components/practices/header";
 import { generateMetadata } from "@/lib/meta";
 import {
@@ -8,8 +9,8 @@ import {
 } from "@/stores/attempt";
 import { QuestionsNavigator } from "./_components/questions-navigator";
 import { ResultActionBar } from "./_components/result-action-bar";
+import { ResultActions } from "./_components/result-actions";
 import { ResultQuestionsList } from "./_components/result-questions-list";
-import { ResultTimer } from "./_components/result-timer";
 
 export const Route = createFileRoute(
 	"/_protected/app/_practices/practices/$part/$session-id/results/",
@@ -50,6 +51,7 @@ export const Route = createFileRoute(
 function RouteComponent() {
 	const { part } = Route.useParams();
 	const { questions, history } = Route.useLoaderData();
+	const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
 
 	return (
 		<CurrentQuestionProvider
@@ -85,12 +87,16 @@ function RouteComponent() {
 			>
 				<Header
 					title={`Part ${part}`}
-					timer={<ResultTimer />}
-					className="fixed top-0 right-0 left-0"
+					className="fixed top-0 right-0 left-0 z-40"
+					onNavigatorToggle={() => setIsNavigatorOpen(true)}
+					action={<ResultActions />}
 				/>
 				<div className="flex flex-col pt-16">
-					<QuestionsNavigator />
-					<div className="ml-64">
+					<QuestionsNavigator
+						isOpen={isNavigatorOpen}
+						onOpenChange={setIsNavigatorOpen}
+					/>
+					<div className="xl:ml-64">
 						<ResultQuestionsList />
 					</div>
 				</div>

@@ -1,7 +1,7 @@
+import { sql } from "drizzle-orm";
 import { index, jsonb, pgTable, text, varchar } from "drizzle-orm/pg-core";
 import { DEFAULT_SCHEMA } from "../constants";
 import { user } from "./auth";
-import { sql } from "drizzle-orm";
 
 export const history = pgTable(
 	"histories",

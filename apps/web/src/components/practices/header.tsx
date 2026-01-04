@@ -42,13 +42,13 @@ export const Header = ({
 			)}
 		>
 			<div className="flex items-center gap-2 sm:gap-4">
-				<Button size="icon-sm" variant="outline" onClick={handleGoBack}>
+				<Button size="icon" variant="outline" onClick={handleGoBack}>
 					<span className="sr-only">Trở lại</span>
 					<CaretLeftIcon />
 				</Button>
 				{onNavigatorToggle && (
 					<Button
-						size="icon-sm"
+						size="icon"
 						variant="outline"
 						onClick={onNavigatorToggle}
 						className="xl:hidden"
