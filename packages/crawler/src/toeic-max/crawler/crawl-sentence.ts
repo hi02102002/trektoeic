@@ -1,9 +1,10 @@
+import { db } from "@trektoeic/db";
 import { getToken } from "@trektoeic/db/queries/toiec-max-tokens/get-token";
 import { callApi } from "../api";
 import { writeToFile } from "../utils";
 
 export async function getListIdsOfSentences(token?: string) {
-	const _token = token || (await getToken()());
+	const _token = token || (await getToken(db)());
 	let page = 1;
 	let total_pages = 1;
 
@@ -37,7 +38,7 @@ export async function getListIdsOfSentences(token?: string) {
 }
 
 export async function getSentenceDetail(id: number, token?: string) {
-	const _token = token || (await getToken()());
+	const _token = token || (await getToken(db)());
 
 	const res = await callApi({
 		method: "GET",
@@ -53,7 +54,7 @@ export async function getSentenceDetail(id: number, token?: string) {
 }
 
 export async function getAllSentences() {
-	const token = await getToken()();
+	const token = await getToken(db)();
 
 	if (!token) {
 		return;

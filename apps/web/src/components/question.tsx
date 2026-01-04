@@ -376,15 +376,15 @@ export const QuestionSubOptions = ({
 				return false;
 			}
 
-			if (!internal) {
-				return false;
-			}
-
-			if (!internal.choice) {
-				return false;
-			}
-
 			if (!sub.ans) {
+				return false;
+			}
+
+			if (mode === "review") {
+				return choice.startsWith(sub.ans);
+			}
+
+			if (!internal?.choice) {
 				return false;
 			}
 
@@ -459,11 +459,13 @@ export const QuestionSubOptions = ({
 				choice: optionKey,
 				questionId: question.id,
 				subQuestionId: sub.id,
+				isCorrect: optionKey === sub.ans,
 			});
 		}
 	};
 
-	const isChecked = mode === "practice" && !!internal?.choice;
+	const isChecked =
+		mode === "review" || (mode === "practice" && !!internal?.choice);
 
 	return (
 		<ul className="space-y-1">

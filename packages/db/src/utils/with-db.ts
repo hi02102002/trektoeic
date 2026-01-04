@@ -1,4 +1,4 @@
-import { type Database, db } from "../db";
+import type { Database } from "../db";
 
 /**
  * Higher-order function that creates a curried function with database dependency injection.
@@ -23,7 +23,7 @@ export const withDb =
 	<TArgs extends unknown[], TReturn>(
 		fn: (db: Database) => (...args: TArgs) => TReturn,
 	) =>
-	(database: Database = db) =>
+	(database: Database) =>
 		fn(database);
 
 /**
@@ -51,9 +51,9 @@ export const withDbAndUser =
 			db,
 			userId,
 		}: {
-			db?: Database;
+			db: Database;
 			userId: string;
 		}) => (...args: TArgs) => TReturn,
 	) =>
-	(userId: string, database: Database = db) =>
+	(userId: string, database: Database) =>
 		fn({ db: database, userId });

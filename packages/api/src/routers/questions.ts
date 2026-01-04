@@ -11,8 +11,10 @@ const getTotalQuestionsEachPart = requiredAuthProcedure
 		tags,
 	})
 	.output(z.array(z.object({ part: z.number(), totalQuestions: z.number() })))
-	.handler(async () => {
-		const result = await questionsQueries.getTotalQuestionsEachPart()();
+	.handler(async ({ context }) => {
+		const result = await questionsQueries.getTotalQuestionsEachPart(
+			context.db,
+		)();
 
 		return result;
 	});

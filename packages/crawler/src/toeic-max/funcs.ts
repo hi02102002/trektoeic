@@ -1,10 +1,11 @@
+import { db } from "@trektoeic/db";
 import { getToken } from "@trektoeic/db/queries/toiec-max-tokens/get-token";
 import { upsertToken } from "@trektoeic/db/queries/toiec-max-tokens/upsert-token";
 import { callApi, publicApi } from "./api";
 import { RECORD_TO_REGISTER } from "./constants";
 
 export const deleteAccount = async () => {
-	const token = await getToken()();
+	const token = await getToken(db)();
 
 	if (!token) {
 		return;
@@ -51,11 +52,11 @@ export const loginAccount = async () => {
 		return;
 	}
 
-	await upsertToken()(token);
+	await upsertToken(db)(token);
 };
 
 export const registerCourse = async (courseId: number) => {
-	const token = await getToken()();
+	const token = await getToken(db)();
 
 	if (!token) {
 		return;

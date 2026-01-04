@@ -2,7 +2,7 @@ import { createContext, use, useRef } from "react";
 import { createStore, useStore } from "zustand";
 import { useShallow } from "zustand/shallow";
 
-type Answer = {
+export type Answer = {
 	choice: string;
 	isCorrect: boolean;
 	isFlagged?: boolean;
@@ -25,10 +25,12 @@ const defaultSelector = <T,>(s: T) => s;
 
 const createAnswersStore = (
 	questions: { id: string; subs: { id: string }[] }[],
+	initialAnswers?: Record<string, Answer>,
 ) => {
 	const answers = questions.reduce<Record<string, Answer>>((acc, question) => {
 		question.subs.forEach((sub) => {
-			acc[sub.id] = {
+			const existingAnswer = initialAnswers?.[sub.id];
+			acc[sub.id] = existingAnswer ?? {
 				choice: "",
 				isCorrect: false,
 				isFlagged: false,
@@ -74,14 +76,16 @@ const AnswersContext = createContext<ReturnType<
 export const AnswersProvider = ({
 	children,
 	questions,
+	initialAnswers,
 }: {
 	children: React.ReactNode;
 	questions: { id: string; subs: { id: string }[] }[];
+	initialAnswers?: Record<string, Answer>;
 }) => {
 	const storeRef = useRef<ReturnType<typeof createAnswersStore> | null>(null);
 
 	if (!storeRef.current) {
-		storeRef.current = createAnswersStore(questions);
+		storeRef.current = createAnswersStore(questions, initialAnswers);
 	}
 
 	return (

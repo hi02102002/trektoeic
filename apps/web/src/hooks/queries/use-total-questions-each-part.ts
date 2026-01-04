@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { getTime } from "@trektoeic/utils/get-time";
 import { orpc } from "@/utils/orpc";
 
 export const useTotalQuestionsEachPart = () => {
@@ -13,6 +14,7 @@ export const useTotalQuestionsEachPart = () => {
 					{} as Record<string, number>,
 				);
 			},
+			staleTime: getTime({ hours: 1 }),
 		}),
 	);
 };

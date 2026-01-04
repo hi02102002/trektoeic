@@ -2,6 +2,7 @@ import { InsertOrUpdateResult } from "@trektoeic/schemas/db";
 import {
 	type InputPartPracticeHistory,
 	PartPracticeContentSchema,
+	PartPracticeHistorySchema,
 } from "@trektoeic/schemas/part-practice-schema";
 import { and, eq, sql } from "drizzle-orm";
 import z from "zod";
@@ -70,7 +71,47 @@ const createPartPracticeHistory = withDbAndUser(
 		},
 );
 
+const getPartPracticeHistoryById = withDbAndUser(
+	({ db, userId }) =>
+		async (id: string) => {
+			const record = await db
+				?.select()
+				.from(history)
+				.where(
+					and(
+						eq(history.id, id),
+						eq(history.userId, userId),
+						eq(history.action, "practice_part"),
+					),
+				)
+				.limit(1)
+				.then((r) => r?.[0]);
+
+			if (!record) {
+				return null;
+			}
+
+			const contents = z
+				.array(PartPracticeContentSchema)
+				.parse(record.contents);
+
+			if (contents.length === 0) {
+				return null;
+			}
+
+			const questions = await questionsQueries.getQuestionsByIds(db)(
+				contents.map((c) => c.questionId),
+			);
+
+			return {
+				history: PartPracticeHistorySchema.parse(record),
+				questions,
+			};
+		},
+);
+
 export const partPracticesQueries = {
 	getPartPractices,
 	createPartPracticeHistory,
+	getPartPracticeHistoryById,
 };

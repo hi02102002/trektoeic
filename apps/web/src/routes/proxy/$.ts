@@ -27,8 +27,7 @@ export const Route = createFileRoute("/proxy/$")({
 
 					const mediaBuffer = await response.arrayBuffer();
 					const contentType =
-						response.headers.get("content-type") ||
-						"application/octet-stream";
+						response.headers.get("content-type") || "application/octet-stream";
 
 					return new Response(mediaBuffer, {
 						status: 200,

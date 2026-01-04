@@ -16,6 +16,11 @@ export const PartPracticeMetadataSchema = z.object({
 	mode: PartPracticeModeSchema,
 	duration: z.number().nullable().optional(),
 	numberOfQuestions: z.number(),
+	numberOfCorrectQuestions: z.number().nullable().optional(),
+	numberOfWrongQuestions: z.number().nullable().optional(),
+	numberOfUnansweredQuestions: z.number().nullable().optional(),
+	avgTimePerQuestion: z.number().nullable().optional(),
+	performancePercentile: z.number().nullable().optional(),
 });
 
 export const PartPracticeHistorySchema = z.object({

@@ -16,10 +16,12 @@ const getPartSection = requiredAuthProcedure
 		}),
 	)
 	.output(PartSectionSchema)
-	.handler(async ({ input }) => {
+	.handler(async ({ input, context }) => {
 		const { part } = input;
 
-		const section = await partSectionsQueries.getPartSectionByPart()(part);
+		const section = await partSectionsQueries.getPartSectionByPart(context.db)(
+			part,
+		);
 
 		return PartSectionSchema.parse(section);
 	});

@@ -23,7 +23,6 @@ export function QuestionOption({
 	disabled = false,
 }: QuestionOptionProps) {
 	const getOptionStyles = () => {
-		// After checking: show correct (green) or wrong (red)
 		if (isChecked) {
 			if (isCorrect) {
 				return "bg-green-50 border-green-200 text-green-900 ";
@@ -33,7 +32,6 @@ export function QuestionOption({
 			}
 		}
 
-		// Before checking: selected = violet, not selected = default
 		if (isSelected) {
 			return "bg-violet-50 border-violet-200 text-violet-900 ";
 		}
@@ -57,7 +55,7 @@ export function QuestionOption({
 			return (
 				<span className="flex items-center gap-1.5 rounded-md bg-green-100 px-2.5 py-1 font-medium text-green-700 text-xs">
 					<Check weight="bold" className="size-3.5" />
-					Đúng
+					{isSelected ? "Bạn chọn đúng" : "Đáp án đúng"}
 				</span>
 			);
 		}
@@ -66,7 +64,7 @@ export function QuestionOption({
 			return (
 				<span className="flex items-center gap-1.5 rounded-md bg-red-100 px-2.5 py-1 font-medium text-red-700 text-xs">
 					<X weight="bold" className="size-3.5" />
-					Sai
+					Bạn chọn sai
 				</span>
 			);
 		}

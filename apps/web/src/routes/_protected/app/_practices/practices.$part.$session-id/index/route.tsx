@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMount } from "ahooks";
+import { useState } from "react";
 import z from "zod";
 import { Header } from "@/components/practices/header";
 import { generateMetadata } from "@/lib/meta";
@@ -61,6 +62,7 @@ export const Route = createFileRoute(
 function RouteComponent() {
 	const { part } = Route.useParams();
 	const { questions } = Route.useLoaderData();
+	const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
 
 	useMount(() => {
 		prefetchQuestionMedia(questions);
@@ -90,11 +92,15 @@ function RouteComponent() {
 						title={`Part ${part}`}
 						timer={<PracticeTimer />}
 						action={<PracticeActions />}
-						className="fixed top-0 right-0 left-0"
+						className="fixed top-0 right-0 left-0 z-40"
+						onNavigatorToggle={() => setIsNavigatorOpen(true)}
 					/>
 					<div className="flex flex-col pt-16">
-						<QuestionsNavigator />
-						<div className="ml-64">
+						<QuestionsNavigator
+							isOpen={isNavigatorOpen}
+							onOpenChange={setIsNavigatorOpen}
+						/>
+						<div className="xl:ml-64">
 							<PracticeQuestionsList />
 						</div>
 					</div>

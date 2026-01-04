@@ -90,5 +90,9 @@ export const env = createEnv({
 		VITE_BASE_URL: z.string().optional().default("http://localhost:3000"),
 	},
 	runtimeEnv:
-		typeof process !== "undefined" ? process.env : (import.meta as any).env,
+		typeof process !== "undefined" && process.env
+			? process.env
+			: typeof import.meta !== "undefined"
+				? (import.meta as any).env
+				: {},
 });

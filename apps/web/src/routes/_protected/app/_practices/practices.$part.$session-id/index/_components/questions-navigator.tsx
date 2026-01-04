@@ -4,15 +4,23 @@ import {
 	type ButtonNavigatorStatus,
 	Navigator,
 } from "@/components/practices/navigator";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useAnswers, useCurrentQuestion } from "@/stores/attempt";
 
 const PART_HAVE_MULTIPLE_SUBS = new Set([3, 4, 6, 7]);
+const SCROLL_DELAY_MS = 100;
 
 const Route = getRouteApi(
 	"/_protected/app/_practices/practices/$part/$session-id/",
 );
 
-export const QuestionsNavigator = () => {
+export const QuestionsNavigator = ({
+	isOpen,
+	onOpenChange,
+}: {
+	isOpen: boolean;
+	onOpenChange: (open: boolean) => void;
+}) => {
 	const gotoQuestion = useCurrentQuestion((s) => s.goto);
 	const setSubQuestionIdx = useCurrentQuestion((s) => s.setSubQuestionIdx);
 	const currentSubQuestionIdx = useCurrentQuestion((s) => s.subQuestionIdx);
@@ -94,20 +102,42 @@ export const QuestionsNavigator = () => {
 		];
 	}, [part, questions]);
 
-	return (
-		<Navigator
-			mappedQuestions={mappedQuestions}
-			groupedQuestions={groupedQuestions}
-			onQuestionClick={({ pIdx, idx, questionId }) => {
-				gotoQuestion(pIdx);
-				setSubQuestionIdx(idx);
-				setTimeout(() => {
-					const el = document.getElementById(`question-sub-${questionId}`);
+	const handleQuestionClick = ({
+		pIdx,
+		idx,
+		questionId,
+	}: {
+		pIdx: number;
+		idx: number;
+		questionId: string;
+	}) => {
+		gotoQuestion(pIdx);
+		setSubQuestionIdx(idx);
+		onOpenChange(false);
+		setTimeout(() => {
+			const el = document.getElementById(`question-sub-${questionId}`);
+			el?.scrollIntoView({ behavior: "smooth", block: "center" });
+		}, SCROLL_DELAY_MS);
+	};
 
-					el?.scrollIntoView({ behavior: "smooth", block: "center" });
-				}, 100);
-			}}
-			className="fixed top-16 h-screen overflow-y-auto border-input border-r"
-		/>
+	return (
+		<>
+			<Navigator
+				mappedQuestions={mappedQuestions}
+				groupedQuestions={groupedQuestions}
+				onQuestionClick={handleQuestionClick}
+				className="fixed top-16 h-screen overflow-y-auto border-input border-r"
+			/>
+			<Sheet open={isOpen} onOpenChange={onOpenChange}>
+				<SheetContent side="left" className="w-64 p-0 sm:w-64 xl:hidden">
+					<Navigator
+						mappedQuestions={mappedQuestions}
+						groupedQuestions={groupedQuestions}
+						onQuestionClick={handleQuestionClick}
+						className="flex h-full"
+					/>
+				</SheetContent>
+			</Sheet>
+		</>
 	);
 };

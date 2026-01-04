@@ -4,7 +4,7 @@ import { withDb } from "../../utils";
 import { getToken } from "./get-token";
 
 export const upsertToken = withDb((db) => async (token: string) => {
-	const existing = await getToken()();
+	const existing = await getToken(db)();
 
 	if (existing) {
 		const updated = await db

@@ -31,6 +31,7 @@ import { Route as ProtectedAppDashboardIndexRouteRouteImport } from './routes/_p
 import { Route as ProtectedAppDashboardPracticesPartChar123partChar125RouteRouteImport } from './routes/_protected/app/_dashboard/practices/part-{$part}/route'
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
 import { Route as ProtectedAppPracticesPracticesPartSessionIdIndexRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/index/route'
+import { Route as ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/results/summary/route'
 import { Route as ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/results/index/route'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -149,6 +150,14 @@ const ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute =
     path: '/app/practices/$part/$session-id',
     getParentRoute: () => ProtectedRoute,
   } as any)
+const ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute =
+  ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRouteImport.update(
+    {
+      id: '/app/_practices/practices/$part/$session-id/results/summary',
+      path: '/app/practices/$part/$session-id/results/summary',
+      getParentRoute: () => ProtectedRoute,
+    } as any,
+  )
 const ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute =
   ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRouteImport.update(
     {
@@ -177,6 +186,7 @@ export interface FileRoutesByFullPath {
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
   '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
   '/app/practices/$part/$session-id/results': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
+  '/app/practices/$part/$session-id/results/summary': typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
 export interface FileRoutesByTo {
   '/og.png': typeof OgDotpngRoute
@@ -197,6 +207,7 @@ export interface FileRoutesByTo {
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
   '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
   '/app/practices/$part/$session-id/results': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
+  '/app/practices/$part/$session-id/results/summary': typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -223,6 +234,7 @@ export interface FileRoutesById {
   '/_protected/app/_dashboard/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
   '/_protected/app/_practices/practices/$part/$session-id/': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
   '/_protected/app/_practices/practices/$part/$session-id/results/': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
+  '/_protected/app/_practices/practices/$part/$session-id/results/summary': typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -245,6 +257,7 @@ export interface FileRouteTypes {
     | '/app/practices/part-{$part}'
     | '/app/practices/$part/$session-id'
     | '/app/practices/$part/$session-id/results'
+    | '/app/practices/$part/$session-id/results/summary'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/og.png'
@@ -265,6 +278,7 @@ export interface FileRouteTypes {
     | '/app/practices/part-{$part}'
     | '/app/practices/$part/$session-id'
     | '/app/practices/$part/$session-id/results'
+    | '/app/practices/$part/$session-id/results/summary'
   id:
     | '__root__'
     | '/_auth'
@@ -290,6 +304,7 @@ export interface FileRouteTypes {
     | '/_protected/app/_dashboard/practices/part-{$part}'
     | '/_protected/app/_practices/practices/$part/$session-id/'
     | '/_protected/app/_practices/practices/$part/$session-id/results/'
+    | '/_protected/app/_practices/practices/$part/$session-id/results/summary'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -462,6 +477,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRouteImport
       parentRoute: typeof ProtectedRoute
     }
+    '/_protected/app/_practices/practices/$part/$session-id/results/summary': {
+      id: '/_protected/app/_practices/practices/$part/$session-id/results/summary'
+      path: '/app/practices/$part/$session-id/results/summary'
+      fullPath: '/app/practices/$part/$session-id/results/summary'
+      preLoaderRoute: typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
     '/_protected/app/_practices/practices/$part/$session-id/results/': {
       id: '/_protected/app/_practices/practices/$part/$session-id/results/'
       path: '/app/practices/$part/$session-id/results'
@@ -514,6 +536,7 @@ interface ProtectedRouteChildren {
   ProtectedAppDashboardRoute: typeof ProtectedAppDashboardRouteWithChildren
   ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
   ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
+  ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
@@ -522,6 +545,8 @@ const ProtectedRouteChildren: ProtectedRouteChildren = {
     ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute,
   ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute:
     ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute,
+  ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute:
+    ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute,
 }
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(

@@ -1,36 +1,34 @@
-import { createFileRoute } from "@tanstack/react-router";
-import z from "zod";
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { useState } from "react";
 import { Header } from "@/components/practices/header";
 import { generateMetadata } from "@/lib/meta";
-import { AnswersProvider, CurrentQuestionProvider } from "@/stores/attempt";
-import { PracticeTimer } from "./_components/practice-timer";
+import {
+	type Answer,
+	AnswersProvider,
+	CurrentQuestionProvider,
+} from "@/stores/attempt";
 import { QuestionsNavigator } from "./_components/questions-navigator";
 import { ResultActionBar } from "./_components/result-action-bar";
+import { ResultActions } from "./_components/result-actions";
 import { ResultQuestionsList } from "./_components/result-questions-list";
 
 export const Route = createFileRoute(
 	"/_protected/app/_practices/practices/$part/$session-id/results/",
 )({
-	validateSearch: z.object({
-		duration: z.coerce.number().optional(),
-		mode: z.enum(["normal", "timed"]).optional().default("normal"),
-		numberOfQuestions: z.coerce.number().optional().default(10),
-	}),
-	loaderDeps(opts) {
-		return opts.search;
-	},
-	async loader({ deps, context, params }) {
-		const questions = await context.queryClient.ensureQueryData(
-			context.orpc.partPractices.getPartPractice.queryOptions({
+	async loader({ context, params }) {
+		const res = await context.queryClient.ensureQueryData(
+			context.orpc.partPractices.getPartPracticeHistoryById.queryOptions({
 				input: {
-					part: Number(params.part),
-					limit: deps.numberOfQuestions,
-					unique: params["session-id"],
+					id: params["session-id"],
 				},
 			}),
 		);
 
-		return { questions };
+		if (!res) {
+			throw notFound();
+		}
+
+		return res;
 	},
 	head: ({ params, match }) => {
 		const { meta, links } = generateMetadata({
@@ -52,7 +50,8 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
 	const { part } = Route.useParams();
-	const { questions } = Route.useLoaderData();
+	const { questions, history } = Route.useLoaderData();
+	const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
 
 	return (
 		<CurrentQuestionProvider
@@ -72,15 +71,32 @@ function RouteComponent() {
 						}),
 					};
 				})}
+				initialAnswers={history.contents.reduce(
+					(acc, content) => {
+						acc[content.subQuestionId] = {
+							choice: content.userAnswer,
+							isCorrect: content.isCorrect,
+							isFlagged: content.isFlagged,
+							subQuestionId: content.subQuestionId,
+							parentQuestionId: content.questionId,
+						};
+						return acc;
+					},
+					{} as Record<string, Answer>,
+				)}
 			>
 				<Header
 					title={`Part ${part}`}
-					timer={<PracticeTimer />}
-					className="fixed top-0 right-0 left-0"
+					className="fixed top-0 right-0 left-0 z-40"
+					onNavigatorToggle={() => setIsNavigatorOpen(true)}
+					action={<ResultActions />}
 				/>
 				<div className="flex flex-col pt-16">
-					<QuestionsNavigator />
-					<div className="ml-64">
+					<QuestionsNavigator
+						isOpen={isNavigatorOpen}
+						onOpenChange={setIsNavigatorOpen}
+					/>
+					<div className="xl:ml-64">
 						<ResultQuestionsList />
 					</div>
 				</div>

@@ -97,6 +97,7 @@ export const ResultQuestionsList = () => {
 									<QuestionSubExplanation
 										mode="review"
 										isAnswerSelected={!!currentAnswer.choice}
+										defaultOpen={true}
 									/>
 								</Activity>
 							</div>

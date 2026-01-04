@@ -1,7 +1,8 @@
-import { redisProviderMiddleware } from "../middlewares";
+import { dbProviderMiddleware, redisProviderMiddleware } from "../middlewares";
 import { kvProviderMiddleware } from "../middlewares/kv-middleware";
 import { o } from "./o";
 
 export const publicProcedure = o
+	.use(dbProviderMiddleware)
 	.use(redisProviderMiddleware)
 	.use(kvProviderMiddleware);

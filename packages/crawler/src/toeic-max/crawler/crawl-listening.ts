@@ -1,10 +1,10 @@
+import { db } from "@trektoeic/db";
 import { getToken } from "@trektoeic/db/queries/toiec-max-tokens/get-token";
-
 import { apiWithDecrypt, callApi } from "../api";
 import { writeToFile } from "../utils";
 
 export async function getListListenings(token?: string) {
-	const _token = token || (await getToken()());
+	const _token = token || (await getToken(db)());
 	let page = 1;
 	let total_pages = 1;
 
@@ -37,7 +37,7 @@ export async function getListListenings(token?: string) {
 }
 
 export async function getListeningDetail(id: number, token?: string) {
-	const _token = token || (await getToken()());
+	const _token = token || (await getToken(db)());
 	const res = await apiWithDecrypt({
 		method: "GET",
 		url: `/app/spell/${id}`,
@@ -52,7 +52,7 @@ export async function getListeningDetail(id: number, token?: string) {
 
 export async function getAllListeningsWithDetail() {
 	const map = new Map<number, any>();
-	const token = await getToken()();
+	const token = await getToken(db)();
 
 	if (!token) {
 		return;
