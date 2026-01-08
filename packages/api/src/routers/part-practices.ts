@@ -86,8 +86,35 @@ const getPartPracticeHistoryById = requiredAuthProcedure
 		return result;
 	});
 
+export const getCurrentProgressOfPartPractice = requiredAuthProcedure
+	.route({
+		method: "GET",
+		tags,
+	})
+	.input(
+		z.object({
+			part: z.union([z.string(), z.number()]),
+		}),
+	)
+	.output(
+		z.object({
+			attempt: z.number(),
+			correct: z.number(),
+			completed: z.number(),
+		}),
+	)
+	.handler(async ({ context, input }) => {
+		const result = await partPracticesQueries.getCurrentProgressOfPartPractice(
+			context.session.user.id,
+			context.db,
+		)(input.part);
+
+		return result;
+	});
+
 export const partPractices = {
 	getPartPractice,
 	createPartPracticeHistory,
 	getPartPracticeHistoryById,
+	getCurrentProgressOfPartPractice,
 };

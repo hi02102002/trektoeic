@@ -3,8 +3,12 @@ import {
 	CheckCircleIcon,
 	TargetIcon,
 } from "@phosphor-icons/react";
+import { getRouteApi } from "@tanstack/react-router";
+
+const Route = getRouteApi("/_protected/app/_dashboard/practices/part-{$part}");
 
 export const CurrentProgress = () => {
+	const { currentProgress } = Route.useLoaderData();
 	return (
 		<div className="overflow-hidden rounded-md border border-neutral-200 bg-white">
 			<div className="border-neutral-100 border-b bg-neutral-50/50 px-4 py-3">
@@ -25,7 +29,9 @@ export const CurrentProgress = () => {
 								Attempted
 							</span>
 						</div>
-						<span className="font-semibold text-neutral-900 text-sm">0</span>
+						<span className="font-semibold text-neutral-900 text-sm">
+							{currentProgress.attempt || 0}
+						</span>
 					</div>
 					<div className="w-full border-neutral-100 border-t" />
 					<div className="flex items-center justify-between">
@@ -39,7 +45,9 @@ export const CurrentProgress = () => {
 								Correct
 							</span>
 						</div>
-						<span className="font-semibold text-sm text-teal-600">0</span>
+						<span className="font-semibold text-sm text-teal-600">
+							{currentProgress.correct || 0}
+						</span>
 					</div>
 					<div className="w-full border-neutral-100 border-t" />
 					<div className="flex items-center justify-between">
@@ -53,7 +61,9 @@ export const CurrentProgress = () => {
 								Completion
 							</span>
 						</div>
-						<span className="font-semibold text-blue-600 text-sm">0%</span>
+						<span className="font-semibold text-blue-600 text-sm">
+							{currentProgress.completed || 0}%
+						</span>
 					</div>
 				</div>
 			</div>

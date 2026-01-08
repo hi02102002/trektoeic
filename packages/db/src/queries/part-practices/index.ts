@@ -4,9 +4,9 @@ import {
 	PartPracticeContentSchema,
 	PartPracticeHistorySchema,
 } from "@trektoeic/schemas/part-practice-schema";
-import { and, eq, sql } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 import z from "zod";
-import { history } from "../../schema";
+import { history, questions } from "../../schema";
 import { withDb, withDbAndUser } from "../../utils";
 import { questionsQueries } from "../questions";
 
@@ -36,8 +36,10 @@ const getPartPractices = withDb(
 				.then((records) => {
 					const flattened = records.flatMap((record) => record.contents);
 
+					// only get questionIds which have been answered incorrectly or not answered
 					return flattened
 						.map((content) => PartPracticeContentSchema.parse(content))
+						.filter((c) => !c.userAnswer || c.isCorrect === false)
 						.map((content) => content.questionId);
 				});
 
@@ -110,8 +112,63 @@ const getPartPracticeHistoryById = withDbAndUser(
 		},
 );
 
+const getCurrentProgressOfPartPractice = withDbAndUser(
+	({ db, userId }) =>
+		async (part: number | string) => {
+			const [records, totalQuestions] = await Promise.all([
+				db
+					.select()
+					.from(history)
+					.where(
+						and(
+							eq(history.userId, userId),
+							eq(history.action, "practice_part"),
+							eq(sql`${history.metadata}->>'part'`, part.toString()),
+						),
+					),
+				db
+					.select({
+						count: count(questions.id),
+					})
+					.from(questions)
+					.where(eq(questions.part, Number(part)))
+					.then((r) => r[0]?.count || 0),
+			]);
+
+			const attempt = records.length || 0;
+			const correctQuestionIds = new Set<string>();
+
+			for (const record of records) {
+				const contents = z
+					.array(PartPracticeContentSchema)
+					.parse(record.contents);
+
+				for (const content of contents) {
+					if (content.isCorrect) {
+						correctQuestionIds.add(content.questionId);
+					}
+				}
+			}
+
+			return {
+				attempt,
+				correct: correctQuestionIds.size,
+				completed:
+					correctQuestionIds.size > 0
+						? Math.max(
+								1,
+								Math.round(
+									(correctQuestionIds.size / (totalQuestions || 1)) * 100,
+								),
+							)
+						: 0,
+			};
+		},
+);
+
 export const partPracticesQueries = {
 	getPartPractices,
 	createPartPracticeHistory,
 	getPartPracticeHistoryById,
+	getCurrentProgressOfPartPractice,
 };

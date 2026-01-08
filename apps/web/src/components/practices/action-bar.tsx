@@ -10,9 +10,16 @@ type Props = {
 	canPrev: () => boolean;
 	next: () => void;
 	prev: () => void;
+	finalText?: string;
 };
 
-export const ActionBar = ({ canNext, canPrev, next, prev }: Props) => {
+export const ActionBar = ({
+	canPrev,
+	next,
+	prev,
+	finalText = "Hoàn thành",
+	canNext,
+}: Props) => {
 	return (
 		<ActionBarUI open>
 			<ActionBarGroup>
@@ -20,12 +27,8 @@ export const ActionBar = ({ canNext, canPrev, next, prev }: Props) => {
 					<ArrowLeftIcon />
 					Câu trước
 				</ActionBarItem>
-				<ActionBarItem
-					variant="default"
-					disabled={!canNext?.()}
-					onSelect={next}
-				>
-					Câu tiếp theo
+				<ActionBarItem variant="default" onSelect={next}>
+					{canNext() ? "Câu tiếp" : finalText}
 					<ArrowRightIcon />
 				</ActionBarItem>
 			</ActionBarGroup>

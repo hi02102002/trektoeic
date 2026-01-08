@@ -23,15 +23,26 @@ export const Route = createFileRoute(
 	async loader({ params, context }) {
 		const { part } = params;
 
-		const partSection = await context.queryClient.ensureQueryData(
-			context.orpc.partSections.getPartSection.queryOptions({
-				input: {
-					part,
-				},
-			}),
-		);
+		const [partSection, currentProgress] = await Promise.all([
+			context.queryClient.ensureQueryData(
+				context.orpc.partSections.getPartSection.queryOptions({
+					input: {
+						part,
+					},
+				}),
+			),
+			context.queryClient.ensureQueryData(
+				context.orpc.partPractices.getCurrentProgressOfPartPractice.queryOptions(
+					{
+						input: {
+							part,
+						},
+					},
+				),
+			),
+		]);
 
-		return { partSection };
+		return { partSection, currentProgress };
 	},
 	head: ({ loaderData, match }) => {
 		if (!loaderData) {
