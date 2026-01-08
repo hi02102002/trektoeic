@@ -1,5 +1,6 @@
 import { createORPCClient } from "@orpc/client";
 import { RPCLink } from "@orpc/client/fetch";
+import { BatchLinkPlugin, DedupeRequestsPlugin } from "@orpc/client/plugins";
 import type { RouterClient } from "@orpc/server";
 import { createRouterClient } from "@orpc/server";
 import { createTanstackQueryUtils } from "@orpc/tanstack-query";
@@ -19,14 +20,56 @@ const getORPCClient = createIsomorphicFn()
 		});
 	})
 	.client((): RouterClient<typeof appRouter> => {
-		const link = new RPCLink({
+		const link = new RPCLink<{
+			cache?: RequestCache;
+		}>({
 			url: `${window.location.origin}/api/rpc`,
-			fetch(url, options) {
+			method: ({ context }) => {
+				if (context?.cache) {
+					return "GET";
+				}
+
+				return "POST";
+			},
+			fetch(url, options, { context }) {
 				return fetch(url, {
 					...options,
 					credentials: "include",
+					cache: context?.cache,
 				});
 			},
+			plugins: [
+				new DedupeRequestsPlugin({
+					filter: ({ request }) => request.method === "GET",
+					groups: [
+						{
+							condition: ({ context }) => context?.cache === "force-cache",
+							context: {
+								cache: "force-cache",
+							},
+						},
+						{
+							condition: () => true,
+							context: {},
+						},
+					],
+				}),
+				new BatchLinkPlugin({
+					mode: typeof window === "undefined" ? "buffered" : "streaming",
+					groups: [
+						{
+							condition: ({ context }) => context?.cache === "force-cache",
+							context: {
+								cache: "force-cache",
+							},
+						},
+						{
+							condition: () => true,
+							context: {},
+						},
+					],
+				}),
+			],
 		});
 
 		return createORPCClient(link);

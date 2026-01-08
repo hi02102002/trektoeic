@@ -29,6 +29,9 @@ export const Route = createFileRoute(
 					input: {
 						part,
 					},
+					context: {
+						cache: "force-cache",
+					},
 				}),
 			),
 			context.queryClient.ensureQueryData(
@@ -95,6 +98,9 @@ function RouteComponent() {
 		orpc.partSections.getPartSection.queryOptions({
 			input: {
 				part,
+			},
+			context: {
+				cache: "force-cache",
 			},
 		}),
 	);

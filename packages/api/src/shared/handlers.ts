@@ -47,6 +47,7 @@ export const createOpenApiHandler = <T extends Context>(
 		smartCoercion<T>(),
 		logger(),
 		responseHeader(),
+		batchHandler(),
 	].filter((p) => p !== null);
 
 	return new OpenAPIHandler(router, {

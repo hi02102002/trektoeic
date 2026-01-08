@@ -15,6 +15,9 @@ export const useTotalQuestionsEachPart = () => {
 				);
 			},
 			staleTime: getTime({ hours: 1 }),
+			context: {
+				cache: "force-cache",
+			},
 		}),
 	);
 };
