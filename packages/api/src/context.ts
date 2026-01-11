@@ -1,6 +1,8 @@
 import type { LoggerContext } from "@orpc/experimental-pino";
 import { auth } from "@trektoeic/auth";
+import { kysely } from "@trektoeic/db";
 import { type Database, db } from "@trektoeic/db/db";
+import type { KyselyDb } from "@trektoeic/db/types/index";
 import type { getRedisClient } from "./libs/ioredis";
 import type { storage } from "./libs/storage";
 
@@ -12,11 +14,13 @@ export async function createContext({ headers }: { headers: any }) {
 		return {
 			db,
 			session,
+			kysely,
 		};
 	} catch {
 		return {
 			session: null,
 			db,
+			kysely,
 		};
 	}
 }
@@ -28,4 +32,5 @@ export interface Context extends LoggerContext {
 	redis?: ReturnType<typeof getRedisClient>;
 	kv?: typeof storage;
 	db: Database;
+	kysely: KyselyDb;
 }

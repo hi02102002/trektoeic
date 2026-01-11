@@ -7,3 +7,13 @@ export const withKysely =
 	) =>
 	(db: Kysely<KyselyDatabase>) =>
 		fn(db);
+
+export const withUserAndKysely =
+	<TArgs extends unknown[], TReturn>(
+		fn: (
+			userId: string,
+			db: Kysely<KyselyDatabase>,
+		) => (...args: TArgs) => TReturn,
+	) =>
+	(userId: string, db: Kysely<KyselyDatabase>) =>
+		fn(userId, db);

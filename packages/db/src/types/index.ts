@@ -1,6 +1,6 @@
 import type { Table } from "drizzle-orm";
 import type { Kyselify } from "drizzle-orm/kysely";
-import type { ColumnType } from "kysely";
+import type { ColumnType, Kysely } from "kysely";
 import type * as schema from "../schema";
 
 export type SnakeToCamelCase<S extends string> =
@@ -35,3 +35,5 @@ export type KyselyDatabase = {
 		RawTableMap[K]
 	>;
 };
+
+export type KyselyDb = Kysely<KyselyDatabase>;

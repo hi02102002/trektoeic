@@ -106,7 +106,7 @@ export const getCurrentProgressOfPartPractice = requiredAuthProcedure
 	.handler(async ({ context, input }) => {
 		const result = await partPracticesQueries.getCurrentProgressOfPartPractice(
 			context.session.user.id,
-			context.db,
+			context.kysely,
 		)(input.part);
 
 		return result;
