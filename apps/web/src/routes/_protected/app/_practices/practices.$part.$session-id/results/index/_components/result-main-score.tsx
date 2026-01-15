@@ -12,7 +12,7 @@ export const ResultMainScore = () => {
 			<div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blue-50/50 to-transparent" />
 			<div className="relative z-10">
 				<h2 className="mb-4 font-medium text-neutral-500 text-sm">
-					Độ chính xác
+					Kết quả luyện tập
 				</h2>
 				<div className="mb-2 font-semibold text-6xl text-neutral-900 tracking-tighter">
 					{history.metadata.performancePercentile ?? 0}

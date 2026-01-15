@@ -4,7 +4,6 @@ import { LoadingOverlay } from "@/components/ui/loading-overlay";
 
 export const Route = createFileRoute("/_protected/app/_dashboard")({
 	component: RouteComponent,
-	ssr: false,
 	pendingComponent: () => <LoadingOverlay open message="Đang tải..." />,
 });
 

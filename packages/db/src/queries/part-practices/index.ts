@@ -4,10 +4,17 @@ import {
 	PartPracticeContentSchema,
 	PartPracticeHistorySchema,
 } from "@trektoeic/schemas/part-practice-schema";
+import { QuestionWithSubsSchema } from "@trektoeic/schemas/question-schema";
 import { and, eq, sql } from "drizzle-orm";
-import { sql as kSql } from "kysely";
 import z from "zod";
-import { history } from "../../schema";
+import {
+	drizzleColumnNames,
+	jsonColsFromNames,
+	kJsonAggBuildObject,
+	kSql,
+	selectColsFromNames,
+} from "../../libs/kysely";
+import { history, questions, subQuestions } from "../../schema";
 import { withDb, withDbAndUser, withUserAndKysely } from "../../utils";
 import { questionsQueries } from "../questions";
 
@@ -165,9 +172,61 @@ const getCurrentProgressOfPartPractice = withUserAndKysely(
 	},
 );
 
+const getRedoPartPractices = withUserAndKysely(
+	(userId, db) => async (historyId: string) => {
+		const records = await db
+			.with("ids_to_redo", (qb) =>
+				qb
+					.selectFrom("histories")
+					.innerJoin(
+						kSql`jsonb_array_elements(histories.contents) WITH ORDINALITY`.as(
+							"elem",
+						),
+						(join) => join.onTrue(),
+					)
+					.where("histories.id", "=", historyId)
+					.where("histories.userId", "=", userId)
+					.select([
+						kSql<string>`elem.value->>'questionId'`.as("questionId"),
+						kSql<number>`elem.ordinality`.as("order_index"),
+					]),
+			)
+			.with("questions", (qb) => {
+				return qb
+					.selectFrom("questions")
+					.where("questions.id", "in", (qb) => {
+						return qb.selectFrom("ids_to_redo").select("questionId");
+					})
+					.innerJoin("ids_to_redo", "ids_to_redo.questionId", "questions.id")
+					.leftJoin("subQuestions", "subQuestions.questionId", "questions.id")
+					.select((eb) => {
+						const questionCols = drizzleColumnNames(questions);
+						const subQuestionCols = drizzleColumnNames(subQuestions);
+
+						return [
+							...selectColsFromNames(eb, "questions", questionCols),
+							kJsonAggBuildObject(
+								jsonColsFromNames(eb, "subQuestions", subQuestionCols),
+							).as("subs"),
+						];
+					})
+					.groupBy(["questions.id", "ids_to_redo.order_index"])
+					.orderBy("ids_to_redo.order_index");
+			})
+			.selectFrom("questions")
+			.selectAll()
+			.execute();
+
+		console.log(records);
+
+		return z.array(QuestionWithSubsSchema).parse(records);
+	},
+);
+
 export const partPracticesQueries = {
 	getPartPractices,
 	createPartPracticeHistory,
 	getPartPracticeHistoryById,
 	getCurrentProgressOfPartPractice,
+	getRedoPartPractices,
 };

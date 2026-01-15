@@ -112,9 +112,32 @@ export const getCurrentProgressOfPartPractice = requiredAuthProcedure
 		return result;
 	});
 
+export const getRedoPartPractices = requiredAuthProcedure
+	.route({
+		method: "GET",
+		tags,
+	})
+	.input(
+		z.object({
+			historyId: z.string(),
+		}),
+	)
+	.output(z.array(QuestionWithSubsSchema))
+	.handler(async ({ input, context }) => {
+		const { historyId } = input;
+
+		const records = await partPracticesQueries.getRedoPartPractices(
+			context.session.user.id,
+			context.kysely,
+		)(historyId);
+
+		return records;
+	});
+
 export const partPractices = {
 	getPartPractice,
 	createPartPracticeHistory,
 	getPartPracticeHistoryById,
 	getCurrentProgressOfPartPractice,
+	getRedoPartPractices,
 };
