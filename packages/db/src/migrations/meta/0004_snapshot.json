@@ -1,6 +1,6 @@
 {
-	"id": "9e5e5f76-c023-43a5-8745-1144beaf52bd",
-	"prevId": "f3df0a0b-4dee-4859-b206-df2b18c81192",
+	"id": "d35b2a45-166e-4e3d-afce-0448947bbe8d",
+	"prevId": "9e5e5f76-c023-43a5-8745-1144beaf52bd",
 	"version": "7",
 	"dialect": "postgresql",
 	"tables": {
@@ -353,19 +353,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
@@ -378,7 +379,7 @@
 				},
 				"action": {
 					"name": "action",
-					"type": "varchar(50)",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
@@ -386,18 +387,20 @@
 					"name": "metadata",
 					"type": "jsonb",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "'{}'::jsonb"
 				},
 				"contents": {
 					"name": "contents",
 					"type": "jsonb",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "'{}'::jsonb"
 				}
 			},
 			"indexes": {
-				"idx_histories_user_id_action": {
-					"name": "idx_histories_user_id_action",
+				"histories_user_id_action_idx": {
+					"name": "histories_user_id_action_idx",
 					"columns": [
 						{
 							"expression": "user_id",
@@ -417,8 +420,29 @@
 					"method": "btree",
 					"with": {}
 				},
-				"idx_histories_user_id_action_metadata_part": {
-					"name": "idx_histories_user_id_action_metadata_part",
+				"histories_user_id_created_at_idx": {
+					"name": "histories_user_id_created_at_idx",
+					"columns": [
+						{
+							"expression": "user_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						},
+						{
+							"expression": "created_at",
+							"isExpression": false,
+							"asc": false,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"histories_user_action_metadata_part_idx": {
+					"name": "histories_user_action_metadata_part_idx",
 					"columns": [
 						{
 							"expression": "user_id",
@@ -444,8 +468,8 @@
 					"method": "btree",
 					"with": {}
 				},
-				"idx_histories_metadata_gin": {
-					"name": "idx_histories_metadata_gin",
+				"histories_metadata_gin_idx": {
+					"name": "histories_metadata_gin_idx",
 					"columns": [
 						{
 							"expression": "metadata",
@@ -457,42 +481,6 @@
 					"isUnique": false,
 					"concurrently": false,
 					"method": "gin",
-					"with": {}
-				},
-				"idx_histories_created_at": {
-					"name": "idx_histories_created_at",
-					"columns": [
-						{
-							"expression": "created_at",
-							"isExpression": false,
-							"asc": true,
-							"nulls": "last"
-						}
-					],
-					"isUnique": false,
-					"concurrently": false,
-					"method": "btree",
-					"with": {}
-				},
-				"idx_histories_user_id_created_at": {
-					"name": "idx_histories_user_id_created_at",
-					"columns": [
-						{
-							"expression": "user_id",
-							"isExpression": false,
-							"asc": true,
-							"nulls": "last"
-						},
-						{
-							"expression": "created_at",
-							"isExpression": false,
-							"asc": true,
-							"nulls": "last"
-						}
-					],
-					"isUnique": false,
-					"concurrently": false,
-					"method": "btree",
 					"with": {}
 				}
 			},
@@ -519,19 +507,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
@@ -555,7 +544,23 @@
 					"notNull": true
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"kits_year_idx": {
+					"name": "kits_year_idx",
+					"columns": [
+						{
+							"expression": "year",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
 			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {
@@ -580,19 +585,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
@@ -605,7 +611,7 @@
 				},
 				"position": {
 					"name": "position",
-					"type": "varchar(10)",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
@@ -637,12 +643,64 @@
 				},
 				"kit_id": {
 					"name": "kit_id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"questions_kit_id_idx": {
+					"name": "questions_kit_id_idx",
+					"columns": [
+						{
+							"expression": "kit_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"questions_kit_id_part_idx": {
+					"name": "questions_kit_id_part_idx",
+					"columns": [
+						{
+							"expression": "kit_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						},
+						{
+							"expression": "part",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"questions_part_idx": {
+					"name": "questions_part_idx",
+					"columns": [
+						{
+							"expression": "part",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
 			"foreignKeys": {
 				"questions_kit_id_kits_id_fk": {
 					"name": "questions_kit_id_kits_id_fk",
@@ -666,26 +724,27 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
 				},
 				"question_id": {
 					"name": "question_id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
@@ -705,11 +764,12 @@
 					"name": "options",
 					"type": "jsonb",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "'{}'::jsonb"
 				},
 				"ans": {
 					"name": "ans",
-					"type": "varchar",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
@@ -717,10 +777,48 @@
 					"name": "translation",
 					"type": "jsonb",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "'{}'::jsonb"
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"sub_questions_question_id_idx": {
+					"name": "sub_questions_question_id_idx",
+					"columns": [
+						{
+							"expression": "question_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"sub_questions_question_id_position_idx": {
+					"name": "sub_questions_question_id_position_idx",
+					"columns": [
+						{
+							"expression": "question_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						},
+						{
+							"expression": "position",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
 			"foreignKeys": {
 				"sub_questions_question_id_questions_id_fk": {
 					"name": "sub_questions_question_id_questions_id_fk",
@@ -744,19 +842,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
@@ -814,22 +913,19 @@
 					"name": "intro_audio",
 					"type": "text",
 					"primaryKey": false,
-					"notNull": false,
-					"default": "''"
+					"notNull": false
 				},
 				"intro_image": {
 					"name": "intro_image",
 					"type": "text",
 					"primaryKey": false,
-					"notNull": false,
-					"default": "''"
+					"notNull": false
 				},
 				"intro_answer": {
 					"name": "intro_answer",
 					"type": "text",
 					"primaryKey": false,
-					"notNull": false,
-					"default": "''"
+					"notNull": false
 				},
 				"part": {
 					"name": "part",
@@ -839,8 +935,8 @@
 				}
 			},
 			"indexes": {
-				"idx_sections_part": {
-					"name": "idx_sections_part",
+				"sections_part_idx": {
+					"name": "sections_part_idx",
 					"columns": [
 						{
 							"expression": "part",
@@ -868,19 +964,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
@@ -907,26 +1004,27 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
 				},
 				"category_id": {
 					"name": "category_id",
-					"type": "varchar",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": true
 				},
@@ -979,7 +1077,38 @@
 					"notNull": false
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"vocabularies_category_id_idx": {
+					"name": "vocabularies_category_id_idx",
+					"columns": [
+						{
+							"expression": "category_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"vocabularies_name_idx": {
+					"name": "vocabularies_name_idx",
+					"columns": [
+						{
+							"expression": "name",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
 			"foreignKeys": {
 				"vocabularies_category_id_vocabulary_categories_id_fk": {
 					"name": "vocabularies_category_id_vocabulary_categories_id_fk",
@@ -1003,19 +1132,20 @@
 			"columns": {
 				"id": {
 					"name": "id",
-					"type": "varchar(21)",
+					"type": "text",
 					"primaryKey": true,
 					"notNull": true
 				},
 				"updated_at": {
 					"name": "updated_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
-					"notNull": true
+					"notNull": true,
+					"default": "now()"
 				},
 				"created_at": {
 					"name": "created_at",
-					"type": "timestamp",
+					"type": "timestamp with time zone",
 					"primaryKey": false,
 					"notNull": true,
 					"default": "now()"
@@ -1047,7 +1177,7 @@
 				},
 				"parent_id": {
 					"name": "parent_id",
-					"type": "varchar",
+					"type": "text",
 					"primaryKey": false,
 					"notNull": false
 				},
@@ -1059,7 +1189,38 @@
 					"default": false
 				}
 			},
-			"indexes": {},
+			"indexes": {
+				"vocabulary_categories_parent_id_idx": {
+					"name": "vocabulary_categories_parent_id_idx",
+					"columns": [
+						{
+							"expression": "parent_id",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				},
+				"vocabulary_categories_level_idx": {
+					"name": "vocabulary_categories_level_idx",
+					"columns": [
+						{
+							"expression": "level",
+							"isExpression": false,
+							"asc": true,
+							"nulls": "last"
+						}
+					],
+					"isUnique": false,
+					"concurrently": false,
+					"method": "btree",
+					"with": {}
+				}
+			},
 			"foreignKeys": {},
 			"compositePrimaryKeys": {},
 			"uniqueConstraints": {
