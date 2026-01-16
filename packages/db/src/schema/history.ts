@@ -26,5 +26,14 @@ export const history = pgTable(
 		idxUserIdActionMetadataPart: index(
 			"idx_histories_user_id_action_metadata_part",
 		).on(tb.userId, tb.action, sql`(${tb.metadata}->>'part')`),
+		idxMetadataGin: index("idx_histories_metadata_gin").using(
+			"gin",
+			tb.metadata,
+		),
+		idxCreatedAt: index("idx_histories_created_at").on(tb.createdAt),
+		idxUserIdCreatedAt: index("idx_histories_user_id_created_at").on(
+			tb.userId,
+			tb.createdAt,
+		),
 	}),
 );
