@@ -27,7 +27,8 @@
 			"!**/.source",
 			"!**/node_modules",
 			"!**/.output",
-			"!**/data/*.json"
+			"!**/data/*.json",
+			"!**/.claude"
 		]
 	},
 	"formatter": {
