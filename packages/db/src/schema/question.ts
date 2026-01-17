@@ -23,7 +23,7 @@ export const questions = pgTable(
 					vi: "",
 				},
 			}),
-		total: integer("count").notNull().default(1),
+		count: integer("count").notNull().default(1),
 		kitId: text("kit_id")
 			.notNull()
 			.references(() => kits.id, { onDelete: "cascade" }),

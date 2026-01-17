@@ -3,18 +3,12 @@ import {
 	type InputPartPracticeHistory,
 	PartPracticeContentSchema,
 	PartPracticeHistorySchema,
+	PartPracticeMetadataSchema,
 } from "@trektoeic/schemas/part-practice-schema";
-import { QuestionWithSubsSchema } from "@trektoeic/schemas/question-schema";
 import { and, eq, sql } from "drizzle-orm";
 import z from "zod";
-import {
-	drizzleColumnNames,
-	jsonColsFromNames,
-	kJsonAggBuildObject,
-	kSql,
-	selectColsFromNames,
-} from "../../libs/kysely";
-import { history, questions, subQuestions } from "../../schema";
+import { kSql } from "../../libs/kysely";
+import { history } from "../../schema";
 import { withDb, withDbAndUser, withUserAndKysely } from "../../utils";
 import { questionsQueries } from "../questions";
 
@@ -172,55 +166,52 @@ const getCurrentProgressOfPartPractice = withUserAndKysely(
 	},
 );
 
-const getRedoPartPractices = withUserAndKysely(
-	(userId, db) => async (historyId: string) => {
-		const records = await db
-			.with("ids_to_redo", (qb) =>
-				qb
-					.selectFrom("histories")
-					.innerJoin(
-						kSql`jsonb_array_elements(histories.contents) WITH ORDINALITY`.as(
-							"elem",
-						),
-						(join) => join.onTrue(),
-					)
-					.where("histories.id", "=", historyId)
-					.where("histories.userId", "=", userId)
-					.select([
-						kSql<string>`elem.value->>'questionId'`.as("questionId"),
-						kSql<number>`elem.ordinality`.as("order_index"),
-					]),
-			)
-			.with("questions", (qb) => {
-				return qb
-					.selectFrom("questions")
-					.where("questions.id", "in", (qb) => {
-						return qb.selectFrom("ids_to_redo").select("questionId");
-					})
-					.innerJoin("ids_to_redo", "ids_to_redo.questionId", "questions.id")
-					.leftJoin("subQuestions", "subQuestions.questionId", "questions.id")
-					.select((eb) => {
-						const questionCols = drizzleColumnNames(questions);
-						const subQuestionCols = drizzleColumnNames(subQuestions);
+/**
+ * Redo a part practice session by getting all questions from a previous practice history
+ */
+const redoPartPractices = withDbAndUser(
+	({ db, userId }) =>
+		async (historyId: string) => {
+			const record = await db
+				?.select()
+				.from(history)
+				.where(
+					and(
+						eq(history.id, historyId),
+						eq(history.userId, userId),
+						eq(history.action, "practice_part"),
+					),
+				)
+				.limit(1)
+				.then((r) => r?.[0]);
 
-						return [
-							...selectColsFromNames(eb, "questions", questionCols),
-							kJsonAggBuildObject(
-								jsonColsFromNames(eb, "subQuestions", subQuestionCols),
-							).as("subs"),
-						];
-					})
-					.groupBy(["questions.id", "ids_to_redo.order_index"])
-					.orderBy("ids_to_redo.order_index");
-			})
-			.selectFrom("questions")
-			.selectAll()
-			.execute();
+			if (!record) {
+				return null;
+			}
 
-		console.log(records);
+			const contents = z
+				.array(PartPracticeContentSchema)
+				.parse(record.contents);
 
-		return z.array(QuestionWithSubsSchema).parse(records);
-	},
+			if (contents.length === 0) {
+				return null;
+			}
+
+			const allQuestionIds = contents.map((c) => c.questionId);
+
+			const uniqueQuestionIds = [...new Set(allQuestionIds)];
+
+			const metadata = PartPracticeMetadataSchema.parse(record.metadata);
+
+			const questions =
+				await questionsQueries.getQuestionsByIds(db)(uniqueQuestionIds);
+
+			return {
+				questions,
+				metadata,
+				originalHistoryId: historyId,
+			};
+		},
 );
 
 export const partPracticesQueries = {
@@ -228,5 +219,5 @@ export const partPracticesQueries = {
 	createPartPracticeHistory,
 	getPartPracticeHistoryById,
 	getCurrentProgressOfPartPractice,
-	getRedoPartPractices,
+	redoPartPractices,
 };
