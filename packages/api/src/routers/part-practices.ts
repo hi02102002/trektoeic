@@ -34,7 +34,7 @@ const getPartPractice = requiredAuthProcedure
 		);
 
 		if (await context.kv.has(key).catch(() => false)) {
-			const cached = await context.kv.get(key);
+			const cached = await context.kv.getItem(key);
 
 			return z.array(QuestionWithSubsSchema).parse(cached);
 		}
@@ -45,7 +45,7 @@ const getPartPractice = requiredAuthProcedure
 			userId: context.session.user.id,
 		});
 
-		await context.kv.set(key, records, {
+		await context.kv.setItem(key, records, {
 			ttl: 60 * 60,
 		});
 
