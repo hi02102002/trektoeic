@@ -13,6 +13,7 @@ import { questions, subQuestions } from "../../schema";
 import { jsonAggBuildObjectWithOrder, withDb } from "../../utils";
 import { arrayPosition } from "../../utils/array-position";
 import { sqlTrue } from "../../utils/sql-true";
+import { kitsQueries } from "../kits";
 
 const getTotalQuestionsEachPart = withDb((db) => async () => {
 	const result = await db
@@ -21,7 +22,13 @@ const getTotalQuestionsEachPart = withDb((db) => async () => {
 			totalQuestions: count(questions.id),
 		})
 		.from(questions)
-		.groupBy(questions.part);
+		.groupBy(questions.part)
+		.$withCache({
+			tag: "questions_total_each_part",
+			config: {
+				ex: 60 * 60, // 1 hour
+			},
+		});
 
 	return result;
 });
@@ -76,7 +83,50 @@ const getQuestionsByIds = withDb((db) => async (ids: string[]) => {
 		.leftJoin(subQuestions, eq(questions.id, subQuestions.questionId))
 		.where(and(inArray(questions.id, ids)))
 		.orderBy(ids.length > 0 ? arrayPosition(ids, questions.id) : sql`NULL`)
-		.groupBy(questions.id);
+		.groupBy(questions.id)
+		.$withCache();
+
+	return z.array(QuestionWithSubsSchema).parse(records);
+});
+
+const getQuestionsByKitId = withDb((db) => async (kitId: string) => {
+	const records = await db
+		.select({
+			...getTableColumns(questions),
+			subs: jsonAggBuildObjectWithOrder(subQuestions, subQuestions.position).as(
+				"subs",
+			),
+		})
+		.from(questions)
+		.leftJoin(subQuestions, eq(questions.id, subQuestions.questionId))
+		.where(and(eq(questions.kitId, kitId)))
+		.orderBy(questions.part, questions.id)
+		.groupBy(questions.id)
+		.$withCache();
+
+	return z.array(QuestionWithSubsSchema).parse(records);
+});
+
+const getQuestionsByKitSlug = withDb((db) => async (kitSlug: string) => {
+	const kit = await kitsQueries.getKitById(db)(kitSlug, { id: true });
+
+	if (!kit) {
+		return null;
+	}
+
+	const records = await db
+		.select({
+			...getTableColumns(questions),
+			subs: jsonAggBuildObjectWithOrder(subQuestions, subQuestions.position).as(
+				"subs",
+			),
+		})
+		.from(questions)
+		.leftJoin(subQuestions, eq(questions.id, subQuestions.questionId))
+		.where(and(eq(questions.kitId, kit.id)))
+		.orderBy(questions.part, questions.id)
+		.groupBy(questions.id)
+		.$withCache();
 
 	return z.array(QuestionWithSubsSchema).parse(records);
 });
@@ -85,4 +135,6 @@ export const questionsQueries = {
 	getTotalQuestionsEachPart,
 	getRandomQuestionsByPart,
 	getQuestionsByIds,
+	getQuestionsByKitId,
+	getQuestionsByKitSlug,
 };

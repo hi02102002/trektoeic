@@ -1,5 +1,6 @@
 import { IconBadge } from "@/components/icon-badge";
 import { MAP_PART } from "@/constants";
+import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { cn } from "@/lib/utils";
 
 const MAP_COLOR = {
@@ -26,13 +27,10 @@ export const PartSectionCard = ({
 }) => {
 	const { title, desc, Icon, color } = MAP_PART[part];
 	const colorClasses = MAP_COLOR[color];
+	const cardStyle = useCardStyle();
+
 	return (
-		<div
-			className={cn(
-				"group relative flex h-full flex-col justify-between overflow-hidden rounded-md border border-neutral-200 bg-white p-5 transition-all duration-300",
-				colorClasses.wrapper,
-			)}
-		>
+		<div className={cn(cardStyle, colorClasses.wrapper)}>
 			<div>
 				<div className="mb-4 flex items-start justify-between">
 					<IconBadge color="neutral" className={colorClasses.icon}>
