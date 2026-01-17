@@ -55,7 +55,9 @@ export const useSubmitPractice = () => {
 				metadata: {
 					part: Number(params.part),
 					mode: search.mode,
-					duration: questionTimerApi.getState().getTotalSessionTime(),
+					duration:
+						search?.duration ??
+						questionTimerApi.getState().getTotalSessionTime(),
 					numberOfQuestions: totalQuestions,
 					numberOfCorrectQuestions,
 					numberOfWrongQuestions,

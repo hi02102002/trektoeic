@@ -1,14 +1,15 @@
-import { createId, SIZE_OF_ID } from "@trektoeic/utils/create-id";
-import { timestamp, varchar } from "drizzle-orm/pg-core";
+import { createId } from "@trektoeic/utils/create-id";
+import { text, timestamp } from "drizzle-orm/pg-core";
 
 export const DEFAULT_SCHEMA = {
-	id: varchar("id", {
-		length: SIZE_OF_ID,
-	})
+	id: text("id")
 		.primaryKey()
 		.$defaultFn(() => createId()),
-	updatedAt: timestamp("updated_at")
+	updatedAt: timestamp("updated_at", { withTimezone: true })
+		.defaultNow()
 		.$onUpdate(() => /* @__PURE__ */ new Date())
 		.notNull(),
-	createdAt: timestamp("created_at").defaultNow().notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true })
+		.defaultNow()
+		.notNull(),
 } as const;

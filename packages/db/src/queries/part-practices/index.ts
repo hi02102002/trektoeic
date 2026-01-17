@@ -3,10 +3,11 @@ import {
 	type InputPartPracticeHistory,
 	PartPracticeContentSchema,
 	PartPracticeHistorySchema,
+	PartPracticeMetadataSchema,
 } from "@trektoeic/schemas/part-practice-schema";
 import { and, eq, sql } from "drizzle-orm";
-import { sql as kSql } from "kysely";
 import z from "zod";
+import { kSql } from "../../libs/kysely";
 import { history } from "../../schema";
 import { withDb, withDbAndUser, withUserAndKysely } from "../../utils";
 import { questionsQueries } from "../questions";
@@ -165,9 +166,58 @@ const getCurrentProgressOfPartPractice = withUserAndKysely(
 	},
 );
 
+/**
+ * Redo a part practice session by getting all questions from a previous practice history
+ */
+const redoPartPractices = withDbAndUser(
+	({ db, userId }) =>
+		async (historyId: string) => {
+			const record = await db
+				?.select()
+				.from(history)
+				.where(
+					and(
+						eq(history.id, historyId),
+						eq(history.userId, userId),
+						eq(history.action, "practice_part"),
+					),
+				)
+				.limit(1)
+				.then((r) => r?.[0]);
+
+			if (!record) {
+				return null;
+			}
+
+			const contents = z
+				.array(PartPracticeContentSchema)
+				.parse(record.contents);
+
+			if (contents.length === 0) {
+				return null;
+			}
+
+			const allQuestionIds = contents.map((c) => c.questionId);
+
+			const uniqueQuestionIds = [...new Set(allQuestionIds)];
+
+			const metadata = PartPracticeMetadataSchema.parse(record.metadata);
+
+			const questions =
+				await questionsQueries.getQuestionsByIds(db)(uniqueQuestionIds);
+
+			return {
+				questions,
+				metadata,
+				originalHistoryId: historyId,
+			};
+		},
+);
+
 export const partPracticesQueries = {
 	getPartPractices,
 	createPartPracticeHistory,
 	getPartPracticeHistoryById,
 	getCurrentProgressOfPartPractice,
+	redoPartPractices,
 };

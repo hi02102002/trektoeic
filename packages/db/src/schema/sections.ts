@@ -12,12 +12,10 @@ export const sections = pgTable(
 		sectionDes: text("section_des").default(""),
 		intro: text("intro").default(""),
 		introVi: text("intro_vi").default(""),
-		introAudio: text("intro_audio").default(""),
-		introImage: text("intro_image").default(""),
-		introAnswer: text("intro_answer").default(""),
+		introAudio: text("intro_audio"),
+		introImage: text("intro_image"),
+		introAnswer: text("intro_answer"),
 		part: integer("part").notNull(),
 	},
-	(tb) => ({
-		indexPart: index("idx_sections_part").on(tb.part),
-	}),
+	(table) => [index("sections_part_idx").on(table.part)],
 );

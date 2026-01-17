@@ -40,7 +40,7 @@ const main = async () => {
 						audioUrl: question.audio_url || null,
 						imageUrl: question.image_url.join(","),
 						teaser: question.teaser,
-						total: question.count,
+						count: question.count,
 					})
 					.returning({
 						id: questions.id,

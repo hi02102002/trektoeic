@@ -22,6 +22,20 @@
 			"when": 1765693775437,
 			"tag": "0002_same_franklin_richards",
 			"breakpoints": true
+		},
+		{
+			"idx": 3,
+			"version": "7",
+			"when": 1768538217843,
+			"tag": "0003_youthful_exiles",
+			"breakpoints": true
+		},
+		{
+			"idx": 4,
+			"version": "7",
+			"when": 1768539170300,
+			"tag": "0004_fancy_spencer_smythe",
+			"breakpoints": true
 		}
 	]
 }

@@ -1,14 +1,51 @@
 import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
+import { getRouteApi, useNavigate } from "@tanstack/react-router";
 import { useTransition } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
+import { client } from "@/utils/orpc";
+
+const routeApi = getRouteApi(
+	"/_protected/app/_practices/practices/$part/$session-id/results/",
+);
 
 export const ResultActions = () => {
 	const [isPending, startTransition] = useTransition();
+	const params = routeApi.useParams();
+	const { history } = routeApi.useLoaderData();
+	const navigate = useNavigate();
 
 	const handleRetry = () => {
-		startTransition(() => {
-			alert("Chức năng làm lại bài sẽ sớm được ra mắt. Hãy chờ đón nhé!");
+		startTransition(async () => {
+			try {
+				const result = await client.partPractices.redoPartPractices({
+					historyId: params["session-id"],
+				});
+
+				if (!result) {
+					toast.error("Không tìm thấy bài luyện tập để làm lại");
+					return;
+				}
+
+				navigate({
+					to: "/app/practices/$part/$session-id",
+					params: {
+						part: params.part,
+						"session-id": result.cacheKey,
+					},
+					search: {
+						mode: history.metadata.mode,
+						numberOfQuestions: result.questions.length,
+						duration:
+							history.metadata.mode === "timed"
+								? history.metadata.duration
+								: undefined,
+					},
+				});
+			} catch {
+				toast.error("Có lỗi xảy ra khi làm lại bài luyện tập");
+			}
 		});
 	};
 
@@ -24,7 +61,10 @@ export const ResultActions = () => {
 					Làm lại
 				</Button>
 			</div>
-			<LoadingOverlay open={isPending} message="Bạn chờ chút nhé..." />
+			<LoadingOverlay
+				open={isPending}
+				message="Đang chuẩn bị bài luyện tập..."
+			/>
 		</>
 	);
 };

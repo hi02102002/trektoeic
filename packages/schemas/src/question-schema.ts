@@ -12,7 +12,7 @@ export const QuestionSchema = z.object({
 		text: z.string().nullable().optional(),
 		tran: z.record(z.string(), z.string().nullable().optional()),
 	}),
-	total: z.number(),
+	count: z.coerce.number<number>(),
 	kitId: z.string(),
 });
 

@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { index, jsonb, pgTable, text, varchar } from "drizzle-orm/pg-core";
+import { index, jsonb, pgTable, text } from "drizzle-orm/pg-core";
 import { DEFAULT_SCHEMA } from "../constants";
 import { user } from "./auth";
 
@@ -10,21 +10,24 @@ export const history = pgTable(
 		userId: text("user_id")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
-		action: varchar("action", {
-			length: 50,
-		})
-			.$type<"practice_part">()
-			.notNull(),
-		metadata: jsonb("metadata").$type<Record<string, unknown>>().notNull(),
-		contents: jsonb("contents").$type<unknown>().notNull(),
+		action: text("action").$type<"practice_part">().notNull(),
+		metadata: jsonb("metadata")
+			.$type<Record<string, unknown>>()
+			.notNull()
+			.default({}),
+		contents: jsonb("contents").$type<unknown>().notNull().default({}),
 	},
-	(tb) => ({
-		idxUserIdAction: index("idx_histories_user_id_action").on(
+	(tb) => [
+		index("histories_user_id_action_idx").on(tb.userId, tb.action),
+		index("histories_user_id_created_at_idx").on(
+			tb.userId,
+			tb.createdAt.desc(),
+		),
+		index("histories_user_action_metadata_part_idx").on(
 			tb.userId,
 			tb.action,
+			sql`(${tb.metadata}->>'part')`,
 		),
-		idxUserIdActionMetadataPart: index(
-			"idx_histories_user_id_action_metadata_part",
-		).on(tb.userId, tb.action, sql`(${tb.metadata}->>'part')`),
-	}),
+		index("histories_metadata_gin_idx").using("gin", tb.metadata),
+	],
 );

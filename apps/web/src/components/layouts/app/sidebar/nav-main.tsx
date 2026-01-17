@@ -96,6 +96,11 @@ export default function DashboardNavigation({ routes }: { routes: Route[] }) {
 																"flex items-center rounded-md px-4 py-1.5 font-medium text-muted-foreground text-sm hover:bg-sidebar-muted hover:text-foreground",
 																"data-[status=active]:bg-sidebar-accent data-[status=active]:text-foreground",
 															)}
+															activeOptions={{
+																includeSearch: true,
+																includeHash: true,
+																exact: true,
+															}}
 														>
 															{subRoute.title}
 														</Link>

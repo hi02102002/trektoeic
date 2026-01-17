@@ -9,7 +9,6 @@ import {
 } from "@/stores/attempt";
 import { QuestionsNavigator } from "./_components/questions-navigator";
 import { ResultActionBar } from "./_components/result-action-bar";
-import { ResultActions } from "./_components/result-actions";
 import { ResultQuestionsList } from "./_components/result-questions-list";
 
 export const Route = createFileRoute(
@@ -89,7 +88,6 @@ function RouteComponent() {
 					title={`Part ${part}`}
 					className="fixed top-0 right-0 left-0 z-40"
 					onNavigatorToggle={() => setIsNavigatorOpen(true)}
-					action={<ResultActions />}
 				/>
 				<div className="flex flex-col pt-16">
 					<QuestionsNavigator
