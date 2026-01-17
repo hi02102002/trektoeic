@@ -39,6 +39,9 @@ lerna-debug.log*
 # Better-T-Stack
 .alchemy
 
+# Claude
+.claude
+
 # Testing
 coverage
 .nyc_output
@@ -49,3 +52,4 @@ coverage
 tmp
 temp
 data/*.json
+.claude
