@@ -36,21 +36,21 @@
 	},
 	"devDependencies": {
 		"@trektoeic/config": "workspace:*",
-		"@types/pg": "^8.11.11",
-		"drizzle-kit": "^0.31.2"
+		"@types/pg": "^8.16.0",
+		"drizzle-kit": "^0.31.8"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
 		"@trektoeic/env": "workspace:*",
-		"@trektoeic/utils": "workspace:*",
 		"@trektoeic/schemas": "workspace:*",
-		"drizzle-orm": "^0.44.2",
+		"@trektoeic/utils": "workspace:*",
+		"drizzle-orm": "^0.45.1",
 		"drizzle-orm-helpers": "^0.7.6",
-		"kysely": "^0.28.8",
-		"pg": "^8.14.1",
-		"type-fest": "^5.3.1",
-		"zod": "^4.1.11"
+		"kysely": "^0.28.10",
+		"pg": "^8.17.2",
+		"type-fest": "^5.4.1",
+		"zod": "^4.3.5"
 	}
 }
