@@ -1,3 +1,4 @@
+import type { HistoryAction } from "@trektoeic/schemas/history-schema";
 import { sql } from "drizzle-orm";
 import { index, jsonb, pgTable, text } from "drizzle-orm/pg-core";
 import { DEFAULT_SCHEMA } from "../constants";
@@ -10,7 +11,7 @@ export const history = pgTable(
 		userId: text("user_id")
 			.notNull()
 			.references(() => user.id, { onDelete: "cascade" }),
-		action: text("action").$type<"practice_part">().notNull(),
+		action: text("action").$type<HistoryAction>().notNull(),
 		metadata: jsonb("metadata")
 			.$type<Record<string, unknown>>()
 			.notNull()
@@ -27,6 +28,11 @@ export const history = pgTable(
 			tb.userId,
 			tb.action,
 			sql`(${tb.metadata}->>'part')`,
+		),
+		index("histories_user_action_metadata_kit_id_idx").on(
+			tb.userId,
+			tb.action,
+			sql`(${tb.metadata}->>'kitId')`,
 		),
 		index("histories_metadata_gin_idx").using("gin", tb.metadata),
 	],

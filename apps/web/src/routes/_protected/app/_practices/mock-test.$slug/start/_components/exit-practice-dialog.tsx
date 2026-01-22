@@ -11,7 +11,7 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export const ExitPracticeDialog = () => {
+export const ExitMockTestDialog = () => {
 	const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
 	const { proceed, reset, status } = useBlocker({
@@ -38,10 +38,10 @@ export const ExitPracticeDialog = () => {
 		<AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Xác nhận rời khỏi bài luyện tập</AlertDialogTitle>
+					<AlertDialogTitle>Xác nhận rời khỏi bài thi thử</AlertDialogTitle>
 					<AlertDialogDescription>
-						Bạn có chắc chắn muốn rời khỏi bài luyện tập không? Tiến trình của
-						bạn sẽ không được lưu lại.
+						Bạn có chắc chắn muốn rời khỏi bài thi thử? Mọi tiến trình hiện tại
+						sẽ không được lưu lại.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
