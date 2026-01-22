@@ -72,7 +72,7 @@
 		"lucide-react": "^0.562.0",
 		"motion": "^12.28.2",
 		"next-themes": "^0.4.6",
-		"nitro": "3.0.1-alpha.1",
+		"nitro": "3.0.1-alpha.2",
 		"nprogress": "^0.2.0",
 		"ofetch": "^1.5.1",
 		"pg": "^8.17.2",
