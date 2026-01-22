@@ -84,6 +84,15 @@ export const env = createEnv({
 		 */
 		UPSTASH_REDIS_REST_URL: z.string().min(1),
 		UPSTASH_REDIS_REST_TOKEN: z.string().min(1),
+
+		/**
+		 * DEBUG
+		 */
+		DEBUG_STORAGE: z
+			.string()
+			.optional()
+			.default("false")
+			.transform((v) => v === "true"),
 	},
 	clientPrefix: "VITE_",
 	client: {
