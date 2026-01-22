@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
-import { client } from "@/utils/orpc";
+import { client } from "@/lib/orpc/orpc";
 
 const routeApi = getRouteApi(
 	"/_protected/app/_practices/practices/$part/$session-id/results/",

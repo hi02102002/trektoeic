@@ -3,12 +3,10 @@ import { z } from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
 import { TsrBreadcrumbs } from "@/components/tsr-breadcrumbs";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
-import {
-	MockTestInfo,
-	MockTestInstructions,
-	MockTestParts,
-	MockTestStartButton,
-} from "../_components";
+import { MockTestInfo } from "./_components/mock-test-info";
+import { MockTestInstructions } from "./_components/mock-test-instructions";
+import { MockTestParts } from "./_components/mock-test-parts";
+import { MockTestStartButton } from "./_components/mock-test-start-button";
 
 export const Route = createFileRoute(
 	"/_protected/app/_dashboard/mock-test/$slug",
@@ -79,13 +77,10 @@ function RouteComponent() {
 			}
 		>
 			<div className="grid gap-6 lg:grid-cols-3">
-				{/* Main content */}
 				<div className="space-y-6 lg:col-span-2">
 					<MockTestInstructions />
 					<MockTestParts />
 				</div>
-
-				{/* Sidebar */}
 				<div className="space-y-6">
 					<MockTestInfo kit={kit} />
 					<MockTestStartButton kit={kit} />

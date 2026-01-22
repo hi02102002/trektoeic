@@ -19,9 +19,8 @@ type Props = {
 		title: string;
 		questions: Array<{
 			id: string;
-			idx: number;
-			pIdx: number;
 			parentId: string;
+			pos: number;
 		}>;
 	}>;
 	mappedQuestions: Record<
@@ -33,8 +32,7 @@ type Props = {
 	>;
 	onQuestionClick?: (opts: {
 		questionId: string;
-		idx: number;
-		pIdx: number;
+		pos: number;
 		parentId: string;
 	}) => void;
 	className?: string;
@@ -163,19 +161,18 @@ export const Navigator = ({
 										{title}
 									</span>
 								</div>
-								{questions.map(({ id, idx, pIdx, parentId }) => {
+								{questions.map(({ id, parentId, pos }) => {
 									return (
 										<NavigatorButton
 											key={id}
 											id={id}
 											elId={`questions-navigator-question-${id}-parent-${parentId}`}
-											number={idx + 1}
+											number={pos}
 											status={mappedQuestions[id]?.status || "unanswered"}
 											onClick={() => {
 												onQuestionClick?.({
 													questionId: id,
-													idx: pIdx,
-													pIdx,
+													pos,
 													parentId,
 												});
 											}}

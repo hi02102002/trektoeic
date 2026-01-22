@@ -1,9 +1,7 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { QuestionsNavigator as SharedQuestionsNavigator } from "@/components/practices/questions-navigator";
 
-const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id/",
-);
+const Route = getRouteApi("/_protected/app/_practices/mock-test/$slug/start");
 
 export const QuestionsNavigator = ({
 	isOpen,
@@ -13,7 +11,6 @@ export const QuestionsNavigator = ({
 	onOpenChange: (open: boolean) => void;
 }) => {
 	const { questions } = Route.useLoaderData();
-	const { part } = Route.useParams();
 
 	return (
 		<SharedQuestionsNavigator
@@ -21,7 +18,7 @@ export const QuestionsNavigator = ({
 			onOpenChange={onOpenChange}
 			questions={questions}
 			mode="practice"
-			part={part}
+			groupBy="part"
 		/>
 	);
 };

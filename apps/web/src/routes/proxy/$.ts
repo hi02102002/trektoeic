@@ -33,9 +33,9 @@ export const Route = createFileRoute("/proxy/$")({
 						status: 200,
 						headers: {
 							"Content-Type": contentType,
-							"Cache-Control": "public, max-age=31536000, immutable",
+							"Cache-Control":
+								"public, max-age=31536000, s-maxage=31536000, immutable",
 							"Access-Control-Allow-Origin": "*",
-							"CDN-Cache-Control": "max-age=31536000",
 							"Accept-Ranges": "bytes",
 						},
 					});

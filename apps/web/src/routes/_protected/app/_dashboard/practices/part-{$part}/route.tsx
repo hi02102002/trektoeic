@@ -9,7 +9,7 @@ import { ProTips } from "@/components/pro-tips";
 import { TsrBreadcrumbs } from "@/components/tsr-breadcrumbs";
 import { MAP_PART } from "@/constants";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
-import { orpc } from "@/utils/orpc";
+import { orpc } from "@/lib/orpc/orpc";
 import { ConfigSession } from "./_components/config-session";
 import { CurrentProgress } from "./_components/current-progress";
 

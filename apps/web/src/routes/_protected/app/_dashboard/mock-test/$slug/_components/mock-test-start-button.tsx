@@ -1,4 +1,5 @@
 import { PlayIcon } from "@phosphor-icons/react";
+import { useNavigate } from "@tanstack/react-router";
 import type { Kit } from "@trektoeic/schemas/kit-schema";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -8,7 +9,9 @@ type Props = {
 	className?: string;
 };
 
-export const MockTestStartButton = ({ className }: Props) => {
+export const MockTestStartButton = ({ className, kit }: Props) => {
+	const navigate = useNavigate();
+
 	return (
 		<div
 			className={cn(
@@ -27,14 +30,17 @@ export const MockTestStartButton = ({ className }: Props) => {
 					thời gian và không gian yên tĩnh để làm bài.
 				</p>
 				<Button
-					className="w-full gap-2 font-semibold"
+					className="w-full gap-2"
 					leadingIcon={<PlayIcon weight="fill" />}
+					onClick={() => {
+						navigate({
+							to: "/app/mock-test/$slug/start",
+							params: { slug: kit.slug },
+						});
+					}}
 				>
 					Bắt đầu làm bài
 				</Button>
-				<p className="text-center text-muted-foreground/70 text-xs">
-					Chức năng này sẽ sớm được ra mắt
-				</p>
 			</div>
 		</div>
 	);

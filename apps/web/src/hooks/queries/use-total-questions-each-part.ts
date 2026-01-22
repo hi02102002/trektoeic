@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTime } from "@trektoeic/utils/get-time";
-import { orpc } from "@/utils/orpc";
+import { orpc } from "@/lib/orpc/orpc";
 
 export const useTotalQuestionsEachPart = () => {
 	return useQuery(

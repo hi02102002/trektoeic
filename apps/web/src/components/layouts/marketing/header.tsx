@@ -7,7 +7,6 @@ export const Header = () => {
 		<header className="fixed top-0 z-50 w-full border-neutral-200/50 border-b bg-white/80 backdrop-blur-md">
 			<nav className="container mx-auto">
 				<div className="flex h-16 items-center justify-between">
-					{/* @ts-expect-error */}
 					<Link to="/" className="inline-block">
 						<Logo />
 					</Link>

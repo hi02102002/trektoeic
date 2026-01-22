@@ -14,7 +14,7 @@ import { NProgress } from "@/components/nprogress";
 import { Toaster } from "@/components/ui/sonner";
 import { getUser } from "@/functions/get-user";
 import { generateMetadata } from "@/lib/meta";
-import type { orpc } from "@/utils/orpc";
+import type { orpc } from "@/lib/orpc/orpc";
 import appCss from "../index.css?url";
 
 export interface RouterAppContext {

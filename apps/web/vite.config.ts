@@ -15,7 +15,11 @@ export default defineConfig({
 			},
 		}),
 		nitro(),
-		viteReact(),
+		viteReact({
+			babel: {
+				plugins: ["babel-plugin-react-compiler"],
+			},
+		}),
 	],
 	nitro: {},
 });
