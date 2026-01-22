@@ -99,7 +99,7 @@
 	"devDependencies": {
 		"@tailwindcss/typography": "^0.5.19",
 		"@tanstack/react-query-devtools": "^5.91.2",
-		"@tanstack/react-router-devtools": "^1.154.1",
+		"@tanstack/react-router-devtools": "^1.154.7",
 		"@testing-library/dom": "^10.4.1",
 		"@testing-library/react": "^16.3.2",
 		"@trektoeic/config": "workspace:*",
