@@ -1,7 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
+import { useSubmitMockTest } from "../_hooks/use-submit-mock-test";
 
 export const MockActions = () => {
-	// const { handleSubmit, isPending } = useSubmitPractice();
+	const { handleSubmit, isPending } = useSubmitMockTest();
 
 	return (
 		<>
@@ -9,13 +11,13 @@ export const MockActions = () => {
 				<Button
 					variant="default"
 					size="sm"
-					// onClick={handleSubmit}
+					onClick={handleSubmit}
 					className="text-xs sm:text-sm"
 				>
 					Nộp bài
 				</Button>
 			</div>
-			{/* <LoadingOverlay open={isPending} message="Bạn chờ chút nhé..." /> */}
+			<LoadingOverlay open={isPending} message="Bạn chờ chút nhé..." />
 		</>
 	);
 };

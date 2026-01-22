@@ -1,4 +1,5 @@
 import { InsertOrUpdateResult } from "@trektoeic/schemas/db";
+import { HistoryActionSchema } from "@trektoeic/schemas/history-schema";
 import {
 	type InputPartPracticeHistory,
 	PartPracticeContentSchema,
@@ -64,7 +65,7 @@ const createPartPracticeHistory = withDbAndUser(
 					userId,
 					metadata,
 					contents,
-					action: "practice_part",
+					action: HistoryActionSchema.enum.practice_part,
 					id,
 				})
 				.returning({

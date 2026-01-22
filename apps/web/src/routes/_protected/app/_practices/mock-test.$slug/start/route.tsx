@@ -9,6 +9,7 @@ import {
 	QuestionTimerProvider,
 } from "@/stores/attempt";
 import { prefetchQuestionMedia } from "@/utils/prefetch-media";
+import { ExitMockTestDialog } from "./_components/exit-practice-dialog";
 import { MockActionBar } from "./_components/mock-action-bar";
 import { MockActions } from "./_components/mock-actions";
 import { MockQuestionsList } from "./_components/mock-questions-list";
@@ -93,7 +94,7 @@ function RouteComponent() {
 						timer={<MockTimer />}
 						action={<MockActions />}
 						className="fixed top-0 right-0 left-0 z-40"
-						// onNavigatorToggle={() => setIsNavigatorOpen(true)}
+						onNavigatorToggle={() => setIsNavigatorOpen(true)}
 					/>
 					<div className="flex flex-col pt-16">
 						<QuestionsNavigator
@@ -105,7 +106,7 @@ function RouteComponent() {
 						</div>
 					</div>
 					<MockActionBar />
-					{/* <ExitPracticeDialog /> */}
+					<ExitMockTestDialog />
 				</QuestionTimerProvider>
 			</AnswersProvider>
 		</CurrentQuestionProvider>

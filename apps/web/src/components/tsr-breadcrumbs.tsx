@@ -22,18 +22,18 @@ type Props = {
 
 export const TsrBreadcrumbs = ({ breadcrumbs, className }: Props) => {
 	return (
-		<Breadcrumb className={cn(className)}>
-			<BreadcrumbList>
+		<Breadcrumb className={cn("flex-nowrap", className)}>
+			<BreadcrumbList className="no-scrollbar flex-nowrap overflow-x-auto">
 				<SidebarTrigger />
 				{breadcrumbs.map((bc, index, arr) => {
 					const isLast = index === arr.length - 1;
 					return (
 						<Fragment key={bc.to?.toString() + index.toString()}>
-							<BreadcrumbItem>
+							<BreadcrumbItem className="shrink-0">
 								{isLast ? (
 									<BreadcrumbPage>{bc.label}</BreadcrumbPage>
 								) : (
-									<BreadcrumbLink asChild>
+									<BreadcrumbLink asChild className="whitespace-nowrap">
 										<Link
 											to={bc.to}
 											search={bc.search}

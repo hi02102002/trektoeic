@@ -14,7 +14,9 @@ export default defineConfig({
 				routeFileIgnorePattern: "^_(components|styles|assets|utils|hooks)$",
 			},
 		}),
-		nitro(),
+		nitro({
+			minify: true,
+		}),
 		viteReact({
 			babel: {
 				plugins: ["babel-plugin-react-compiler"],

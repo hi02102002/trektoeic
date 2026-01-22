@@ -1,5 +1,7 @@
 import { ActionBar } from "@/components/practices/action-bar";
+import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { useCurrentQuestion } from "@/stores/attempt";
+import { useSubmitMockTest } from "../_hooks/use-submit-mock-test";
 
 export const MockActionBar = () => {
 	const { canNext, canPrev, next, prev } = useCurrentQuestion((state) => ({
@@ -10,20 +12,21 @@ export const MockActionBar = () => {
 		idx: state.idx,
 	}));
 
+	const { handleSubmit, isPending } = useSubmitMockTest();
+
 	return (
 		<>
-			{/* <LoadingOverlay open={isPending} message="Đang gửi bài..." /> */}
+			<LoadingOverlay open={isPending} message="Đang gửi bài..." />
 			<ActionBar
 				canNext={canNext}
 				canPrev={canPrev}
-				// next={() => {
-				// 	if (canNext()) {
-				// 		next();
-				// 	} else {
-				// 		handleSubmit();
-				// 	}
-				// }}
-				next={() => (canNext() ? next() : {})}
+				next={() => {
+					if (canNext()) {
+						next();
+					} else {
+						handleSubmit();
+					}
+				}}
 				prev={prev}
 			/>
 		</>
