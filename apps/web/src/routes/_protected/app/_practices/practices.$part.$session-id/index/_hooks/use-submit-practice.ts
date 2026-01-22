@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { useTransition } from "react";
+import { orpc } from "@/lib/orpc/orpc";
 import { useAnswersApi, useQuestionTimerApi } from "@/stores/attempt";
-import { orpc } from "@/utils/orpc";
 
 const Route = getRouteApi(
 	"/_protected/app/_practices/practices/$part/$session-id/",

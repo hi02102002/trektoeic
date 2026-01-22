@@ -8,6 +8,7 @@ import { createIsomorphicFn } from "@tanstack/react-start";
 import { getRequestHeaders } from "@tanstack/react-start/server";
 import { createContext } from "@trektoeic/api/context";
 import { appRouter } from "@trektoeic/api/routers/index";
+import { logger } from "./logger";
 
 const getORPCClient = createIsomorphicFn()
 	.server(() => {
@@ -55,13 +56,10 @@ const getORPCClient = createIsomorphicFn()
 					],
 				}),
 				new BatchLinkPlugin({
-					mode: typeof window === "undefined" ? "buffered" : "streaming",
 					groups: [
 						{
-							condition: ({ context }) => context?.cache === "force-cache",
-							context: {
-								cache: "force-cache",
-							},
+							condition: () => true,
+							context: {},
 						},
 						{
 							condition: () => true,
@@ -70,6 +68,7 @@ const getORPCClient = createIsomorphicFn()
 					],
 				}),
 			],
+			interceptors: [logger()],
 		});
 
 		return createORPCClient(link);

@@ -37,7 +37,6 @@ function RouteComponent() {
 					}),
 					"absolute top-4 left-4",
 				)}
-				//@ts-expect-error
 				to="/"
 			>
 				<CaretLeftIcon />

@@ -113,6 +113,11 @@ export const MAP_PART_PRO_TIPS = [
 	],
 ] as const;
 
+/**
+ * Duration of full mock test in milliseconds
+ */
+export const DURATION_OF_MOCK_TEST_IN_MINUTES = 7_200_000;
+
 export const UNSET_VALUE = "__UNSET_VALUE__";
 
 export const KV_KEYS = {

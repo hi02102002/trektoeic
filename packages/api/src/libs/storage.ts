@@ -301,6 +301,7 @@ class MultiLayerDriver implements Driver {
 				);
 				counters.upstashWrites++;
 				saveCounters();
+				return;
 			} catch {}
 		}
 
@@ -313,6 +314,7 @@ class MultiLayerDriver implements Driver {
 				);
 				counters.cloudflareWrites++;
 				saveCounters();
+				return;
 			} catch {}
 		}
 	}
@@ -330,7 +332,7 @@ class MultiLayerDriver implements Driver {
 				const has = await upstashStorage.hasItem(key);
 				counters.upstashReads++;
 				saveCounters();
-				if (has) return true;
+				return has;
 			} catch {}
 		}
 

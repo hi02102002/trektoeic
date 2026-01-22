@@ -43,7 +43,7 @@ export function QuestionOption({
 		// Before checking: show "Bạn chọn" for selected option
 		if (!isChecked && isSelected) {
 			return (
-				<span className="flex items-center gap-1.5 rounded-md bg-violet-100 px-2.5 py-1 font-medium text-violet-700 text-xs">
+				<span className="flex items-center gap-1.5 whitespace-nowrap rounded-md bg-violet-100 px-2.5 py-1 font-medium text-violet-700 text-xs">
 					Bạn chọn
 				</span>
 			);

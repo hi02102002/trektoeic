@@ -26,6 +26,9 @@ type TimerProps = {
 type TimerUpProps = {} & TimerProps;
 
 type TimerDownProps = {
+	/**
+	 * Duration in milliseconds
+	 */
 	duration: number;
 	onDone: () => void;
 } & TimerProps;

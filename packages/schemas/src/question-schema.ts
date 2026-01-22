@@ -14,6 +14,7 @@ export const QuestionSchema = z.object({
 	}),
 	count: z.coerce.number<number>(),
 	kitId: z.string(),
+	position: z.string(),
 });
 
 export const SubQuestionSchema = z.object({

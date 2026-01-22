@@ -15,7 +15,6 @@ import {
 } from "./plugins";
 import { batchHandler } from "./plugins/batch-handler";
 
-// biome-ignore lint/suspicious/noExplicitAny: it is needed here
 type AnyRouter<T extends Context> = Router<ContractRouter<any>, T>;
 
 export const createRpcHandler = <T extends Context>(router: AnyRouter<T>) => {
@@ -32,8 +31,6 @@ export const createRpcHandler = <T extends Context>(router: AnyRouter<T>) => {
 				console.error(error);
 			}),
 		],
-		// biome-ignore lint/suspicious/noTsIgnore: orpc types issue
-		// @ts-ignore
 		plugins,
 	});
 };
@@ -56,8 +53,6 @@ export const createOpenApiHandler = <T extends Context>(
 				console.error(error);
 			}),
 		],
-		// biome-ignore lint/suspicious/noTsIgnore: orpc types issue
-		// @ts-ignore
 		plugins,
 	});
 };

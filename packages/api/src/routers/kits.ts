@@ -1,7 +1,9 @@
-import { kitsQueries } from "@trektoeic/db/queries";
+import { kitsQueries, questionsQueries } from "@trektoeic/db/queries";
 import { KitSchema } from "@trektoeic/schemas/kit-schema";
+import { QuestionWithSubsSchema } from "@trektoeic/schemas/question-schema";
 import { createOrderByInputSchema } from "@trektoeic/schemas/share-schema";
 import z from "zod";
+import { cachedMiddleware } from "../middlewares";
 import { publicProcedure } from "../procedures";
 
 const TAGS = ["Kits"] as const;
@@ -77,8 +79,52 @@ const getKitBySlug = publicProcedure
 		return kit;
 	});
 
+const getQuestionsBySlug = publicProcedure
+	.use(
+		cachedMiddleware({
+			expireInSeconds: 60 * 60, // 1 hour
+		}),
+	)
+	.route({
+		method: "GET",
+		tags: TAGS,
+		description: "Get questions of a kit by its slug",
+	})
+	.input(
+		z.object({
+			slug: z.string(),
+		}),
+	)
+	.output(
+		z
+			.object({
+				kit: KitSchema,
+				questions: z.array(QuestionWithSubsSchema),
+			})
+			.nullable(),
+	)
+	.handler(async ({ input, context }) => {
+		const { slug } = input;
+
+		const kit = await kitsQueries.getKitBySlug(context.db)(slug);
+
+		if (!kit) {
+			return null;
+		}
+
+		const questions = await questionsQueries.getQuestionsByKitId(context.db)(
+			kit?.id,
+		);
+
+		return {
+			kit,
+			questions,
+		};
+	});
+
 export const kitsRouter = {
 	getAllKits,
 	getAvailableKitYears,
 	getKitBySlug,
+	getQuestionsBySlug,
 };

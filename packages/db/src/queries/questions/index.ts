@@ -53,6 +53,7 @@ const getRandomQuestionsByPart = withDb(
 					subs: jsonAggBuildObjectWithOrder(
 						subQuestions,
 						subQuestions.position,
+						subQuestions.id,
 					).as("subs"),
 				})
 				.from(questions)
@@ -75,9 +76,11 @@ const getQuestionsByIds = withDb((db) => async (ids: string[]) => {
 	const records = await db
 		.select({
 			...getTableColumns(questions),
-			subs: jsonAggBuildObjectWithOrder(subQuestions, subQuestions.position).as(
-				"subs",
-			),
+			subs: jsonAggBuildObjectWithOrder(
+				subQuestions,
+				subQuestions.position,
+				subQuestions.id,
+			).as("subs"),
 		})
 		.from(questions)
 		.leftJoin(subQuestions, eq(questions.id, subQuestions.questionId))
@@ -93,16 +96,20 @@ const getQuestionsByKitId = withDb((db) => async (kitId: string) => {
 	const records = await db
 		.select({
 			...getTableColumns(questions),
-			subs: jsonAggBuildObjectWithOrder(subQuestions, subQuestions.position).as(
-				"subs",
-			),
+			subs: jsonAggBuildObjectWithOrder(
+				subQuestions,
+				subQuestions.position,
+				subQuestions.id,
+			).as("subs"),
 		})
 		.from(questions)
 		.leftJoin(subQuestions, eq(questions.id, subQuestions.questionId))
 		.where(and(eq(questions.kitId, kitId)))
-		.orderBy(questions.part, questions.id)
-		.groupBy(questions.id)
-		.$withCache();
+		.orderBy(
+			questions.part,
+			sql`split_part(${questions.position}, '-', 1)::int`,
+		)
+		.groupBy(questions.id);
 
 	return z.array(QuestionWithSubsSchema).parse(records);
 });
@@ -117,16 +124,17 @@ const getQuestionsByKitSlug = withDb((db) => async (kitSlug: string) => {
 	const records = await db
 		.select({
 			...getTableColumns(questions),
-			subs: jsonAggBuildObjectWithOrder(subQuestions, subQuestions.position).as(
-				"subs",
-			),
+			subs: jsonAggBuildObjectWithOrder(
+				subQuestions,
+				subQuestions.position,
+				subQuestions.id,
+			).as("subs"),
 		})
 		.from(questions)
 		.leftJoin(subQuestions, eq(questions.id, subQuestions.questionId))
 		.where(and(eq(questions.kitId, kit.id)))
-		.orderBy(questions.part, questions.id)
-		.groupBy(questions.id)
-		.$withCache();
+		.orderBy(questions.position)
+		.groupBy(questions.id);
 
 	return z.array(QuestionWithSubsSchema).parse(records);
 });

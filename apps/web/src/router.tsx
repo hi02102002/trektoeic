@@ -6,8 +6,8 @@ import "./index.css";
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { routerWithQueryClient } from "@tanstack/react-router-with-query";
 import { toast } from "sonner";
+import { orpc } from "./lib/orpc/orpc";
 import { routeTree } from "./routeTree.gen";
-import { orpc } from "./utils/orpc";
 
 export const getRouter = () => {
 	const queryClient = new QueryClient({

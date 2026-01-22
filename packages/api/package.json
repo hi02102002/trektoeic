@@ -41,10 +41,10 @@
 		"@trektoeic/logger": "workspace:*",
 		"@trektoeic/schemas": "workspace:*",
 		"@trektoeic/utils": "workspace:*",
-		"@upstash/redis": "^1.35.8",
-		"ioredis": "^5.8.2",
+		"@upstash/redis": "^1.36.1",
+		"ioredis": "^5.9.2",
 		"lru-cache": "^11.2.4",
-		"unstorage": "^1.17.3",
-		"zod": "^4.1.11"
+		"unstorage": "^1.17.4",
+		"zod": "^4.3.5"
 	}
 }

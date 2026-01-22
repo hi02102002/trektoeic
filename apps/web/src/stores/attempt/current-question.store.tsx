@@ -58,7 +58,7 @@ const createCurrentQuestionStore = (args: {
 
 			const newIdx = Math.max(0, Math.min(idx, total - 1));
 
-			set({ idx: newIdx, subQuestionIdx: newIdx });
+			set({ idx: newIdx, subQuestionIdx: 0 });
 
 			const onChange = get().onChange;
 			if (onChange) {
