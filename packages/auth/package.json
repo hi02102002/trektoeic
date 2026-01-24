@@ -23,6 +23,6 @@
 		"@trektoeic/env": "workspace:*",
 		"@trektoeic/mailer": "workspace:*",
 		"better-auth": "catalog:",
-		"zod": "^4.3.5"
+		"zod": "^4.3.6"
 	}
 }
