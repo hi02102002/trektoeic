@@ -118,6 +118,12 @@ export const MAP_PART_PRO_TIPS = [
  */
 export const DURATION_OF_MOCK_TEST_IN_MINUTES = 7_200_000;
 
+export const NUMBER_OF_QUESTIONS_IN_MOCK_TEST = 200;
+
+export const READING_PARTS = new Set([5, 6, 7]);
+
+export const LISTENING_PARTS = new Set([1, 2, 3, 4]);
+
 export const UNSET_VALUE = "__UNSET_VALUE__";
 
 export const KV_KEYS = {

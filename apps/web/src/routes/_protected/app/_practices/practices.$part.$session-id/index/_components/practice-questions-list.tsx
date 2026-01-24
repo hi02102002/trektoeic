@@ -162,6 +162,7 @@ export const PracticeQuestionsList = () => {
 											isCorrect: opts.isCorrect ?? false,
 											subQuestionId: opts.subQuestionId,
 											parentQuestionId: questionId,
+											part: Number(part),
 										});
 									}}
 								/>

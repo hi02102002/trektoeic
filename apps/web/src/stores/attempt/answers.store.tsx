@@ -8,6 +8,10 @@ export type Answer = {
 	isFlagged?: boolean;
 	subQuestionId: string;
 	parentQuestionId: string;
+	/**
+	 * Part number (1-7)
+	 */
+	part: number;
 };
 
 type AnswersValue = {
@@ -24,7 +28,7 @@ type AnswersState = AnswersValue & AnswersActions;
 const defaultSelector = <T,>(s: T) => s;
 
 const createAnswersStore = (
-	questions: { id: string; subs: { id: string }[] }[],
+	questions: { id: string; part: number; subs: { id: string }[] }[],
 	initialAnswers?: Record<string, Answer>,
 ) => {
 	const answers = questions.reduce<Record<string, Answer>>((acc, question) => {
@@ -36,6 +40,7 @@ const createAnswersStore = (
 				isFlagged: false,
 				subQuestionId: sub.id,
 				parentQuestionId: question.id,
+				part: question.part,
 			};
 		});
 		return acc;
@@ -79,7 +84,7 @@ export const AnswersProvider = ({
 	initialAnswers,
 }: {
 	children: React.ReactNode;
-	questions: { id: string; subs: { id: string }[] }[];
+	questions: { id: string; part: number; subs: { id: string }[] }[];
 	initialAnswers?: Record<string, Answer>;
 }) => {
 	const storeRef = useRef<ReturnType<typeof createAnswersStore> | null>(null);

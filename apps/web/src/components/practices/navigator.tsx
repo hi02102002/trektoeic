@@ -40,7 +40,7 @@ type Props = {
 	extra?: ReactNode;
 };
 
-const navigatorButtonVariants = cva(
+export const navigatorButtonVariants = cva(
 	cn(
 		"relative flex aspect-square size-8 cursor-pointer items-center justify-center rounded p-0 font-medium text-xs transition-colors",
 	),
