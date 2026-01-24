@@ -1,5 +1,6 @@
-import { getRouteApi } from "@tanstack/react-router";
+import { getRouteApi, Link } from "@tanstack/react-router";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { dayjs } from "@/lib/dayjs";
 import { cn } from "@/lib/utils";
@@ -10,6 +11,7 @@ const Route = getRouteApi(
 
 export const OverallScore = () => {
 	const cardStyle = useCardStyle();
+	const { slug, historyId } = Route.useParams();
 	const {
 		result: { history },
 	} = Route.useLoaderData();
@@ -20,9 +22,19 @@ export const OverallScore = () => {
 				<h2 className="flex items-center gap-2 font-semibold text-primary text-sm uppercase tracking-wider">
 					Overall Score
 				</h2>
-				<Badge variant="secondary">
-					Ngày làm bài: {dayjs(history.createdAt).format("DD/MM/YYYY")}
-				</Badge>
+				<div className="flex items-center gap-2">
+					<Badge variant="secondary">
+						Ngày làm bài: {dayjs(history.createdAt).format("DD/MM/YYYY")}
+					</Badge>
+					<Button size="sm" asChild>
+						<Link
+							to="/app/mock-test/$slug/$historyId/result-detail"
+							params={{ slug, historyId }}
+						>
+							Xem chi tiết
+						</Link>
+					</Button>
+				</div>
 			</div>
 
 			<div className="flex flex-col items-center gap-8 border-border border-b pb-8 sm:flex-row sm:items-end">
