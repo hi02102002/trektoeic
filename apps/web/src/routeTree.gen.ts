@@ -32,7 +32,8 @@ import { Route as ProtectedAppDashboardMockTestSlugRouteRouteImport } from './ro
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
 import { Route as ProtectedAppDashboardMockTestIndexRouteRouteImport } from './routes/_protected/app/_dashboard/mock-test/index/route'
 import { Route as ProtectedAppPracticesMockTestSlugStartRouteRouteImport } from './routes/_protected/app/_practices/mock-test.$slug/start/route'
-import { Route as ProtectedAppPracticesMockTestSlugResultsRouteRouteImport } from './routes/_protected/app/_practices/mock-test.$slug/results/route'
+import { Route as ProtectedAppDashboardMockTestSlugHistoryIdRouteRouteImport } from './routes/_protected/app/_dashboard/mock-test/$slug_.$historyId/route'
+import { Route as ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRouteImport } from './routes/_protected/app/_practices/mock-test.$slug/$historyId/result-detail/route'
 import { Route as ProtectedAppPracticesPracticesPartSessionIdIndexRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/index/route'
 import { Route as ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/results/summary/route'
 import { Route as ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRouteImport } from './routes/_protected/app/_practices/practices.$part.$session-id/results/index/route'
@@ -159,12 +160,20 @@ const ProtectedAppPracticesMockTestSlugStartRouteRoute =
     path: '/app/mock-test/$slug/start',
     getParentRoute: () => ProtectedRoute,
   } as any)
-const ProtectedAppPracticesMockTestSlugResultsRouteRoute =
-  ProtectedAppPracticesMockTestSlugResultsRouteRouteImport.update({
-    id: '/app/_practices/mock-test/$slug/results',
-    path: '/app/mock-test/$slug/results',
-    getParentRoute: () => ProtectedRoute,
+const ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute =
+  ProtectedAppDashboardMockTestSlugHistoryIdRouteRouteImport.update({
+    id: '/mock-test/$slug_/$historyId',
+    path: '/mock-test/$slug/$historyId',
+    getParentRoute: () => ProtectedAppDashboardRoute,
   } as any)
+const ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute =
+  ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRouteImport.update(
+    {
+      id: '/app/_practices/mock-test/$slug/$historyId/result-detail',
+      path: '/app/mock-test/$slug/$historyId/result-detail',
+      getParentRoute: () => ProtectedRoute,
+    } as any,
+  )
 const ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute =
   ProtectedAppPracticesPracticesPartSessionIdIndexRouteRouteImport.update({
     id: '/app/_practices/practices/$part/$session-id/',
@@ -208,9 +217,10 @@ export interface FileRoutesByFullPath {
   '/app/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
-  '/app/mock-test/$slug/results': typeof ProtectedAppPracticesMockTestSlugResultsRouteRoute
+  '/app/mock-test/$slug/$historyId': typeof ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute
   '/app/mock-test/$slug/start': typeof ProtectedAppPracticesMockTestSlugStartRouteRoute
   '/app/practices/$part/$session-id/': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  '/app/mock-test/$slug/$historyId/result-detail': typeof ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute
   '/app/practices/$part/$session-id/results/': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
   '/app/practices/$part/$session-id/results/summary': typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
@@ -233,9 +243,10 @@ export interface FileRoutesByTo {
   '/app/practices': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
-  '/app/mock-test/$slug/results': typeof ProtectedAppPracticesMockTestSlugResultsRouteRoute
+  '/app/mock-test/$slug/$historyId': typeof ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute
   '/app/mock-test/$slug/start': typeof ProtectedAppPracticesMockTestSlugStartRouteRoute
   '/app/practices/$part/$session-id': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  '/app/mock-test/$slug/$historyId/result-detail': typeof ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute
   '/app/practices/$part/$session-id/results': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
   '/app/practices/$part/$session-id/results/summary': typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
@@ -263,9 +274,10 @@ export interface FileRoutesById {
   '/_protected/app/_dashboard/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/_protected/app/_dashboard/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
   '/_protected/app/_dashboard/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
-  '/_protected/app/_practices/mock-test/$slug/results': typeof ProtectedAppPracticesMockTestSlugResultsRouteRoute
+  '/_protected/app/_dashboard/mock-test/$slug_/$historyId': typeof ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute
   '/_protected/app/_practices/mock-test/$slug/start': typeof ProtectedAppPracticesMockTestSlugStartRouteRoute
   '/_protected/app/_practices/practices/$part/$session-id/': typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  '/_protected/app/_practices/mock-test/$slug/$historyId/result-detail': typeof ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute
   '/_protected/app/_practices/practices/$part/$session-id/results/': typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
   '/_protected/app/_practices/practices/$part/$session-id/results/summary': typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
@@ -291,9 +303,10 @@ export interface FileRouteTypes {
     | '/app/practices/'
     | '/app/mock-test/$slug'
     | '/app/practices/part-{$part}'
-    | '/app/mock-test/$slug/results'
+    | '/app/mock-test/$slug/$historyId'
     | '/app/mock-test/$slug/start'
     | '/app/practices/$part/$session-id/'
+    | '/app/mock-test/$slug/$historyId/result-detail'
     | '/app/practices/$part/$session-id/results/'
     | '/app/practices/$part/$session-id/results/summary'
   fileRoutesByTo: FileRoutesByTo
@@ -316,9 +329,10 @@ export interface FileRouteTypes {
     | '/app/practices'
     | '/app/mock-test/$slug'
     | '/app/practices/part-{$part}'
-    | '/app/mock-test/$slug/results'
+    | '/app/mock-test/$slug/$historyId'
     | '/app/mock-test/$slug/start'
     | '/app/practices/$part/$session-id'
+    | '/app/mock-test/$slug/$historyId/result-detail'
     | '/app/practices/$part/$session-id/results'
     | '/app/practices/$part/$session-id/results/summary'
   id:
@@ -345,9 +359,10 @@ export interface FileRouteTypes {
     | '/_protected/app/_dashboard/practices/'
     | '/_protected/app/_dashboard/mock-test/$slug'
     | '/_protected/app/_dashboard/practices/part-{$part}'
-    | '/_protected/app/_practices/mock-test/$slug/results'
+    | '/_protected/app/_dashboard/mock-test/$slug_/$historyId'
     | '/_protected/app/_practices/mock-test/$slug/start'
     | '/_protected/app/_practices/practices/$part/$session-id/'
+    | '/_protected/app/_practices/mock-test/$slug/$historyId/result-detail'
     | '/_protected/app/_practices/practices/$part/$session-id/results/'
     | '/_protected/app/_practices/practices/$part/$session-id/results/summary'
   fileRoutesById: FileRoutesById
@@ -529,11 +544,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAppPracticesMockTestSlugStartRouteRouteImport
       parentRoute: typeof ProtectedRoute
     }
-    '/_protected/app/_practices/mock-test/$slug/results': {
-      id: '/_protected/app/_practices/mock-test/$slug/results'
-      path: '/app/mock-test/$slug/results'
-      fullPath: '/app/mock-test/$slug/results'
-      preLoaderRoute: typeof ProtectedAppPracticesMockTestSlugResultsRouteRouteImport
+    '/_protected/app/_dashboard/mock-test/$slug_/$historyId': {
+      id: '/_protected/app/_dashboard/mock-test/$slug_/$historyId'
+      path: '/mock-test/$slug/$historyId'
+      fullPath: '/app/mock-test/$slug/$historyId'
+      preLoaderRoute: typeof ProtectedAppDashboardMockTestSlugHistoryIdRouteRouteImport
+      parentRoute: typeof ProtectedAppDashboardRoute
+    }
+    '/_protected/app/_practices/mock-test/$slug/$historyId/result-detail': {
+      id: '/_protected/app/_practices/mock-test/$slug/$historyId/result-detail'
+      path: '/app/mock-test/$slug/$historyId/result-detail'
+      fullPath: '/app/mock-test/$slug/$historyId/result-detail'
+      preLoaderRoute: typeof ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRouteImport
       parentRoute: typeof ProtectedRoute
     }
     '/_protected/app/_practices/practices/$part/$session-id/': {
@@ -578,6 +600,7 @@ interface ProtectedAppDashboardRouteChildren {
   ProtectedAppDashboardPracticesIndexRouteRoute: typeof ProtectedAppDashboardPracticesIndexRouteRoute
   ProtectedAppDashboardMockTestSlugRouteRoute: typeof ProtectedAppDashboardMockTestSlugRouteRoute
   ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute: typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
+  ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute: typeof ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute
 }
 
 const ProtectedAppDashboardRouteChildren: ProtectedAppDashboardRouteChildren = {
@@ -594,6 +617,8 @@ const ProtectedAppDashboardRouteChildren: ProtectedAppDashboardRouteChildren = {
     ProtectedAppDashboardMockTestSlugRouteRoute,
   ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute:
     ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute,
+  ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute:
+    ProtectedAppDashboardMockTestSlugHistoryIdRouteRoute,
 }
 
 const ProtectedAppDashboardRouteWithChildren =
@@ -603,21 +628,21 @@ const ProtectedAppDashboardRouteWithChildren =
 
 interface ProtectedRouteChildren {
   ProtectedAppDashboardRoute: typeof ProtectedAppDashboardRouteWithChildren
-  ProtectedAppPracticesMockTestSlugResultsRouteRoute: typeof ProtectedAppPracticesMockTestSlugResultsRouteRoute
   ProtectedAppPracticesMockTestSlugStartRouteRoute: typeof ProtectedAppPracticesMockTestSlugStartRouteRoute
   ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute
+  ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute: typeof ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute
   ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute
   ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute: typeof ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedAppDashboardRoute: ProtectedAppDashboardRouteWithChildren,
-  ProtectedAppPracticesMockTestSlugResultsRouteRoute:
-    ProtectedAppPracticesMockTestSlugResultsRouteRoute,
   ProtectedAppPracticesMockTestSlugStartRouteRoute:
     ProtectedAppPracticesMockTestSlugStartRouteRoute,
   ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute:
     ProtectedAppPracticesPracticesPartSessionIdIndexRouteRoute,
+  ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute:
+    ProtectedAppPracticesMockTestSlugHistoryIdResultDetailRouteRoute,
   ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute:
     ProtectedAppPracticesPracticesPartSessionIdResultsIndexRouteRoute,
   ProtectedAppPracticesPracticesPartSessionIdResultsSummaryRouteRoute:

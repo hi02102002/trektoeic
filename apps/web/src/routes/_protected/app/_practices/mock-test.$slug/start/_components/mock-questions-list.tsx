@@ -153,6 +153,7 @@ export const MockQuestionsList = () => {
 											isCorrect: opts.isCorrect ?? false,
 											subQuestionId: opts.subQuestionId,
 											parentQuestionId: questionId,
+											part: Number(currentQuestion.part),
 										});
 									}}
 								/>

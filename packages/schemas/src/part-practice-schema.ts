@@ -9,6 +9,7 @@ export const PartPracticeContentSchema = z.object({
 	isCorrect: z.boolean(),
 	timeTaken: z.number().nullable().optional(),
 	isFlagged: z.boolean().optional(),
+	part: z.number().optional(),
 });
 
 export const PartPracticeMetadataSchema = z.object({

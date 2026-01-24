@@ -81,6 +81,7 @@ function RouteComponent() {
 				questions={questions.map((q) => {
 					return {
 						id: q.id,
+						part: q.part,
 						subs: q.subs.map((sub) => {
 							return { id: sub.id };
 						}),

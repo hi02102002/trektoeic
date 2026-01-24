@@ -50,6 +50,7 @@ export const useSubmitPractice = () => {
 						timeTaken: questionTimerApi
 							.getState()
 							.getQuestionTime(answer.parentQuestionId),
+						part: answer.part,
 					};
 				}),
 				metadata: {
