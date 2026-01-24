@@ -2,7 +2,7 @@ import { relations } from "drizzle-orm";
 import { account, session, user } from "./auth";
 import { history } from "./history";
 import { kits } from "./kit";
-import { questions, subQuestions } from "./question";
+import { questions, questionsToTags, subQuestions, tags } from "./question";
 import { vocabularies, vocabularyCategories } from "./vocabulary";
 
 export const userRelations = relations(user, ({ many }) => ({
@@ -33,12 +33,34 @@ export const questionsRelations = relations(questions, ({ many, one }) => ({
 	}),
 }));
 
-export const subQuestionsRelations = relations(subQuestions, ({ one }) => ({
-	question: one(questions, {
-		fields: [subQuestions.questionId],
-		references: [questions.id],
-	}),
+export const tagsRelations = relations(tags, ({ many }) => ({
+	questions: many(questionsToTags),
 }));
+
+export const subQuestionsRelations = relations(
+	subQuestions,
+	({ one, many }) => ({
+		question: one(questions, {
+			fields: [subQuestions.questionId],
+			references: [questions.id],
+		}),
+		tags: many(questionsToTags),
+	}),
+);
+
+export const questionsToTagsRelations = relations(
+	questionsToTags,
+	({ one }) => ({
+		question: one(questions, {
+			fields: [questionsToTags.questionId],
+			references: [questions.id],
+		}),
+		tag: one(tags, {
+			fields: [questionsToTags.tagId],
+			references: [tags.id],
+		}),
+	}),
+);
 
 export const kitsRelations = relations(questions, ({ many }) => ({
 	questions: many(questions),
