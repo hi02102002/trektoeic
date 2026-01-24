@@ -1,7 +1,7 @@
 import { RocketLaunchIcon } from "@phosphor-icons/react";
+
 import {
 	Empty,
-	EmptyContent,
 	EmptyDescription,
 	EmptyHeader,
 	EmptyMedia,
@@ -20,12 +20,6 @@ export const ComingSoon = () => {
 					Chúng tôi đang phát triển tính năng này. Vui lòng quay lại sau.
 				</EmptyDescription>
 			</EmptyHeader>
-			<EmptyContent className="max-w-lg">
-				<p className="text-muted-foreground text-xs">
-					Chúng tôi đang làm việc chăm chỉ để mang đến cho bạn trải nghiệm tốt
-					nhất.
-				</p>
-			</EmptyContent>
 		</Empty>
 	);
 };
