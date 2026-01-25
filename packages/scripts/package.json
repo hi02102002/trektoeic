@@ -19,14 +19,16 @@
 		"seed:sections:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-sections.ts"
 	},
 	"devDependencies": {
-		"@trektoeic/config": "workspace:*"
+		"@trektoeic/config": "workspace:*",
+		"@types/lodash-es": "^4.17.12"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"@trektoeic/env": "workspace:*",
 		"@trektoeic/crawler": "workspace:*",
-		"@trektoeic/db": "workspace:*"
+		"@trektoeic/db": "workspace:*",
+		"@trektoeic/env": "workspace:*",
+		"lodash-es": "^4.17.23"
 	}
 }

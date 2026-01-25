@@ -43,6 +43,13 @@
 			"when": 1769266601407,
 			"tag": "0005_square_kulan_gath",
 			"breakpoints": true
+		},
+		{
+			"idx": 6,
+			"version": "7",
+			"when": 1769313472073,
+			"tag": "0006_funny_vindicator",
+			"breakpoints": true
 		}
 	]
 }

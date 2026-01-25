@@ -57,7 +57,7 @@ export const questionsToTags = pgTable(
 		...DEFAULT_SCHEMA,
 		questionId: text("question_id")
 			.notNull()
-			.references(() => questions.id, { onDelete: "cascade" }),
+			.references(() => subQuestions.id, { onDelete: "cascade" }),
 		tagId: text("tag_id")
 			.notNull()
 			.references(() => tags.id, { onDelete: "cascade" }),
