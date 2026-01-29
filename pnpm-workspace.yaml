@@ -11,5 +11,5 @@ catalog:
   '@orpc/tanstack-query': ^1.13.4
   "@orpc/experimental-pino": ^1.13.4
   "@orpc/contract": ^1.13.4
-  better-auth: ^1.4.17
+  better-auth: ^1.4.18
   dotenv: ^17.2.2
