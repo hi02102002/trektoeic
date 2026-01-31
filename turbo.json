@@ -33,6 +33,10 @@
 			"cache": false,
 			"persistent": true
 		},
+		"db:migrate:prod": {
+			"cache": false,
+			"persistent": true
+		},
 		"db:generate": {
 			"cache": false,
 			"persistent": true

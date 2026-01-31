@@ -35,6 +35,43 @@ export const questions = pgTable(
 	],
 );
 
+export const tags = pgTable(
+	"tags",
+	{
+		...DEFAULT_SCHEMA,
+		key: text("key").notNull().unique(),
+		groupKey: text("group_key").notNull(),
+		part: integer("part"),
+		labelVi: text("label_vi").notNull(),
+		labelEn: text("label_en"),
+	},
+	(table) => [
+		index("tags_group_key_idx").on(table.groupKey),
+		index("tags_key_idx").on(table.key),
+	],
+);
+
+export const questionsToTags = pgTable(
+	"questions_to_tags",
+	{
+		...DEFAULT_SCHEMA,
+		questionId: text("question_id")
+			.notNull()
+			.references(() => subQuestions.id, { onDelete: "cascade" }),
+		tagId: text("tag_id")
+			.notNull()
+			.references(() => tags.id, { onDelete: "cascade" }),
+	},
+	(table) => [
+		index("questions_to_tags_question_id_idx").on(table.questionId),
+		index("questions_to_tags_tag_id_idx").on(table.tagId),
+		index("questions_to_tags_question_id_tag_id_idx").on(
+			table.questionId,
+			table.tagId,
+		),
+	],
+);
+
 export const subQuestions = pgTable(
 	"sub_questions",
 	{

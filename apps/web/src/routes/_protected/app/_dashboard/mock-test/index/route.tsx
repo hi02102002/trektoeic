@@ -9,7 +9,6 @@ import {
 	EmptyHeader,
 	EmptyTitle,
 } from "@/components/ui/empty";
-import { Label } from "@/components/ui/label";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { MockTestCard, MockTestFilter } from "../_components";
 
@@ -72,9 +71,7 @@ export const Route = createFileRoute("/_protected/app/_dashboard/mock-test/")({
 });
 
 function RouteComponent() {
-	const search = Route.useSearch();
-	const { kits, years } = Route.useLoaderData();
-	const navigate = Route.useNavigate();
+	const { kits } = Route.useLoaderData();
 
 	return (
 		<AppContent
@@ -95,24 +92,7 @@ function RouteComponent() {
 			}
 		>
 			<div className="space-y-6">
-				<div className="space-y-4">
-					<div className="space-y-2">
-						<Label>Năm</Label>
-						<MockTestFilter
-							options={years}
-							value={search.year?.toString() || "all"}
-							onChange={(value: string) => {
-								navigate({
-									search: (prev) => ({
-										...prev,
-										year: value === "all" ? undefined : Number(value),
-									}),
-								});
-							}}
-						/>
-					</div>
-				</div>
-
+				<MockTestFilter />
 				<div className="flex items-center justify-between border-neutral-200 border-b pb-4">
 					<p className="text-neutral-500 text-sm">{kits.length} đề thi</p>
 				</div>

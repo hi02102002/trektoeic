@@ -11,7 +11,7 @@ import {
 } from "./ui/breadcrumb";
 import { SidebarTrigger } from "./ui/sidebar";
 
-type Props = {
+export type TsrBreadcrumbsProps = {
 	breadcrumbs: Array<
 		{
 			label: string;
@@ -20,7 +20,10 @@ type Props = {
 	className?: string;
 };
 
-export const TsrBreadcrumbs = ({ breadcrumbs, className }: Props) => {
+export const TsrBreadcrumbs = ({
+	breadcrumbs,
+	className,
+}: TsrBreadcrumbsProps) => {
 	return (
 		<Breadcrumb className={cn("flex-nowrap", className)}>
 			<BreadcrumbList className="no-scrollbar flex-nowrap overflow-x-auto">

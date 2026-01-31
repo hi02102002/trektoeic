@@ -9,5 +9,5 @@ export const RECORD_TO_REGISTER = {
 	email: isDev ? "hoanghuyvodev@gmail.com" : "hoanghuyvoprod@gmail.com",
 	password: "0394604830Hoanghuy",
 	name: "Hoang Huy Vo",
-	phone: isDev ? "0394604832" : "0394604831",
+	phone: isDev ? "0344804832" : "0344804831",
 };

@@ -53,3 +53,5 @@ tmp
 temp
 data/*.json
 .claude
+google-cookies.json
+cookies.json

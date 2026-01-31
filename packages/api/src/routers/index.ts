@@ -8,6 +8,7 @@ import { mockTestRouter } from "./mock-test.router";
 import { partPractices } from "./part-practices";
 import { questions } from "./questions";
 import { partSections } from "./sections";
+import { vocabulariesRouter } from "./vocabularies";
 
 export const appRouter = {
 	questions,
@@ -15,6 +16,7 @@ export const appRouter = {
 	partPractices,
 	kits: kitsRouter,
 	mockTest: mockTestRouter,
+	vocabularies: vocabulariesRouter,
 };
 export type AppRouter = typeof appRouter;
 export type AppRouterClient = RouterClient<typeof appRouter>;
