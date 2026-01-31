@@ -15,6 +15,7 @@ export const sendMagicLink = async ({
 	});
 
 	if (error) {
+		console.log(`Your mail url is ${url}`);
 		console.error("Failed to send:", error.message);
 		return null;
 	}

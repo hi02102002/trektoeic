@@ -11,12 +11,16 @@
 		"toeicmax:sentences": "pnpm with-script src/toeicmax/get-all-sentences.ts",
 		"toeicmax:vocabs": "pnpm with-script src/toeicmax/get-all-vocabs.ts",
 		"toeicmax:refresh-token": "pnpm with-script src/toeicmax/refresh-token.ts",
+		"study4:get-all-topics": "pnpm with-script src/study4/get-all-topics.ts",
+		"study4:crawl-vocabularies": "pnpm with-script src/study4/crawl-vocabularies.ts",
 		"seed:mock-tests": "pnpm with-script src/seeds/toeicmax/seed-mock-test.ts",
 		"seed:vocabs": "pnpm with-script src/seeds/toeicmax/seed-vocabularies.ts",
 		"seed:mock-tests:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-mock-test.ts",
 		"seed:vocabs:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-vocabularies.ts",
 		"seed:sections": "pnpm with-script src/seeds/toeicmax/seed-sections.ts",
-		"seed:sections:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-sections.ts"
+		"seed:sections:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-sections.ts",
+		"seed:study4-vocabularies": "pnpm with-script src/seeds/study4/seed-study4-vocabularies.ts",
+		"seed:study4-vocabularies:prod": "pnpm with-script:prod src/seeds/study4/seed-study4-vocabularies.ts"
 	},
 	"devDependencies": {
 		"@trektoeic/config": "workspace:*",

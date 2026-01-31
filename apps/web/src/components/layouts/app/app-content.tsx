@@ -16,7 +16,7 @@ export const AppContent = ({
 	return (
 		<div className={className}>
 			{breadcrumbs && <div className="mb-4">{breadcrumbs}</div>}
-			{header && <div className="mb-12">{header}</div>}
+			{header && <div className="mb-6">{header}</div>}
 			{children}
 		</div>
 	);
