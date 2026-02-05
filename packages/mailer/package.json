@@ -25,7 +25,7 @@
 		"typescript": "^5"
 	},
 	"dependencies": {
-		"@react-email/components": "1.0.6",
+		"@react-email/components": "1.0.7",
 		"@trektoeic/env": "workspace:*",
 		"@unosend/node": "^1.1.0",
 		"nodemailer": "^7.0.13",
