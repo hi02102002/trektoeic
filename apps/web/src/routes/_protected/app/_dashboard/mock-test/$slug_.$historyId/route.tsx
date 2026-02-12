@@ -1,7 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import { TsrBreadcrumbs } from "@/components/tsr-breadcrumbs";
 import { OverallScore } from "./_components/overrall-scrore";
 import { ScoreBreakdown } from "./_components/score-breakdown";
 
@@ -28,7 +27,6 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-	const { historyId, slug } = Route.useParams();
 	const {
 		result: { history },
 	} = Route.useLoaderData();
@@ -36,22 +34,6 @@ function RouteComponent() {
 	return (
 		<AppContent
 			header={<AppHeader title={`Kết quả: ${history.metadata.title}`} />}
-			breadcrumbs={
-				<TsrBreadcrumbs
-					breadcrumbs={[
-						{ label: "Trang chủ", to: "/app" },
-						{ label: "Thư viện đề thi", to: "/app/mock-test" },
-						{
-							label: `Kết quả: ${history.metadata.title}`,
-							to: "/app/mock-test/$slug/$historyId",
-							params: {
-								slug,
-								historyId,
-							},
-						},
-					]}
-				/>
-			}
 		>
 			<div className="mx-auto max-w-7xl space-y-6">
 				<OverallScore />

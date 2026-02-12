@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { createOrderByInputSchema } from "@trektoeic/schemas/share-schema";
 import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import { TsrBreadcrumbs } from "@/components/tsr-breadcrumbs";
 import {
 	Empty,
 	EmptyDescription,
@@ -80,14 +79,6 @@ function RouteComponent() {
 					title="Thư viện đề thi"
 					description="Luyện tập với các đề thi TOEIC theo format chuẩn. Đánh giá trình độ và chuẩn bị tốt nhất cho kỳ thi thật."
 					className="max-w-2xl"
-				/>
-			}
-			breadcrumbs={
-				<TsrBreadcrumbs
-					breadcrumbs={[
-						{ label: "Trang chủ", to: "/app" },
-						{ label: "Thư viện đề thi", to: "/app/mock-test" },
-					]}
 				/>
 			}
 		>

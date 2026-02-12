@@ -1,11 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo } from "react";
 import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import {
-	TsrBreadcrumbs,
-	type TsrBreadcrumbsProps,
-} from "@/components/tsr-breadcrumbs";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { CategoriesList } from "./_components/categories-list";
 
@@ -74,29 +69,6 @@ export const Route = createFileRoute(
 function RouteComponent() {
 	const { category } = Route.useLoaderData();
 
-	const breadcrumbs = useMemo<TsrBreadcrumbsProps["breadcrumbs"]>(() => {
-		const crumbs: TsrBreadcrumbsProps["breadcrumbs"] = [
-			{ label: "Trang chủ", to: "/app" },
-			{
-				label: "Từ vựng theo chủ đề",
-				to: "/app/vocabularies" as const,
-			},
-		];
-
-		if (category) {
-			crumbs.push({
-				label: category.name,
-				to: "/app/vocabularies" as const,
-				search: (prev) => ({
-					...prev,
-					parentId: category.id,
-				}),
-			});
-		}
-
-		return crumbs;
-	}, [category]);
-
 	return (
 		<AppContent
 			header={
@@ -110,7 +82,6 @@ function RouteComponent() {
 					className="max-w-2xl"
 				/>
 			}
-			breadcrumbs={<TsrBreadcrumbs breadcrumbs={breadcrumbs} />}
 		>
 			<div className="space-y-6">
 				<CategoriesList />
