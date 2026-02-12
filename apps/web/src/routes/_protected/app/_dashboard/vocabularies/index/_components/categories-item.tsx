@@ -1,14 +1,9 @@
-import { NotebookIcon } from "@phosphor-icons/react";
 import { Link, type LinkProps } from "@tanstack/react-router";
 import type { VocabularyCategory } from "@trektoeic/schemas/vocabularies-schema";
 import { useMemo } from "react";
 import { IconBadge } from "@/components/icon-badge";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { cn } from "@/lib/utils";
-import {
-	CATEGORY_COLOR_CLASSES,
-	getCategoryColor,
-} from "@/utils/get-category-color";
 
 export const CategoryItem = ({
 	category,
@@ -16,14 +11,6 @@ export const CategoryItem = ({
 	category: VocabularyCategory;
 }) => {
 	const cardStyle = useCardStyle();
-	const categoryColor = useMemo(
-		() => getCategoryColor(category.id),
-		[category.id],
-	);
-	const colorClasses = useMemo(
-		() => CATEGORY_COLOR_CLASSES[categoryColor],
-		[categoryColor],
-	);
 
 	const linkOptions = useMemo(() => {
 		if (category.hasChild) {
@@ -48,18 +35,9 @@ export const CategoryItem = ({
 	return (
 		<Link {...linkOptions} className={cn(cardStyle)}>
 			<div className="mb-4 flex cursor-pointer items-start justify-between">
-				<IconBadge color={categoryColor} className="size-8">
-					<NotebookIcon weight="duotone" />
+				<IconBadge color="indigo" className="size-8">
+					📚
 				</IconBadge>
-				<div
-					className={cn(
-						"rounded px-2 py-1 font-semibold text-[10px] uppercase tracking-wide",
-						colorClasses.badgeBg,
-						colorClasses.badgeText,
-					)}
-				>
-					{category.alias}
-				</div>
 			</div>
 			<h3 className="mb-1 font-semibold text-primary text-sm">
 				{category.name}
@@ -69,7 +47,7 @@ export const CategoryItem = ({
 				<span className="font-medium text-primary">65%</span>
 			</div>
 			<div className="mb-4 h-1.5 w-full overflow-hidden rounded-full bg-zinc-100">
-				<div className={cn("h-full rounded-full", colorClasses.progressBar)} />
+				<div className={cn("h-full rounded-full")} />
 			</div>
 			<div className="flex items-center gap-3 border-border border-t pt-3">
 				{typeof category.totalWords === "number" && (
