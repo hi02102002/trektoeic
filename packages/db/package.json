@@ -37,7 +37,7 @@
 	"devDependencies": {
 		"@trektoeic/config": "workspace:*",
 		"@types/pg": "^8.16.0",
-		"drizzle-kit": "^0.31.8"
+		"drizzle-kit": "^0.31.9"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
@@ -50,7 +50,7 @@
 		"drizzle-orm-helpers": "^0.7.6",
 		"kysely": "^0.28.11",
 		"pg": "^8.18.0",
-		"type-fest": "^5.4.2",
+		"type-fest": "^5.4.4",
 		"zod": "^4.3.6"
 	}
 }

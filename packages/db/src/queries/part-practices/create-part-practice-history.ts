@@ -1,19 +1,20 @@
 import { InsertOrUpdateResult } from "@trektoeic/schemas/db";
 import { HistoryActionSchema } from "@trektoeic/schemas/history-schema";
-import type { InputMockTestHistory } from "@trektoeic/schemas/mock-test-schema";
+import type { InputPartPracticeHistory } from "@trektoeic/schemas/part-practice-schema";
 import z from "zod";
 import { withUserAndKysely } from "../../utils";
 
-export const createMockTestHistory = withUserAndKysely(
+export const createPartPracticeHistory = withUserAndKysely(
 	(userId, db) =>
-		async ({ contents, metadata }: InputMockTestHistory) => {
+		async ({ contents, metadata, id }: InputPartPracticeHistory) => {
 			const record = await db
 				.insertInto("histories")
 				.values({
 					userId,
 					metadata,
 					contents,
-					action: HistoryActionSchema.enum.mock_test,
+					action: HistoryActionSchema.enum.practice_part,
+					id,
 				})
 				.returning(["id"])
 				.execute();

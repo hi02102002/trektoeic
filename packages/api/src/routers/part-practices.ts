@@ -39,11 +39,13 @@ const getPartPractice = requiredAuthProcedure
 			return z.array(QuestionWithSubsSchema).parse(cached);
 		}
 
-		const records = await partPracticesQueries.getPartPractices(context.db)({
-			part,
-			limit,
-			userId: context.session.user.id,
-		});
+		const records = await partPracticesQueries.getPartPractices(context.kysely)(
+			{
+				part,
+				limit,
+				userId: context.session.user.id,
+			},
+		);
 
 		await context.kv.setItem(key, records, {
 			ttl: 60 * 60,
@@ -61,7 +63,7 @@ const createPartPracticeHistory = requiredAuthProcedure
 	.handler(async ({ input, context }) => {
 		const record = await partPracticesQueries.createPartPracticeHistory(
 			context.session.user.id,
-			context.db,
+			context.kysely,
 		)(input);
 
 		return record;
@@ -90,7 +92,7 @@ const getPartPracticeHistoryById = requiredAuthProcedure
 
 		const result = await partPracticesQueries.getPartPracticeHistoryById(
 			context.session.user.id,
-			context.db,
+			context.kysely,
 		)(id);
 
 		return result;
@@ -147,7 +149,7 @@ export const redoPartPractices = requiredAuthProcedure
 
 		const result = await partPracticesQueries.redoPartPractices(
 			context.session.user.id,
-			context.db,
+			context.kysely,
 		)(historyId);
 
 		if (!result) {

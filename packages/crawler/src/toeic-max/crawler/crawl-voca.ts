@@ -1,10 +1,10 @@
-import { db } from "@trektoeic/db";
+import { kysely } from "@trektoeic/db";
 import { getToken } from "@trektoeic/db/queries/toiec-max-tokens/get-token";
 import { callApi } from "../api";
 import { runBatchesWithCount, writeToFile } from "../utils";
 
 export async function getGroups(token?: string) {
-	const _token = token || (await getToken(db)());
+	const _token = token || (await getToken(kysely)());
 	const res = await callApi({
 		url: "https://dictionary.scandict.com/api/voca/group",
 		method: "GET",
@@ -19,7 +19,7 @@ export async function getGroups(token?: string) {
 }
 
 export async function getVocabsById(id: string, token?: string) {
-	const _token = token || (await getToken(db)());
+	const _token = token || (await getToken(kysely)());
 	const res = await callApi({
 		url: `https://dictionary.scandict.com/api/voca/word/${id}`,
 		method: "GET",
@@ -34,7 +34,7 @@ export async function getVocabsById(id: string, token?: string) {
 }
 
 export async function getAllVocabs() {
-	const token = await getToken(db)();
+	const token = await getToken(kysely)();
 
 	if (!token) {
 		return;

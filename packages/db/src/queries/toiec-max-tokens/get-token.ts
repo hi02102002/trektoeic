@@ -1,7 +1,10 @@
-import { withDb } from "../../utils";
+import { withKysely } from "../../utils";
 
-export const getToken = withDb((db) => async () => {
-	const token = await db.query.toeicMaxTokens.findFirst();
+export const getToken = withKysely((db) => async () => {
+	const token = await db
+		.selectFrom("toeicMaxTokens")
+		.select("token")
+		.executeTakeFirst();
 
 	return token?.token ?? null;
 });
