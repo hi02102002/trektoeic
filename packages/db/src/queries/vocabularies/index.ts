@@ -77,7 +77,7 @@ class CategoriesQuery {
 				COALESCE(
 					CASE 
 						WHEN vocabulary_categories.level = 1 
-						THEN COALESCE(child_word_counts.child_word_count, 0)
+						THEN COALESCE(word_counts.direct_word_count, 0) + COALESCE(child_word_counts.child_word_count, 0)
 						ELSE COALESCE(word_counts.direct_word_count, 0)
 					END,
 					0
