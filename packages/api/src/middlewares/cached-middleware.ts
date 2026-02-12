@@ -1,6 +1,6 @@
 import { os } from "@orpc/server";
 import { env } from "@trektoeic/env";
-import type { getRedisClient } from "../libs/ioredis";
+import type { storage } from "../libs/storage";
 
 const DEFAULT_EXPIRES_IN_SECONDS = 1 * 60 * 60; // 1 hour
 
@@ -16,7 +16,7 @@ export const cachedMiddleware = (opts?: {
 }) =>
 	os
 		.$context<{
-			redis?: ReturnType<typeof getRedisClient>;
+			kv?: typeof storage;
 		}>()
 		.middleware(async ({ context, next, path }, input, output) => {
 			if (env.NODE_ENV === "development") {
@@ -25,7 +25,7 @@ export const cachedMiddleware = (opts?: {
 
 			const key = opts?.key ?? `${path.join(":")}:${JSON.stringify(input)}`;
 
-			const cachedData = await context.redis?.get(key);
+			const cachedData = await context.kv?.getItem(key);
 
 			if (cachedData) {
 				return output(cachedData);
@@ -35,8 +35,8 @@ export const cachedMiddleware = (opts?: {
 				context,
 			});
 
-			await context.redis?.set(key, result.output, {
-				ex: opts?.expireInSeconds ?? DEFAULT_EXPIRES_IN_SECONDS,
+			await context.kv?.setItem(key, result.output, {
+				ttl: opts?.expireInSeconds ?? DEFAULT_EXPIRES_IN_SECONDS,
 			});
 
 			return result;
