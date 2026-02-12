@@ -49,7 +49,7 @@ const getAvailableKitYears = publicProcedure
 		),
 	)
 	.handler(async ({ context }) => {
-		const years = await kitsQueries.getAvailableKitYears(context.db)();
+		const years = await kitsQueries.getAvailableKitYears(context.kysely)();
 		return [
 			{ label: "Tất cả", value: "all" },
 			...years.map((year) => ({
@@ -74,7 +74,7 @@ const getKitBySlug = publicProcedure
 	.handler(async ({ input, context }) => {
 		const { slug } = input;
 
-		const kit = await kitsQueries.getKitBySlug(context.db)(slug);
+		const kit = await kitsQueries.getKitBySlug(context.kysely)(slug);
 
 		return kit;
 	});
@@ -106,15 +106,15 @@ const getQuestionsBySlug = publicProcedure
 	.handler(async ({ input, context }) => {
 		const { slug } = input;
 
-		const kit = await kitsQueries.getKitBySlug(context.db)(slug);
+		const kit = await kitsQueries.getKitBySlug(context.kysely)(slug);
 
 		if (!kit) {
 			return null;
 		}
 
-		const questions = await questionsQueries.getQuestionsByKitId(context.db)(
-			kit?.id,
-		);
+		const questions = await questionsQueries.getQuestionsByKitId(
+			context.kysely,
+		)(kit?.id);
 
 		return {
 			kit,

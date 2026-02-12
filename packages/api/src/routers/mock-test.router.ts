@@ -21,7 +21,7 @@ export const mockTestRouter = {
 		.handler(async ({ input, context }) => {
 			const inserted = await createMockTestHistory(
 				context.session.user.id,
-				context.db,
+				context.kysely,
 			)(input);
 
 			return inserted;
@@ -54,7 +54,7 @@ export const mockTestRouter = {
 
 			const result = await getMockTestHistoryById(
 				context.session.user.id,
-				context.db,
+				context.kysely,
 			)(historyId);
 
 			return result;

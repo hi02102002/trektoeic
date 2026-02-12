@@ -1,28 +1,28 @@
-import { eq } from "drizzle-orm";
-import { toeicMaxTokens } from "../../schema";
-import { withDb } from "../../utils";
+import { withKysely } from "../../utils";
 import { getToken } from "./get-token";
 
-export const upsertToken = withDb((db) => async (token: string) => {
+export const upsertToken = withKysely((db) => async (token: string) => {
 	const existing = await getToken(db)();
 
 	if (existing) {
 		const updated = await db
-			.update(toeicMaxTokens)
+			.updateTable("toeicMaxTokens")
 			.set({
 				token,
 			})
-			.where(eq(toeicMaxTokens.token, existing))
-			.returning();
+			.where("token", "=", existing)
+			.returningAll()
+			.execute();
 
 		return updated;
 	}
 	const created = await db
-		.insert(toeicMaxTokens)
+		.insertInto("toeicMaxTokens")
 		.values({
 			token,
 		})
-		.returning();
+		.returningAll()
+		.execute();
 
 	return created;
 });

@@ -13,7 +13,7 @@ const getTotalQuestionsEachPart = requiredAuthProcedure
 	.output(z.array(z.object({ part: z.number(), totalQuestions: z.number() })))
 	.handler(async ({ context }) => {
 		const result = await questionsQueries.getTotalQuestionsEachPart(
-			context.db,
+			context.kysely,
 		)();
 
 		return result;

@@ -19,9 +19,9 @@ const getPartSection = requiredAuthProcedure
 	.handler(async ({ input, context }) => {
 		const { part } = input;
 
-		const section = await partSectionsQueries.getPartSectionByPart(context.db)(
-			part,
-		);
+		const section = await partSectionsQueries.getPartSectionByPart(
+			context.kysely,
+		)(part);
 
 		return PartSectionSchema.parse(section);
 	});
