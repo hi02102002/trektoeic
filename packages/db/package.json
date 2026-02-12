@@ -50,7 +50,7 @@
 		"drizzle-orm-helpers": "^0.7.6",
 		"kysely": "^0.28.11",
 		"pg": "^8.18.0",
-		"type-fest": "^5.4.2",
+		"type-fest": "^5.4.4",
 		"zod": "^4.3.6"
 	}
 }
