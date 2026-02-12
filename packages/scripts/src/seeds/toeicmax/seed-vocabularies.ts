@@ -2,12 +2,48 @@ import fs from "node:fs";
 import path from "node:path";
 import { db, sql, vocabularies, vocabularyCategories } from "@trektoeic/db";
 
+type ToeicVocab = {
+	name: string;
+	example: string;
+	meaning: string;
+	spelling: string;
+	type: string;
+	loai: string;
+	image: string;
+	collection: unknown;
+};
+
+type ToeicChildCategory = {
+	vocabs?: ToeicVocab[];
+};
+
+type ToeicRootCategory = {
+	name: string;
+	slug: string;
+	alias?: string | null;
+	has_child?: number | boolean;
+	vocabs?: ToeicVocab[];
+	childs?: ToeicChildCategory[];
+};
+
+type VocabularyCollection = {
+	uk?: { spell: string; sound: string };
+	us?: { spell: string; sound: string };
+} | null;
+
+const normalizeCollection = (value: unknown): VocabularyCollection => {
+	if (value != null && typeof value === "object" && !Array.isArray(value)) {
+		return value as Exclude<VocabularyCollection, null>;
+	}
+	return null;
+};
+
 const main = async () => {
 	const data = fs.readFileSync(
 		path.join(process.cwd(), "/data/toeicmax-vocabs.json"),
 		"utf-8",
 	);
-	const parsed = JSON.parse(data);
+	const parsed = JSON.parse(data) as ToeicRootCategory[];
 
 	await db.delete(vocabularyCategories).where(sql`true`);
 	await db.delete(vocabularies).where(sql`true`);
@@ -22,8 +58,8 @@ const main = async () => {
 					name: item.name,
 					slug: item.slug,
 					alias: item.alias,
-					level: item.level,
-					hasChild: Boolean(item.has_child),
+					level: 1,
+					hasChild: false,
 				})
 				.returning({
 					id: vocabularyCategories.id,
@@ -33,47 +69,34 @@ const main = async () => {
 
 			if (!parentCategory) throw new Error("Failed to insert parent category");
 
-			// Insert child categories (lessons) and their vocabularies
+			const rootVocabs: ToeicVocab[] = [...(item.vocabs ?? [])];
+
+			// Flatten all child lesson vocabularies into the root category.
 			if (item.has_child && item.childs) {
 				for (const child of item.childs) {
-					const [childCategory] = await tx
-						.insert(vocabularyCategories)
-						.values({
-							name: child.name,
-							slug: child.slug,
-							alias: child.alias,
-							level: child.level,
-							parentId: parentCategory.id,
-							hasChild: Boolean(child.has_child),
-						})
-						.returning({
-							id: vocabularyCategories.id,
-						});
-
-					console.log(
-						`  Inserted lesson: ${childCategory?.id} - ${child.name} (${child.counts} vocabs)`,
-					);
-
-					if (!childCategory)
-						throw new Error("Failed to insert child category");
-
 					if (child.vocabs && child.vocabs.length > 0) {
-						await tx.insert(vocabularies).values(
-							child.vocabs.map((vocab: any) => ({
-								categoryId: childCategory.id,
-								name: vocab.name,
-								example: vocab.example,
-								meaning: vocab.meaning,
-								spelling: vocab.spelling,
-								type: vocab.type,
-								detailType: vocab.loai,
-								image: vocab.image,
-								collection: vocab.collection,
-							})),
-						);
+						rootVocabs.push(...child.vocabs);
 					}
 				}
 			}
+
+			if (rootVocabs.length > 0) {
+				await tx.insert(vocabularies).values(
+					rootVocabs.map((vocab) => ({
+						categoryId: parentCategory.id,
+						name: vocab.name,
+						example: vocab.example,
+						meaning: vocab.meaning,
+						spelling: vocab.spelling,
+						type: vocab.type,
+						detailType: vocab.loai,
+						image: vocab.image,
+						collection: normalizeCollection(vocab.collection),
+					})),
+				);
+			}
+
+			console.log(`  Added ${rootVocabs.length} vocabularies to ${item.name}`);
 		}
 	});
 };

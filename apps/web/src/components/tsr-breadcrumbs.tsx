@@ -9,7 +9,6 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from "./ui/breadcrumb";
-import { SidebarTrigger } from "./ui/sidebar";
 
 export type TsrBreadcrumbsProps = {
 	breadcrumbs: Array<
@@ -27,7 +26,6 @@ export const TsrBreadcrumbs = ({
 	return (
 		<Breadcrumb className={cn("flex-nowrap", className)}>
 			<BreadcrumbList className="no-scrollbar flex-nowrap overflow-x-auto">
-				<SidebarTrigger />
 				{breadcrumbs.map((bc, index, arr) => {
 					const isLast = index === arr.length - 1;
 					return (

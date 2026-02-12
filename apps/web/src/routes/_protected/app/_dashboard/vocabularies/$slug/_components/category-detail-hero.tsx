@@ -1,9 +1,4 @@
-import {
-	CardsIcon,
-	FileTextIcon,
-	PencilSimpleIcon,
-	PlayIcon,
-} from "@phosphor-icons/react";
+import { CardsIcon, PencilSimpleIcon, PlayIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 import type { VocabularyCategory } from "@trektoeic/schemas/vocabularies-schema";
 import { useMemo } from "react";
@@ -61,9 +56,7 @@ export function CategoryDetailHero({
 			<div className="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between">
 				<div className="min-w-0 flex-1">
 					<div className="mb-4 flex items-center gap-3">
-						<IconBadge color={categoryColor} className="size-12 rounded-xl">
-							<FileTextIcon weight="duotone" className="size-6" />
-						</IconBadge>
+						<IconBadge className="size-12 rounded-xl text-xl">📚</IconBadge>
 						<div>
 							<h1 className="font-semibold text-2xl text-foreground tracking-tight">
 								{category.name}
@@ -73,8 +66,6 @@ export function CategoryDetailHero({
 									<span
 										className={cn(
 											"rounded border px-2 py-0.5 font-semibold text-xs uppercase tracking-wide",
-											colorClasses.badgeBg,
-											colorClasses.badgeText,
 											"border-current/20",
 										)}
 									>

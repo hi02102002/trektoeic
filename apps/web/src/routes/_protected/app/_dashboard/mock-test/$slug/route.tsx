@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import { TsrBreadcrumbs } from "@/components/tsr-breadcrumbs";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { MockTestInfo } from "./_components/mock-test-info";
 import { MockTestInstructions } from "./_components/mock-test-instructions";
@@ -60,22 +59,7 @@ function RouteComponent() {
 	const { kit } = Route.useLoaderData();
 
 	return (
-		<AppContent
-			header={<AppHeader title={kit.name} />}
-			breadcrumbs={
-				<TsrBreadcrumbs
-					breadcrumbs={[
-						{ label: "Trang chủ", to: "/app" },
-						{ label: "Thư viện đề thi", to: "/app/mock-test" },
-						{
-							label: kit.name,
-							to: "/app/mock-test/$slug",
-							params: { slug: kit.slug },
-						},
-					]}
-				/>
-			}
-		>
+		<AppContent header={<AppHeader title={kit.name} />}>
 			<div className="grid gap-6 lg:grid-cols-3">
 				<div className="space-y-6 lg:col-span-2">
 					<MockTestInstructions />

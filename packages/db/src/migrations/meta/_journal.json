@@ -50,6 +50,13 @@
 			"when": 1769313472073,
 			"tag": "0006_funny_vindicator",
 			"breakpoints": true
+		},
+		{
+			"idx": 7,
+			"version": "7",
+			"when": 1770931200000,
+			"tag": "0007_flatten_vocabulary_categories",
+			"breakpoints": true
 		}
 	]
 }

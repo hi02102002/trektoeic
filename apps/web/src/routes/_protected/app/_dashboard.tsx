@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Sidebar } from "@/components/layouts/app";
+import { AppHeaderLayout } from "@/components/layouts/app/header";
 import { LoadingOverlay } from "@/components/ui/loading-overlay";
 
 export const Route = createFileRoute("/_protected/app/_dashboard")({
@@ -9,8 +9,8 @@ export const Route = createFileRoute("/_protected/app/_dashboard")({
 
 function RouteComponent() {
 	return (
-		<Sidebar>
+		<AppHeaderLayout>
 			<Outlet />
-		</Sidebar>
+		</AppHeaderLayout>
 	);
 }

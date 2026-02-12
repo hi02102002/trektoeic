@@ -2,10 +2,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import {
-	TsrBreadcrumbs,
-	type TsrBreadcrumbsProps,
-} from "@/components/tsr-breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { client } from "@/lib/orpc/orpc";
@@ -78,25 +74,6 @@ function RouteComponent() {
 	const hasMore = vocabulariesQuery.hasNextPage;
 	const isFetchingMore = vocabulariesQuery.isFetchingNextPage;
 
-	const breadcrumbs = useMemo<TsrBreadcrumbsProps["breadcrumbs"]>(() => {
-		const crumbs: TsrBreadcrumbsProps["breadcrumbs"] = [
-			{ label: "Trang chủ", to: "/app" },
-			{ label: "Từ vựng theo chủ đề", to: "/app/vocabularies" },
-		];
-		if (parentCategory) {
-			crumbs.push({
-				label: parentCategory.name,
-				to: "/app/vocabularies",
-				search: () => ({
-					parentId: parentCategory.id,
-					level: parentCategory.level + 1,
-				}),
-			});
-		}
-		crumbs.push({ label: category.name, to: "." });
-		return crumbs;
-	}, [category, parentCategory]);
-
 	return (
 		<AppContent
 			header={
@@ -110,7 +87,6 @@ function RouteComponent() {
 					className="max-w-2xl"
 				/>
 			}
-			breadcrumbs={<TsrBreadcrumbs breadcrumbs={breadcrumbs} />}
 		>
 			<div className="space-y-6">
 				<CategoryDetailHero category={category} totalWords={totalWords} />
