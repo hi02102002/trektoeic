@@ -2,6 +2,7 @@ import { InsertOrUpdateResult } from "@trektoeic/schemas/db";
 import { HistoryActionSchema } from "@trektoeic/schemas/history-schema";
 import type { InputPartPracticeHistory } from "@trektoeic/schemas/part-practice-schema";
 import z from "zod";
+import { json } from "../../libs/kysely/json";
 import { withUserAndKysely } from "../../utils";
 
 export const createPartPracticeHistory = withUserAndKysely(
@@ -11,8 +12,8 @@ export const createPartPracticeHistory = withUserAndKysely(
 				.insertInto("histories")
 				.values({
 					userId,
-					metadata,
-					contents,
+					metadata: json(metadata),
+					contents: json(contents),
 					action: HistoryActionSchema.enum.practice_part,
 					id,
 				})
