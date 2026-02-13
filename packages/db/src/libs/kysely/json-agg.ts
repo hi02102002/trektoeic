@@ -1,13 +1,23 @@
 import { type Expression, type RawBuilder, sql } from "kysely";
 
+type JsonAggOptions = {
+	orderBy?: Expression<unknown>;
+	filterNotNull?: Expression<unknown>;
+};
+
+/**
+ * Build `json_agg(json_build_object(...))` with end-to-end type inference.
+ *
+ * Mental model:
+ * - `shape` is SQL expressions for each JSON field.
+ * - `TOutput` is the final plain object type returned by SQL.
+ */
 export function kJsonAggBuildObject<TOutput extends Record<string, unknown>>(
 	shape: {
+		// Each output key maps to an expression that resolves to the same value type.
 		[K in keyof TOutput]: Expression<TOutput[K]>;
 	},
-	options?: {
-		orderBy?: Expression<unknown>;
-		filterNotNull?: Expression<unknown>;
-	},
+	options?: JsonAggOptions,
 ) {
 	const entries = Object.entries(shape);
 
@@ -32,19 +42,17 @@ export function kJsonAggBuildObject<TOutput extends Record<string, unknown>>(
   `;
 }
 
+/**
+ * Same SQL builder, but lets callers pin a domain type explicitly for nicer hover.
+ * Useful when TS would otherwise display expanded inferred internals.
+ */
 export function kJsonAggBuildObjectAs<
 	TOutput,
 	TShape extends Record<string, Expression<unknown>> = Record<
 		string,
 		Expression<unknown>
 	>,
->(
-	shape: TShape,
-	options?: {
-		orderBy?: Expression<unknown>;
-		filterNotNull?: Expression<unknown>;
-	},
-): RawBuilder<TOutput[]> {
+>(shape: TShape, options?: JsonAggOptions): RawBuilder<TOutput[]> {
 	return kJsonAggBuildObject(shape, options) as unknown as RawBuilder<
 		TOutput[]
 	>;

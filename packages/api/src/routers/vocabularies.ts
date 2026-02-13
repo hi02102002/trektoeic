@@ -1,4 +1,5 @@
 import { vocabulariesQueries } from "@trektoeic/db/queries";
+import { PaginatedResultSchema } from "@trektoeic/schemas/share-schema";
 import {
 	VocabularyCategorySchema,
 	VocabularySchema,
@@ -50,7 +51,7 @@ export const vocabulariesRouter = {
 				limit: z.number().optional().default(12),
 			}),
 		)
-		.output(z.array(VocabularySchema))
+		.output(PaginatedResultSchema(VocabularySchema))
 		.handler(async ({ input, context }) => {
 			return vocabulariesQueries.getVocabulariesByCategoryId(
 				context.session.user.id,

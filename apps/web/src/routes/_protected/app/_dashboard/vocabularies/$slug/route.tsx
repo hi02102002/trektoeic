@@ -1,31 +1,44 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useMemo } from "react";
+import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import { Button } from "@/components/ui/button";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
-import { client } from "@/lib/orpc/orpc";
 import { CategoryDetailHero } from "./_components/category-detail-hero";
 import { VocabularyCard } from "./_components/vocabulary-card";
+import { VocabularyPagination } from "./_components/vocabulary-pagination";
+
+const WORDS_PER_PAGE = 12;
 
 export const Route = createFileRoute(
 	"/_protected/app/_dashboard/vocabularies/$slug",
 )({
-	loader: async ({ context, params }) => {
+	validateSearch: z.object({
+		page: z.number().int().positive().optional().default(1),
+		study: z.enum(["now"]).optional(),
+		mode: z.enum(["flashcards", "quiz"]).optional(),
+	}),
+	loaderDeps: ({ search }) => search,
+	loader: async ({ context, params, deps }) => {
 		const category = await context.queryClient.ensureQueryData(
 			context.orpc.vocabularies.getCategoryBySlug.queryOptions({
 				input: { slug: params.slug },
 			}),
 		);
-		if (!category) throw notFound();
-		const parentCategory = category.parentId
-			? await context.queryClient.ensureQueryData(
-					context.orpc.vocabularies.getCategoryById.queryOptions({
-						input: { id: category.parentId },
-					}),
-				)
-			: null;
-		return { category, parentCategory };
+
+		if (!category) {
+			throw notFound();
+		}
+
+		const vocabularies = await context.queryClient.ensureQueryData(
+			context.orpc.vocabularies.getVocabulariesByCategoryId.queryOptions({
+				input: {
+					categoryId: category.id,
+					limit: WORDS_PER_PAGE,
+					page: deps.page,
+				},
+			}),
+		);
+
+		return { category, vocabularies };
 	},
 	component: RouteComponent,
 	head: ({ match, loaderData }) => {
@@ -47,32 +60,23 @@ export const Route = createFileRoute(
 	},
 });
 
-const WORDS_PER_PAGE = 12;
-
 function RouteComponent() {
-	const { category, parentCategory } = Route.useLoaderData();
+	const { category, vocabularies } = Route.useLoaderData();
+	const search = Route.useSearch();
+	const navigate = Route.useNavigate();
+	const page = search.page ?? 1;
 
-	const vocabulariesQuery = useInfiniteQuery({
-		queryKey: ["vocabularies", "byCategory", category.id],
-		queryFn: async ({ pageParam }) => {
-			return client.vocabularies.getVocabulariesByCategoryId({
-				categoryId: category.id,
-				page: pageParam as number,
-				limit: WORDS_PER_PAGE,
-			});
-		},
-		initialPageParam: 1,
-		getNextPageParam: (lastPage, allPages) =>
-			lastPage.length === WORDS_PER_PAGE ? allPages.length + 1 : undefined,
-	});
-
-	const words = useMemo(
-		() => vocabulariesQuery.data?.pages.flat() ?? [],
-		[vocabulariesQuery.data],
-	);
-	const totalWords = category.totalWords ?? 0;
-	const hasMore = vocabulariesQuery.hasNextPage;
-	const isFetchingMore = vocabulariesQuery.isFetchingNextPage;
+	const goToPage = (nextPage: number) => {
+		const clampedPage = Math.max(
+			1,
+			Math.min(nextPage, vocabularies.pagination?.totalPages ?? 1),
+		);
+		void navigate({
+			to: "/app/vocabularies/$slug",
+			params: { slug: category.slug },
+			search: { page: clampedPage },
+		});
+	};
 
 	return (
 		<AppContent
@@ -80,33 +84,27 @@ function RouteComponent() {
 				<AppHeader
 					title={category.name}
 					description={
-						parentCategory
-							? undefined
-							: "Học từ vựng TOEIC theo chủ đề. Nắm vững vốn từ cần thiết."
+						"Học từ vựng TOEIC theo chủ đề. Nắm vững vốn từ cần thiết."
 					}
 					className="max-w-2xl"
 				/>
 			}
 		>
 			<div className="space-y-6">
-				<CategoryDetailHero category={category} totalWords={totalWords} />
+				<CategoryDetailHero
+					category={category}
+					totalWords={vocabularies.pagination?.totalItems ?? 0}
+				/>
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-					{words.map((word) => (
+					{vocabularies.items.map((word) => (
 						<VocabularyCard key={word.id} word={word} />
 					))}
 				</div>
-				{hasMore && (
-					<div className="flex justify-center">
-						<Button
-							variant="ghost"
-							className="text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-							onClick={() => vocabulariesQuery.fetchNextPage()}
-							disabled={isFetchingMore}
-						>
-							{isFetchingMore ? "Loading..." : "Load more words"}
-						</Button>
-					</div>
-				)}
+				<VocabularyPagination
+					page={page}
+					totalPages={vocabularies.pagination?.totalPages ?? 0}
+					onPageChange={goToPage}
+				/>
 			</div>
 		</AppContent>
 	);
