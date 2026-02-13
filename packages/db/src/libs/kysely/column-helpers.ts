@@ -8,6 +8,10 @@ import type {
 	StringReference,
 } from "kysely";
 
+/**
+ * Get column name strings from a Drizzle table definition.
+ * Useful when you want to reuse Drizzle schema metadata in Kysely helpers.
+ */
 export function drizzleColumnNames<T extends PgTable>(
 	table: T,
 ): readonly (keyof T["_"]["columns"] & string)[] {
@@ -16,9 +20,19 @@ export function drizzleColumnNames<T extends PgTable>(
 	) as unknown as readonly (keyof T["_"]["columns"] & string)[];
 }
 
+// Valid column names for a concrete alias in the current DB shape.
 type ColumnName<DB, TAlias extends keyof DB & string> = keyof DB[TAlias] &
 	string;
 
+/**
+ * Build select expressions like:
+ *   alias.colA as colA, alias.colB as colB, ...
+ *
+ * Mental model:
+ * - `alias` chooses which table/alias to read from.
+ * - `cols` is constrained to valid columns of that alias.
+ * - output is a list of Kysely select expressions.
+ */
 export function selectColsFromNames<
 	DB,
 	TTables extends keyof DB & string,
@@ -37,6 +51,12 @@ export function selectColsFromNames<
 	);
 }
 
+/**
+ * Build a JSON-object "shape" from alias + column names:
+ *   { id: ref("alias.id"), name: ref("alias.name"), ... }
+ *
+ * This is mainly used as input for JSON aggregate helpers.
+ */
 export function jsonColsFromNames<
 	DB,
 	TTables extends keyof DB & string,
@@ -47,6 +67,7 @@ export function jsonColsFromNames<
 	alias: TAlias,
 	cols: TCols,
 ): {
+	// Key comes from selected column names; value is the underlying selected type.
 	[K in TCols[number]]: Expression<SelectType<DB[TAlias][K]>>;
 } {
 	return cols.reduce(

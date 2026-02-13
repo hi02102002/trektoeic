@@ -1,5 +1,4 @@
-import { CardsIcon, PencilSimpleIcon, PlayIcon } from "@phosphor-icons/react";
-import { Link } from "@tanstack/react-router";
+import { CardsIcon, PencilSimpleIcon } from "@phosphor-icons/react";
 import type { VocabularyCategory } from "@trektoeic/schemas/vocabularies-schema";
 import { useMemo } from "react";
 import { IconBadge } from "@/components/icon-badge";
@@ -129,44 +128,15 @@ export function CategoryDetailHero({
 						</div>
 					</div>
 				</div>
-
-				<div className="flex w-full min-w-[300px] flex-col gap-3 sm:flex-row lg:w-auto">
-					<Button
-						asChild
-						className="flex-1 shadow-lg shadow-primary/10"
-						size="lg"
-					>
-						<Link
-							to="/app/vocabularies/$slug"
-							params={{ slug: category.slug }}
-							search={{ study: "now" }}
-						>
-							<PlayIcon weight="bold" className="size-[18px]" />
-							Study Now
-						</Link>
+				<div className="grid grid-cols-2 gap-3">
+					<Button variant="outline" size="lg" className="font-medium">
+						<CardsIcon weight="duotone" className="size-[18px]" />
+						Flashcards
 					</Button>
-					<div className="grid grid-cols-2 gap-3">
-						<Button variant="outline" size="lg" className="font-medium" asChild>
-							<Link
-								to="/app/vocabularies/$slug"
-								params={{ slug: category.slug }}
-								search={{ mode: "flashcards" }}
-							>
-								<CardsIcon weight="duotone" className="size-[18px]" />
-								Flashcards
-							</Link>
-						</Button>
-						<Button variant="outline" size="lg" className="font-medium" asChild>
-							<Link
-								to="/app/vocabularies/$slug"
-								params={{ slug: category.slug }}
-								search={{ mode: "quiz" }}
-							>
-								<PencilSimpleIcon weight="duotone" className="size-[18px]" />
-								Quiz
-							</Link>
-						</Button>
-					</div>
+					<Button variant="outline" size="lg" className="font-medium">
+						<PencilSimpleIcon weight="duotone" className="size-[18px]" />
+						Quiz
+					</Button>
 				</div>
 			</div>
 		</div>
