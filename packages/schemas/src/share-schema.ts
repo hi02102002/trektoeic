@@ -39,3 +39,5 @@ export type PaginationInput = z.infer<typeof PaginationInputSchema>;
 export type PaginatedResult<TItem> = z.infer<
 	ReturnType<typeof PaginatedResultSchema<TItem>>
 >;
+
+export const DateLikeSchema = z.union([z.string(), z.date()]);

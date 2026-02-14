@@ -6,3 +6,4 @@ export * from "./relations";
 export * from "./sections";
 export * from "./toeic-max-token";
 export * from "./vocabulary";
+export * from "./vocabulary-review";

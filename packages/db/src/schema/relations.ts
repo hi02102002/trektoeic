@@ -4,11 +4,13 @@ import { history } from "./history";
 import { kits } from "./kit";
 import { questions, questionsToTags, subQuestions, tags } from "./question";
 import { vocabularies, vocabularyCategories } from "./vocabulary";
+import { vocabularyReviewCards } from "./vocabulary-review";
 
 export const userRelations = relations(user, ({ many }) => ({
 	sessions: many(session),
 	accounts: many(account),
 	histories: many(history),
+	vocabularyReviewCards: many(vocabularyReviewCards),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -81,12 +83,30 @@ export const vocabularyCategoriesRelations = relations(
 	}),
 );
 
-export const vocabulariesRelations = relations(vocabularies, ({ one }) => ({
-	category: one(vocabularyCategories, {
-		fields: [vocabularies.categoryId],
-		references: [vocabularyCategories.id],
+export const vocabulariesRelations = relations(
+	vocabularies,
+	({ one, many }) => ({
+		category: one(vocabularyCategories, {
+			fields: [vocabularies.categoryId],
+			references: [vocabularyCategories.id],
+		}),
+		reviewCards: many(vocabularyReviewCards),
 	}),
-}));
+);
+
+export const vocabularyReviewCardsRelations = relations(
+	vocabularyReviewCards,
+	({ one }) => ({
+		user: one(user, {
+			fields: [vocabularyReviewCards.userId],
+			references: [user.id],
+		}),
+		vocabulary: one(vocabularies, {
+			fields: [vocabularyReviewCards.vocabularyId],
+			references: [vocabularies.id],
+		}),
+	}),
+);
 
 export const historyRelations = relations(history, ({ one }) => ({
 	user: one(user, {
