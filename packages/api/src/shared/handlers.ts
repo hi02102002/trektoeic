@@ -2,10 +2,12 @@ import { OpenAPIHandler } from "@orpc/openapi/fetch";
 import {
 	type Context,
 	type ContractRouter,
+	ORPCError,
 	onError,
 	type Router,
 } from "@orpc/server";
 import { RPCHandler } from "@orpc/server/fetch";
+import z, { ZodError } from "zod";
 import {
 	cors,
 	logger,
@@ -50,7 +52,16 @@ export const createOpenApiHandler = <T extends Context>(
 	return new OpenAPIHandler(router, {
 		interceptors: [
 			onError((error) => {
-				console.error(error);
+				if (error instanceof ZodError) {
+					throw new ORPCError("VALIDATION_ERROR", {
+						status: 400,
+						message: z.prettifyError(error),
+						data: z.flattenError(error),
+						cause: error.cause,
+					});
+				}
+
+				throw error;
 			}),
 		],
 		plugins,

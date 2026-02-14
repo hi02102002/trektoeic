@@ -42,19 +42,24 @@ export const CategoryItem = ({
 			<h3 className="mb-1 font-semibold text-primary text-sm">
 				{category.name}
 			</h3>
-			<div className="mb-2 flex items-center justify-between text-xs text-zinc-500">
-				<span>Progress</span>
-				<span className="font-medium text-primary">65%</span>
+			<div className="mb-2 flex items-center justify-between text-muted-foreground text-xs">
+				<span>
+					{category.learnedWords} / {category.totalWords} từ
+				</span>
+				<span className="font-medium text-primary">
+					{category.progressPct}%
+				</span>
 			</div>
-			<div className="mb-4 h-1.5 w-full overflow-hidden rounded-full bg-zinc-100">
-				<div className={cn("h-full rounded-full")} />
+			<div className="mb-4 h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+				<div
+					className={cn("h-full rounded-full bg-indigo-700")}
+					style={{ width: `${category.progressPct}%` }}
+				/>
 			</div>
 			<div className="flex items-center gap-3 border-border border-t pt-3">
-				{typeof category.totalWords === "number" && (
-					<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
-						{category.totalWords} words
-					</div>
-				)}
+				<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
+					{category.dueWords} từ cần ôn tập
+				</div>
 			</div>
 		</Link>
 	);

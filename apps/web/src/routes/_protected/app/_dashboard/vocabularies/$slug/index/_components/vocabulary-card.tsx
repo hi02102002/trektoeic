@@ -4,38 +4,29 @@ import {
 	SpeakerHighIcon,
 } from "@phosphor-icons/react";
 import type { Vocabulary } from "@trektoeic/schemas/vocabularies-schema";
+import type { VocabularyReviewStateSchema } from "@trektoeic/schemas/vocabularies-shared-schema";
 import { useCallback } from "react";
+import type z from "zod";
 import { Button } from "@/components/ui/button";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { cn } from "@/lib/utils";
 
-type Proficiency = "mastered" | "learning" | "new";
-
 const PROFICIENCY_STYLES: Record<
-	Proficiency,
+	z.infer<typeof VocabularyReviewStateSchema>,
 	{ label: string; bars: string; checkVisible?: boolean }
 > = {
-	mastered: {
-		label: "Mastered",
-		bars: "bg-primary",
-		checkVisible: true,
-	},
-	learning: {
-		label: "Learning",
-		bars: "bg-primary/60",
-	},
-	new: {
-		label: "New",
-		bars: "bg-muted-foreground/20",
-	},
+	new: { label: "New", bars: "bg-muted-foreground/20" },
+	learning: { label: "Learning", bars: "bg-primary/60" },
+	review: { label: "Review", bars: "bg-primary", checkVisible: true },
+	mastered: { label: "Mastered", bars: "bg-primary", checkVisible: true },
 };
-
-function getProficiency(_word: Vocabulary): Proficiency {
-	return "new";
-}
 
 function getPronunciation(word: Vocabulary): string {
 	const c = word.collection;
+	const isSpellingSame =
+		c?.uk?.spell === word.name || c?.us?.spell === word.name;
+	if (isSpellingSame) return word.spelling ?? "";
+
 	if (c?.uk?.spell) return c.uk.spell;
 	if (c?.us?.spell) return c.us.spell;
 	return word.spelling ?? "";
@@ -46,9 +37,8 @@ type VocabularyCardProps = {
 };
 
 export function VocabularyCard({ word }: VocabularyCardProps) {
-	const proficiency = getProficiency(word);
 	const pronunciation = getPronunciation(word);
-	const styles = PROFICIENCY_STYLES[proficiency];
+	const styles = PROFICIENCY_STYLES[word.state];
 
 	const cardStyle = useCardStyle();
 
@@ -105,12 +95,9 @@ export function VocabularyCard({ word }: VocabularyCardProps) {
 							key={i}
 							className={cn(
 								"h-3 w-1.5 rounded-sm",
-								proficiency === "mastered" || proficiency === "learning"
-									? i <= (proficiency === "mastered" ? 4 : 2)
-										? proficiency === "mastered"
-											? "bg-primary"
-											: "bg-primary/60"
-										: "bg-muted-foreground/20"
+								i <=
+									(word.state === "new" ? 1 : word.state === "learning" ? 2 : 4)
+									? styles.bars
 									: "bg-muted-foreground/20",
 							)}
 						/>
