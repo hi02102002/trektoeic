@@ -1,69 +1,76 @@
 {
-	"version": "7",
-	"dialect": "postgresql",
-	"entries": [
-		{
-			"idx": 0,
-			"version": "7",
-			"when": 1765551012076,
-			"tag": "0000_gorgeous_shen",
-			"breakpoints": true
-		},
-		{
-			"idx": 1,
-			"version": "7",
-			"when": 1765649507715,
-			"tag": "0001_eager_meggan",
-			"breakpoints": true
-		},
-		{
-			"idx": 2,
-			"version": "7",
-			"when": 1765693775437,
-			"tag": "0002_same_franklin_richards",
-			"breakpoints": true
-		},
-		{
-			"idx": 3,
-			"version": "7",
-			"when": 1768538217843,
-			"tag": "0003_youthful_exiles",
-			"breakpoints": true
-		},
-		{
-			"idx": 4,
-			"version": "7",
-			"when": 1768539170300,
-			"tag": "0004_fancy_spencer_smythe",
-			"breakpoints": true
-		},
-		{
-			"idx": 5,
-			"version": "7",
-			"when": 1769266601407,
-			"tag": "0005_square_kulan_gath",
-			"breakpoints": true
-		},
-		{
-			"idx": 6,
-			"version": "7",
-			"when": 1769313472073,
-			"tag": "0006_funny_vindicator",
-			"breakpoints": true
-		},
-		{
-			"idx": 7,
-			"version": "7",
-			"when": 1770931200000,
-			"tag": "0007_flatten_vocabulary_categories",
-			"breakpoints": true
-		},
-		{
-			"idx": 8,
-			"version": "7",
-			"when": 1770980831987,
-			"tag": "0008_organic_tana_nile",
-			"breakpoints": true
-		}
-	]
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1765551012076,
+      "tag": "0000_gorgeous_shen",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1765649507715,
+      "tag": "0001_eager_meggan",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1765693775437,
+      "tag": "0002_same_franklin_richards",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1768538217843,
+      "tag": "0003_youthful_exiles",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1768539170300,
+      "tag": "0004_fancy_spencer_smythe",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1769266601407,
+      "tag": "0005_square_kulan_gath",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1769313472073,
+      "tag": "0006_funny_vindicator",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1770931200000,
+      "tag": "0007_flatten_vocabulary_categories",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1770980831987,
+      "tag": "0008_organic_tana_nile",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1771091450778,
+      "tag": "0009_complete_supernaut",
+      "breakpoints": true
+    }
+  ]
 }
