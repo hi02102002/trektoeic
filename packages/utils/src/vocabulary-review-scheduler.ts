@@ -19,29 +19,18 @@ export type VocabularyReviewCardSchedule = {
 	lapses: number;
 	intervalDays: number;
 	easeFactor: number;
-	nextReviewAt?: Date;
-	lastReviewedAt?: Date | null;
+	nextReviewAt?: Date | string;
+	lastReviewedAt?: Date | null | string;
 };
 
 export type ReviewComputation = {
 	grade: VocabularyReviewGrade;
 	before: VocabularyReviewCardSchedule;
 	after: VocabularyReviewCardSchedule;
-	nextReviewAt: Date;
-	nextReviewInMs: number;
-	intervalLabel: string;
+	nextReviewAt: Date | string;
+	nextReviewInMs: number | string;
+	intervalLabel: string | string;
 };
-
-export type SessionStateInput = {
-	remainingNewCards: number;
-	relearnDueAt: Date[];
-	now?: Date;
-};
-
-export type SessionStateResult =
-	| { status: "show-card" }
-	| { status: "waiting"; waitMs: number; nextAvailableAt: Date }
-	| { status: "completed" };
 
 type SchedulerConfig = {
 	requestRetention: number;
@@ -105,16 +94,16 @@ export class VocabularyReviewScheduler {
 	 * Useful for first-time cards or nullable DB values.
 	 */
 	public normalizeCard(
-		card: Partial<VocabularyReviewCardSchedule>,
+		card?: Partial<VocabularyReviewCardSchedule> | null,
 	): VocabularyReviewCardSchedule {
 		return {
-			state: card.state ?? "new",
-			repetitions: card.repetitions ?? 0,
-			lapses: card.lapses ?? 0,
-			intervalDays: card.intervalDays ?? 0,
-			easeFactor: card.easeFactor ?? this.config.defaultEaseFactor,
-			nextReviewAt: card.nextReviewAt,
-			lastReviewedAt: card.lastReviewedAt ?? null,
+			state: card?.state ?? "new",
+			repetitions: card?.repetitions ?? 0,
+			lapses: card?.lapses ?? 0,
+			intervalDays: card?.intervalDays ?? 0,
+			easeFactor: card?.easeFactor ?? this.config.defaultEaseFactor,
+			nextReviewAt: card?.nextReviewAt,
+			lastReviewedAt: card?.lastReviewedAt ?? null,
 		};
 	}
 
@@ -241,8 +230,10 @@ export class VocabularyReviewScheduler {
 
 		return {
 			...base,
-			due: normalized.nextReviewAt ?? now,
-			last_review: normalized.lastReviewedAt ?? undefined,
+			due: new Date(normalized.nextReviewAt ?? now),
+			last_review: normalized.lastReviewedAt
+				? new Date(normalized.lastReviewedAt)
+				: undefined,
 			state: this.toFsrsState(normalized.state),
 			reps: Math.max(0, normalized.repetitions),
 			lapses: Math.max(0, normalized.lapses),

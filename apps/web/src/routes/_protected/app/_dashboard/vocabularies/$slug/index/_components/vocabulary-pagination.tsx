@@ -54,7 +54,7 @@ export function VocabularyPagination({
 	onPageChange,
 }: VocabularyPaginationProps) {
 	const { slug } = useParams({
-		from: "/_protected/app/_dashboard/vocabularies/$slug",
+		from: "/_protected/app/_dashboard/vocabularies/$slug/",
 	});
 
 	if (totalPages <= 1) return null;

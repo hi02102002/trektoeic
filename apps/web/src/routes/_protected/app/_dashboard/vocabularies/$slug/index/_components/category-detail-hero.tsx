@@ -1,20 +1,11 @@
 import { CardsIcon, PencilSimpleIcon } from "@phosphor-icons/react";
+import { useQuery } from "@tanstack/react-query";
 import type { VocabularyCategory } from "@trektoeic/schemas/vocabularies-schema";
-import { useMemo } from "react";
 import { IconBadge } from "@/components/icon-badge";
 import { Button } from "@/components/ui/button";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
-import { dayjs } from "@/lib/dayjs";
+import { orpc } from "@/lib/orpc/orpc";
 import { cn } from "@/lib/utils";
-import {
-	CATEGORY_COLOR_CLASSES,
-	getCategoryColor,
-} from "@/utils/get-category-color";
-
-const MOCK_MASTERED_PERCENT = 65;
-const MOCK_MASTERED = 12;
-const MOCK_LEARNING = 4;
-const MOCK_NEW = 8;
 
 type CategoryDetailHeroProps = {
 	category: VocabularyCategory;
@@ -26,27 +17,19 @@ export function CategoryDetailHero({
 	totalWords,
 }: CategoryDetailHeroProps) {
 	const cardStyle = useCardStyle();
-
-	const categoryColor = useMemo(
-		() => getCategoryColor(category.id),
-		[category.id],
-	);
-	const colorClasses = useMemo(
-		() => CATEGORY_COLOR_CLASSES[categoryColor],
-		[categoryColor],
-	);
-	const lastReviewed = useMemo(
-		() => (category.updatedAt ? dayjs(category.updatedAt).fromNow() : null),
-		[category.updatedAt],
+	const { data: stats } = useQuery(
+		orpc.vocabularyReview.getStats.queryOptions({
+			input: { categoryId: category.id },
+		}),
 	);
 
 	const masteredPercent = Math.min(
 		100,
-		totalWords > 0 ? (MOCK_MASTERED / totalWords) * 100 : 0,
+		totalWords > 0 ? ((stats?.masteredWords ?? 0) / totalWords) * 100 : 0,
 	);
 	const learningPercent = Math.min(
 		100 - masteredPercent,
-		totalWords > 0 ? (MOCK_LEARNING / totalWords) * 100 : 0,
+		totalWords > 0 ? ((stats?.learningWords ?? 0) / totalWords) * 100 : 0,
 	);
 	const newPercent = 100 - masteredPercent - learningPercent;
 
@@ -71,11 +54,6 @@ export function CategoryDetailHero({
 										{category.alias}
 									</span>
 								)}
-								{lastReviewed && (
-									<span className="text-muted-foreground text-xs">
-										Last reviewed {lastReviewed}
-									</span>
-								)}
 							</div>
 						</div>
 					</div>
@@ -87,15 +65,19 @@ export function CategoryDetailHero({
 					<div className="mt-8">
 						<div className="mb-2 flex items-center justify-between text-xs">
 							<span className="font-medium text-foreground">
-								{MOCK_MASTERED_PERCENT}% Mastered
+								{stats?.masteredWords ?? "--"} mastered,{" "}
+								{stats?.learningWords ?? "--"} learning
 							</span>
 							<span className="text-muted-foreground">
-								{MOCK_MASTERED + MOCK_LEARNING} / {totalWords} words
+								{stats?.totalWords
+									? stats.masteredWords + stats.learningWords
+									: "--"}{" "}
+								/ {stats?.totalWords ?? "--"} từ
 							</span>
 						</div>
 						<div className="flex h-2 w-full overflow-hidden rounded-full bg-muted">
 							<div
-								className={cn("h-full", colorClasses.progressBar)}
+								className={cn("h-full bg-indigo-700")}
 								style={{ width: `${masteredPercent}%` }}
 							/>
 							<div
@@ -109,21 +91,16 @@ export function CategoryDetailHero({
 						</div>
 						<div className="mt-3 flex gap-4">
 							<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
-								<div
-									className={cn(
-										"size-2 rounded-full",
-										colorClasses.progressBar,
-									)}
-								/>
-								Mastered ({MOCK_MASTERED})
+								<div className={cn("size-2 rounded-full", "bg-indigo-700")} />
+								Mastered ({stats?.masteredWords ?? "--"})
 							</div>
 							<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
 								<div className="size-2 rounded-full bg-primary/60" />
-								Learning ({MOCK_LEARNING})
+								Learning ({stats?.learningWords ?? "--"})
 							</div>
 							<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
 								<div className="size-2 rounded-full bg-muted-foreground/20" />
-								New ({MOCK_NEW})
+								New ({stats?.newWords ?? "--"})
 							</div>
 						</div>
 					</div>

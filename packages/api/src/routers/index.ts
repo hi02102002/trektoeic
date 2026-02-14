@@ -9,6 +9,7 @@ import { partPractices } from "./part-practices";
 import { questions } from "./questions";
 import { partSections } from "./sections";
 import { vocabulariesRouter } from "./vocabularies";
+import { vocabularyReviewRouter } from "./vocabulary-review";
 
 export const appRouter = {
 	questions,
@@ -17,6 +18,7 @@ export const appRouter = {
 	kits: kitsRouter,
 	mockTest: mockTestRouter,
 	vocabularies: vocabulariesRouter,
+	vocabularyReview: vocabularyReviewRouter,
 };
 export type AppRouter = typeof appRouter;
 export type AppRouterClient = RouterClient<typeof appRouter>;

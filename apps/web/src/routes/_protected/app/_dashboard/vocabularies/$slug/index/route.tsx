@@ -1,6 +1,7 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
+import { Button } from "@/components/ui/button";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { CategoryDetailHero } from "./_components/category-detail-hero";
 import { VocabularyCard } from "./_components/vocabulary-card";
@@ -9,12 +10,10 @@ import { VocabularyPagination } from "./_components/vocabulary-pagination";
 const WORDS_PER_PAGE = 12;
 
 export const Route = createFileRoute(
-	"/_protected/app/_dashboard/vocabularies/$slug",
+	"/_protected/app/_dashboard/vocabularies/$slug/",
 )({
 	validateSearch: z.object({
 		page: z.number().int().positive().optional().default(1),
-		study: z.enum(["now"]).optional(),
-		mode: z.enum(["flashcards", "quiz"]).optional(),
 	}),
 	loaderDeps: ({ search }) => search,
 	loader: async ({ context, params, deps }) => {
@@ -69,7 +68,7 @@ function RouteComponent() {
 	const goToPage = (nextPage: number) => {
 		const clampedPage = Math.max(
 			1,
-			Math.min(nextPage, vocabularies.pagination?.totalPages ?? 1),
+			Math.min(nextPage, vocabularies?.pagination?.totalPages ?? 1),
 		);
 		void navigate({
 			to: "/app/vocabularies/$slug",
@@ -87,6 +86,18 @@ function RouteComponent() {
 						"Học từ vựng TOEIC theo chủ đề. Nắm vững vốn từ cần thiết."
 					}
 					className="max-w-2xl"
+					right={
+						<div className="mt-4">
+							<Button asChild variant="outline" size="sm">
+								<Link
+									to="/app/vocabularies/$slug/flashcard"
+									params={{ slug: category.slug }}
+								>
+									Start daily review
+								</Link>
+							</Button>
+						</div>
+					}
 				/>
 			}
 		>

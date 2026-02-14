@@ -10,7 +10,7 @@ export const getAllCategories = withUserAndKysely((_userId, db) => {
 		parentId?: string;
 		level?: number;
 	}) => {
-		const records = await buildCategoriesQuery(db)
+		const records = await buildCategoriesQuery(db, _userId)
 			.$if(parentId !== undefined, (qb) =>
 				qb.where("vocabularyCategories.parentId", "=", parentId as string),
 			)

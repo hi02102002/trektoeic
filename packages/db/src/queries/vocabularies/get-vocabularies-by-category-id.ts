@@ -3,7 +3,7 @@ import { VocabularySchema } from "@trektoeic/schemas/vocabularies-schema";
 import { getPagination } from "@trektoeic/utils/get-pagination";
 import { withUserAndKysely } from "../../utils";
 
-export const getVocabulariesByCategoryId = withUserAndKysely((_userId, db) => {
+export const getVocabulariesByCategoryId = withUserAndKysely((userId, db) => {
 	return async ({
 		categoryId,
 		page = 1,
@@ -15,9 +15,15 @@ export const getVocabulariesByCategoryId = withUserAndKysely((_userId, db) => {
 	}) => {
 		const [records, count] = await Promise.all([
 			db
-				.selectFrom("vocabularies")
-				.selectAll()
-				.where("categoryId", "=", categoryId)
+				.selectFrom("vocabularies as v")
+				.leftJoin("vocabularyReviewCards as vrc", (join) =>
+					join
+						.onRef("vrc.vocabularyId", "=", "v.id")
+						.on("vrc.userId", "=", userId),
+				)
+				.selectAll("v")
+				.select("vrc.state")
+				.where("v.categoryId", "=", categoryId)
 				.orderBy("name", "asc")
 				.limit(limit)
 				.offset((page - 1) * limit)
@@ -29,7 +35,7 @@ export const getVocabulariesByCategoryId = withUserAndKysely((_userId, db) => {
 				.execute()
 				.then((res) => Number(res[0]?.count ?? 0)),
 		]);
-		// Normalize collection: DB may have array from old/toeicmax data; schema expects object | null
+
 		const normalized = records.map((r) => ({
 			...r,
 			collection:

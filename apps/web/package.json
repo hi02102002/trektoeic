@@ -6,7 +6,7 @@
 		"build": "vite build",
 		"serve": "vite preview",
 		"dev": "vite dev --port=3000 | npx pino-pretty",
-		"start:dev": "NODE_ENV=development node .output/server/index.mjs ",
+		"start:dev": "NODE_ENV=development node -r dotenv/config .output/server/index.mjs",
 		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
