@@ -1,5 +1,6 @@
 import { kSql } from "../../libs/kysely";
 import { withUserAndKysely } from "../../utils";
+import { whereCategoryInTree } from "../shared";
 
 export const getStats = withUserAndKysely((userId, db) => {
 	return async ({ categoryId }: { categoryId?: string }) => {
@@ -7,25 +8,29 @@ export const getStats = withUserAndKysely((userId, db) => {
 			.with("total_words", (eb) =>
 				eb
 					.selectFrom("vocabularies as v")
+					.$if(!!categoryId, (eb) =>
+						eb.where(
+							whereCategoryInTree(db, "v.categoryId", categoryId as string),
+						),
+					)
 					.select((eb) => [
 						kSql<number>`CAST(${eb.fn.count("v.id")} AS INTEGER)`.as("count"),
-					])
-					.$if(!!categoryId, (eb) =>
-						eb.where("v.categoryId", "=", categoryId as string),
-					),
+					]),
 			)
 			.with("v_and_vrc", (eb) =>
 				eb
 					.selectFrom("vocabularies as v")
+					.$if(!!categoryId, (eb) =>
+						eb.where(
+							whereCategoryInTree(db, "v.categoryId", categoryId as string),
+						),
+					)
 					.leftJoin("vocabularyReviewCards as vrc", (join) =>
 						join
 							.onRef("v.id", "=", "vrc.vocabularyId")
 							.on("vrc.userId", "=", userId),
 					)
-					.select(["v.categoryId", "vrc.state"])
-					.$if(!!categoryId, (eb) =>
-						eb.where("v.categoryId", "=", categoryId as string),
-					),
+					.select(["v.categoryId", "vrc.state"]),
 			)
 			.with("master_stat_count", (eb) =>
 				eb

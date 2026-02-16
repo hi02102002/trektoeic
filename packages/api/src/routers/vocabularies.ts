@@ -47,8 +47,8 @@ export const vocabulariesRouter = {
 		.input(
 			z.object({
 				categoryId: z.string(),
-				page: z.number().optional().default(1),
-				limit: z.number().optional().default(12),
+				page: z.number().optional(),
+				limit: z.number().optional(),
 			}),
 		)
 		.output(PaginatedResultSchema(VocabularySchema))

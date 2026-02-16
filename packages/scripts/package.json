@@ -19,6 +19,8 @@
 		"seed:vocabs:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-vocabularies.ts",
 		"seed:sections": "pnpm with-script src/seeds/toeicmax/seed-sections.ts",
 		"seed:sections:prod": "pnpm with-script:prod src/seeds/toeicmax/seed-sections.ts",
+		"seed:clean-vocabularies": "pnpm with-script src/seeds/clean-vocabularies.ts",
+		"seed:clean-vocabularies:prod": "pnpm with-script:prod src/seeds/clean-vocabularies.ts",
 		"seed:study4-vocabularies": "pnpm with-script src/seeds/study4/seed-study4-vocabularies.ts",
 		"seed:study4-vocabularies:prod": "pnpm with-script:prod src/seeds/study4/seed-study4-vocabularies.ts"
 	},

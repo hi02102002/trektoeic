@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
+import { CategoryDetailHero } from "../_components/category-detail-hero";
 import { CategoriesList } from "./_components/categories-list";
 
 export const Route = createFileRoute(
@@ -68,6 +69,7 @@ export const Route = createFileRoute(
 
 function RouteComponent() {
 	const { category } = Route.useLoaderData();
+	const { user } = Route.useRouteContext();
 
 	return (
 		<AppContent
@@ -75,15 +77,20 @@ function RouteComponent() {
 				<AppHeader
 					title={category ? category.name : "Từ vựng theo chủ đề"}
 					description={
-						category
-							? undefined
-							: "Học từ vựng TOEIC quan trọng theo chủ đề. Nắm vững vốn từ vựng cần thiết để đạt điểm cao trong kỳ thi TOEIC."
+						<>
+							Chào{" "}
+							<span className="font-medium text-primary">
+								{user?.user.name ?? "bạn"}
+							</span>
+							, hãy chọn một chủ đề từ vựng để bắt đầu học nhé!
+						</>
 					}
 					className="max-w-2xl"
 				/>
 			}
 		>
 			<div className="space-y-6">
+				<CategoryDetailHero category={category ?? undefined} />
 				<CategoriesList />
 			</div>
 		</AppContent>

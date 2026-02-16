@@ -8,6 +8,7 @@ import {
 } from "../../libs/kysely";
 import { vocabularyReviewCards } from "../../schema";
 import { withKysely } from "../../utils";
+import { whereCategoryInTree } from "../shared";
 
 const withScheduler = (
 	records: z.infer<typeof GetDueVocabulariesResultSchema>,
@@ -59,7 +60,7 @@ export const getDueVocabularies = withKysely((db) => {
 				]),
 			)
 			.$if(!!categoryId, (eb) =>
-				eb.where("v.categoryId", "=", categoryId as string),
+				eb.where(whereCategoryInTree(db, "v.categoryId", categoryId as string)),
 			)
 			.orderBy("vrc.nextReviewAt", "asc")
 			.orderBy("v.createdAt", "asc")

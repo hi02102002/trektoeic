@@ -3,6 +3,21 @@ import { getToken } from "@trektoeic/db/queries/toiec-max-tokens/get-token";
 import { callApi } from "../api";
 import { runBatchesWithCount, writeToFile } from "../utils";
 
+export async function getGroupDetail(groupId: string, token?: string) {
+	const _token = token || (await getToken(kysely)());
+	const res = await callApi({
+		url: `https://dictionary.scandict.com/api/voca/section/${groupId}`,
+		method: "GET",
+		direction: true,
+		headers: {
+			token: _token || "",
+		},
+		withAgent: false,
+	});
+
+	return res.data;
+}
+
 export async function getGroups(token?: string) {
 	const _token = token || (await getToken(kysely)());
 	const res = await callApi({
@@ -15,7 +30,15 @@ export async function getGroups(token?: string) {
 		withAgent: false,
 	});
 
-	return res.data;
+	const groups = res.data.map(async (group: any) => {
+		const groupDetail = await getGroupDetail(group.id, token);
+		return {
+			...group,
+			childs: groupDetail,
+		};
+	});
+
+	return Promise.all(groups);
 }
 
 export async function getVocabsById(id: string, token?: string) {

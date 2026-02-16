@@ -1,4 +1,5 @@
 import { VocabularyCategorySchema } from "@trektoeic/schemas/vocabularies-schema";
+import { kSql } from "../../libs/kysely";
 import { withUserAndKysely } from "../../utils";
 import { buildCategoriesQuery } from "./build-categories-query";
 
@@ -17,8 +18,13 @@ export const getAllCategories = withUserAndKysely((_userId, db) => {
 			.$if(level !== undefined, (qb) =>
 				qb.where("vocabularyCategories.level", "=", level as number),
 			)
+			.orderBy(
+				kSql`COALESCE(SUBSTRING(vocabulary_categories.name FROM '([0-9]+)')::int, 2147483647)`,
+				"asc",
+			)
 			.orderBy("vocabularyCategories.name", "asc")
 			.execute();
+
 		return VocabularyCategorySchema.array().parse(records);
 	};
 });
