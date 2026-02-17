@@ -15,7 +15,7 @@ export const CategoryItem = ({
 	const linkOptions = useMemo(() => {
 		if (category.hasChild) {
 			return {
-				to: "/app/vocabularies",
+				to: "/app/vocabularies/explore",
 				search: (old) => ({
 					...old,
 					parentId: category.id,
@@ -25,7 +25,7 @@ export const CategoryItem = ({
 		}
 
 		return {
-			to: "/app/vocabularies/$slug",
+			to: "/app/vocabularies/explore/$slug",
 			params: {
 				slug: category.slug,
 			},

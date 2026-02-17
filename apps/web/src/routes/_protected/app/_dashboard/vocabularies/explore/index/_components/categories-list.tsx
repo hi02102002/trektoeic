@@ -1,7 +1,7 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { CategoryItem } from "./categories-item";
 
-const Route = getRouteApi("/_protected/app/_dashboard/vocabularies/");
+const Route = getRouteApi("/_protected/app/_dashboard/vocabularies/explore/");
 
 export const CategoriesList = () => {
 	const { categories } = Route.useLoaderData();

@@ -54,7 +54,7 @@ export function VocabularyPagination({
 	onPageChange,
 }: VocabularyPaginationProps) {
 	const { slug } = useParams({
-		from: "/_protected/app/_dashboard/vocabularies/$slug/",
+		from: "/_protected/app/_dashboard/vocabularies/explore/$slug/",
 	});
 
 	if (totalPages <= 1) return null;
@@ -95,7 +95,7 @@ export function VocabularyPagination({
 						<PaginationItem key={item}>
 							<PaginationLink isActive={item === page}>
 								<Link
-									to="/app/vocabularies/$slug"
+									to="/app/vocabularies/explore/$slug"
 									params={{ slug }}
 									search={{ page: item }}
 									className="block flex h-full w-full items-center justify-center"

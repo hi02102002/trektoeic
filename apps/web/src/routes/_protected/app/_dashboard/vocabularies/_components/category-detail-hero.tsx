@@ -1,7 +1,8 @@
 import { CardsIcon, PencilSimpleIcon } from "@phosphor-icons/react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import type { VocabularyCategory } from "@trektoeic/schemas/vocabularies-schema";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { orpc } from "@/lib/orpc/orpc";
 import { cn } from "@/lib/utils";
@@ -76,10 +77,22 @@ export function CategoryDetailHero({ category }: CategoryDetailHeroProps) {
 					</div>
 				</div>
 				<div className="grid grid-cols-2 gap-3">
-					<Button variant="outline" size="lg" className="font-medium">
+					<Link
+						className={cn(
+							buttonVariants({
+								variant: "outline",
+								size: "lg",
+							}),
+							"font-medium",
+						)}
+						to="/app/vocabularies/review"
+						search={{
+							categoryId: category?.id,
+						}}
+					>
 						<CardsIcon weight="duotone" className="size-[18px]" />
-						Flashcards
-					</Button>
+						Học từ vựng
+					</Link>
 					<Button variant="outline" size="lg" className="font-medium">
 						<PencilSimpleIcon weight="duotone" className="size-[18px]" />
 						Quiz

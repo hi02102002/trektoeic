@@ -1,31 +1,38 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import { Button } from "@/components/ui/button";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
-import { VocabularyReviewSession } from "../index/_components/vocabulary-review-session";
+import { VocabularyReviewSession } from "./_components/vocabulary-review-session";
 
 export const Route = createFileRoute(
-	"/_protected/app/_dashboard/vocabularies/$slug/flashcard",
+	"/_protected/app/_dashboard/vocabularies/review",
 )({
-	loader: async ({ context, params }) => {
-		const category = await context.queryClient.ensureQueryData(
-			context.orpc.vocabularies.getCategoryBySlug.queryOptions({
-				input: { slug: params.slug },
-			}),
-		);
-
-		if (!category) {
-			throw notFound();
-		}
-
-		const dueVocabularies = await context.queryClient.ensureQueryData(
-			context.orpc.vocabularyReview.getDueVocabularies.queryOptions({
-				input: {
-					categoryId: category.id,
-					limit: 50,
-				},
-			}),
-		);
+	validateSearch: z.object({
+		categoryId: z.string().optional(),
+	}),
+	loaderDeps(opts) {
+		return opts.search;
+	},
+	loader: async ({ context, deps }) => {
+		const [category, dueVocabularies] = await Promise.all([
+			deps.categoryId
+				? context.queryClient.ensureQueryData(
+						context.orpc.vocabularies.getCategoryById.queryOptions({
+							input: {
+								id: deps.categoryId,
+							},
+						}),
+					)
+				: Promise.resolve(null),
+			context.queryClient.ensureQueryData(
+				context.orpc.vocabularyReview.getDueVocabularies.queryOptions({
+					input: {
+						categoryId: deps.categoryId ?? "",
+						limit: 50,
+					},
+				}),
+			),
+		]);
 
 		return { category, dueVocabularies };
 	},
@@ -57,27 +64,14 @@ function RouteComponent() {
 		<AppContent
 			header={
 				<AppHeader
-					title={`${category.name} Flashcards`}
+					title={category ? `Ôn tập: ${category.name}` : "Ôn tập từ vựng"}
 					description="Ôn tập từ vựng đến hạn với chế độ flashcard."
 					className="max-w-2xl"
-					right={
-						<div className="mt-4">
-							<Button asChild variant="outline" size="sm">
-								<Link
-									to="/app/vocabularies/$slug"
-									params={{ slug: category.slug }}
-									search={{ page: 1 }}
-								>
-									Back to category
-								</Link>
-							</Button>
-						</div>
-					}
 				/>
 			}
 		>
 			<VocabularyReviewSession
-				category={category}
+				category={category ?? undefined}
 				items={dueVocabularies ?? []}
 			/>
 		</AppContent>

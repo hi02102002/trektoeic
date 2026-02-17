@@ -1,11 +1,10 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
 import { AppContent, AppHeader } from "@/components/layouts/app";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
-import { CategoryDetailHero } from "../../_components/category-detail-hero";
 import { VocabularyCard } from "./_components/vocabulary-card";
 
 export const Route = createFileRoute(
-	"/_protected/app/_dashboard/vocabularies/$slug/",
+	"/_protected/app/_dashboard/vocabularies/explore/$slug/",
 )({
 	loaderDeps: ({ search }) => search,
 	loader: async ({ context, params }) => {
@@ -82,7 +81,6 @@ function RouteComponent() {
 			}
 		>
 			<div className="space-y-6">
-				<CategoryDetailHero category={category} />
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{vocabularies.items.map((word) => (
 						<VocabularyCard key={word.id} word={word} />
