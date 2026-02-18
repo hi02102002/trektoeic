@@ -1,5 +1,9 @@
 import { MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import {
+	type DunnoDictionaryEntry,
+	DunnoSearchResponseSchema,
+} from "@trektoeic/schemas/dunno-schema";
 import { getYoudaoDictVoiceUrl } from "@trektoeic/utils/get-youdao-dictvoice-url";
 import { Suspense } from "react";
 import { AudioPlayButton } from "@/components/audio-play-button";
@@ -19,7 +23,6 @@ import {
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
-import { orpc } from "@/lib/orpc/orpc";
 import { cn } from "@/lib/utils";
 
 type VocabularyReviewDunnoDetailDrawerProps = {
@@ -49,6 +52,52 @@ const parseSnym = (value: unknown): string[] => {
 	const words = typeof value.word === "string" ? [value.word] : [];
 	const content = toStringArray(value.content);
 	return [...words, ...content];
+};
+
+const fetchDunnoDetail = async (
+	keyword: string,
+): Promise<DunnoDictionaryEntry | null> => {
+	const query = keyword.trim();
+	if (!query) return null;
+
+	// Avoid hitting Dunno from server/SSR (Cloudflare may block Vercel IPs)
+	if (typeof window === "undefined") {
+		return null;
+	}
+
+	try {
+		const response = await fetch(
+			`https://api.dunno.ai/api/search/vi/envi/${encodeURIComponent(query)}?limit=1&page=1`,
+		);
+
+		if (!response.ok) {
+			console.warn("Dunno API (browser) non-OK", {
+				status: response.status,
+				statusText: response.statusText,
+				keyword: query,
+			});
+			return null;
+		}
+
+		const json = (await response.json()) as unknown;
+		const parsed = DunnoSearchResponseSchema.safeParse(json);
+
+		if (!parsed.success) {
+			console.warn("Dunno API (browser) schema error", {
+				keyword: query,
+				issues: parsed.error.issues,
+			});
+			return null;
+		}
+
+		return parsed.data.result[0] ?? null;
+	} catch (error) {
+		console.warn("Dunno API (browser) request failed", {
+			keyword: query,
+			error,
+		});
+		return null;
+	}
 };
 
 export function VocabularyReviewDunnoDetailDrawer({
@@ -111,11 +160,10 @@ function VocabularyReviewDunnoDetailSkeleton() {
 
 function VocabularyReviewDunnoDetailContent({ keyword }: { keyword: string }) {
 	const cardStyle = useCardStyle();
-	const { data: dunnoDetail } = useSuspenseQuery(
-		orpc.vocabularies.getDunnoDetail.queryOptions({
-			input: { keyword },
-		}),
-	);
+	const { data: dunnoDetail } = useSuspenseQuery({
+		queryKey: ["dunno-detail", keyword],
+		queryFn: () => fetchDunnoDetail(keyword),
+	});
 
 	if (!dunnoDetail) {
 		return (
