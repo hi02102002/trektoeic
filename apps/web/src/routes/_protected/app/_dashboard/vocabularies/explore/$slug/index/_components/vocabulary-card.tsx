@@ -1,12 +1,9 @@
-import {
-	BookmarkIcon,
-	CheckCircleIcon,
-	SpeakerHighIcon,
-} from "@phosphor-icons/react";
+import { BookmarkIcon, CheckCircleIcon } from "@phosphor-icons/react";
 import type { Vocabulary } from "@trektoeic/schemas/vocabularies-schema";
 import type { VocabularyReviewStateSchema } from "@trektoeic/schemas/vocabularies-shared-schema";
-import { useCallback } from "react";
+import { getYoudaoDictVoiceUrl } from "@trektoeic/utils/get-youdao-dictvoice-url";
 import type z from "zod";
+import { AudioPlayButton } from "@/components/audio-play-button";
 import { Button } from "@/components/ui/button";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { cn } from "@/lib/utils";
@@ -41,14 +38,13 @@ export function VocabularyCard({ word }: VocabularyCardProps) {
 	const styles = PROFICIENCY_STYLES[word.state];
 
 	const cardStyle = useCardStyle();
-
-	const handlePlay = useCallback(() => {
-		const sound = word.collection?.us?.sound ?? word.collection?.uk?.sound;
-		if (sound) {
-			const audio = new Audio(sound);
-			audio.play().catch(() => {});
-		}
-	}, [word.collection]);
+	const pronunciationAudioSrc =
+		word.collection?.us?.sound ??
+		word.collection?.uk?.sound ??
+		getYoudaoDictVoiceUrl(word.name);
+	const exampleAudioSrc = word.example
+		? getYoudaoDictVoiceUrl(word.example)
+		: "";
 
 	return (
 		<div className={cn(cardStyle)}>
@@ -66,19 +62,25 @@ export function VocabularyCard({ word }: VocabularyCardProps) {
 						{pronunciation}
 					</span>
 				)}
-				<Button
-					variant="ghost"
-					size="icon"
-					className="size-6 rounded-full"
-					onClick={handlePlay}
-					aria-label="Play pronunciation"
-				>
-					<SpeakerHighIcon className="size-3.5" weight="regular" />
-				</Button>
+				<AudioPlayButton
+					className="size-6"
+					iconClassName="size-3.5"
+					src={pronunciationAudioSrc}
+					ariaLabel="Play pronunciation"
+				/>
 			</div>
 			<p className="mb-4 font-medium text-foreground text-sm">{word.meaning}</p>
 			{word.example && (
 				<div className="mb-4 rounded-md border border-border bg-muted p-3">
+					<div className="mb-2 flex items-center justify-between gap-2">
+						<span className="text-muted-foreground text-xs">Ví dụ</span>
+						<AudioPlayButton
+							className="size-6"
+							iconClassName="size-3.5"
+							src={exampleAudioSrc}
+							ariaLabel="Play example sentence"
+						/>
+					</div>
 					<p className="text-muted-foreground text-xs italic leading-relaxed">
 						"{word.example}"
 					</p>

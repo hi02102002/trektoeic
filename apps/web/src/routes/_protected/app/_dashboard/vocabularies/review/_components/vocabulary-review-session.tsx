@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { orpc } from "@/lib/orpc/orpc";
+import { playAudioExclusive } from "@/utils/play-audio-exclusive";
 import { GRADES, HOTKEY_HINTS } from "./review-session-constants";
 import type { VocabularyReviewItem } from "./review-session-types";
 import { VocabularyReviewCard } from "./vocabulary-review-card";
@@ -50,8 +51,7 @@ export function VocabularyReviewSession({
 		const sound =
 			current.collection?.us?.sound ?? current.collection?.uk?.sound;
 		if (!sound) return;
-		const audio = new Audio(sound);
-		audio.play().catch(() => {});
+		void playAudioExclusive(sound);
 	};
 
 	const handleQuickChoose = (gradeIndex: number) => {
@@ -123,7 +123,6 @@ export function VocabularyReviewSession({
 					cardStyle={cardStyle}
 					categoryName={current.category?.name}
 					onReveal={handleShowAnswer}
-					onPlayAudio={handlePlayAudio}
 				/>
 				<VocabularyReviewGrades
 					grades={GRADES}

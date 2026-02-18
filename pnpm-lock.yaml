@@ -697,6 +697,9 @@ importers:
 
   packages/utils:
     dependencies:
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       nanoid:
         specifier: ^5.1.6
         version: 5.1.6
@@ -710,6 +713,9 @@ importers:
       '@trektoeic/config':
         specifier: workspace:*
         version: link:../config
+      '@types/crypto-js':
+        specifier: ^4.2.2
+        version: 4.2.2
 
 packages:
 

@@ -1,9 +1,14 @@
 import { vocabulariesQueries } from "@trektoeic/db/queries";
+import {
+	DunnoDictionaryEntrySchema,
+	DunnoSearchResponseSchema,
+} from "@trektoeic/schemas/dunno-schema";
 import { PaginatedResultSchema } from "@trektoeic/schemas/share-schema";
 import {
 	VocabularyCategorySchema,
 	VocabularySchema,
 } from "@trektoeic/schemas/vocabularies-schema";
+import { searchDunnoDictionary } from "@trektoeic/utils/search-dunno-dictionary";
 import z from "zod";
 import { requiredAuthProcedure } from "../procedures";
 
@@ -61,5 +66,23 @@ export const vocabulariesRouter = {
 				page: input.page,
 				limit: input.limit,
 			});
+		}),
+	getDunnoDetail: requiredAuthProcedure
+		.input(
+			z.object({
+				keyword: z.string().trim().min(1),
+			}),
+		)
+		.output(DunnoDictionaryEntrySchema.nullable())
+		.handler(async ({ input }) => {
+			const raw = await searchDunnoDictionary(input.keyword);
+
+			const parsed = DunnoSearchResponseSchema.safeParse(raw);
+
+			if (!parsed.success) {
+				return null;
+			}
+
+			return parsed.data.result[0] ?? null;
 		}),
 };

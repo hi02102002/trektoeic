@@ -1,7 +1,6 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { PaginationControls } from "@/components/pagination-controls";
-
-import { Progress } from "@/components/ui/progress";
+import { buttonVariants } from "@/components/ui/button";
 import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { cn } from "@/lib/utils";
 
@@ -28,41 +27,67 @@ export function VocabularyCollectionsSection() {
 					const label = `${category.learnedWords ?? 0} / ${category.totalWords ?? 0} words`;
 					const isExplore = Boolean(category.hasChild);
 					return (
-						<Link
-							key={category.id}
-							to={
-								isExplore
-									? "/app/vocabularies/explore"
-									: "/app/vocabularies/explore/$slug"
-							}
-							search={
-								isExplore
-									? { parentId: category.id, level: category.level + 1 }
-									: undefined
-							}
-							params={!isExplore ? { slug: category.slug } : undefined}
-							className={cn(cardStyle)}
-						>
-							<div className="flex items-start justify-between gap-3">
-								<div>
-									<p className="font-semibold text-base">{category.name}</p>
-									<p className="mt-1 text-muted-foreground text-sm">{label}</p>
+						<div key={category.id} className={cn(cardStyle)}>
+							<Link
+								to={
+									isExplore
+										? "/app/vocabularies/explore"
+										: "/app/vocabularies/explore/$slug"
+								}
+								search={
+									isExplore
+										? { parentId: category.id, level: category.level + 1 }
+										: undefined
+								}
+								params={!isExplore ? { slug: category.slug } : undefined}
+								className="block"
+							>
+								<div className="flex items-start justify-between gap-3">
+									<div>
+										<p className="font-semibold text-base">{category.name}</p>
+										<p className="mt-1 text-muted-foreground text-sm">
+											{label}
+										</p>
+									</div>
 								</div>
-								<span className="rounded-md bg-neutral-100 px-2 py-1 font-medium text-xs">
-									{category.dueWords ?? 0} due
-								</span>
-							</div>
-							<div className="mt-4 space-y-2">
-								<div className="flex items-center justify-between text-xs">
-									<span className="text-muted-foreground">Progress</span>
-									<span className="font-semibold">{progress}%</span>
+								<div className="mt-4">
+									<div className="mb-2 flex items-center justify-between text-muted-foreground text-xs">
+										<span className="text-muted-foreground">Progress</span>
+										<span className="font-medium text-primary">
+											{progress}%
+										</span>
+									</div>
+									<div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
+										<div
+											className={cn("h-full rounded-full bg-indigo-700")}
+											style={{ width: `${progress}%` }}
+										/>
+									</div>
 								</div>
-								<Progress
-									value={progress}
-									className={cn("h-2", "[&>div]:bg-emerald-500")}
-								/>
+							</Link>
+
+							<div className="mt-4 flex items-center justify-between gap-3 border-border border-t pt-3">
+								<div className="flex items-center gap-1.5 text-muted-foreground text-xs">
+									{category.dueWords ?? 0} từ cần ôn tập
+								</div>
+								{!isExplore ? (
+									<Link
+										to="/app/vocabularies/review"
+										search={{ categoryId: category.id }}
+										className={cn(
+											buttonVariants({ variant: "outline", size: "sm" }),
+											"h-7 px-2.5 font-medium text-[11px]",
+										)}
+									>
+										Học ngay
+									</Link>
+								) : (
+									<span className="text-muted-foreground text-xs">
+										Khám phá
+									</span>
+								)}
 							</div>
-						</Link>
+						</div>
 					);
 				})}
 

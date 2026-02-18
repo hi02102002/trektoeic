@@ -13,12 +13,14 @@
 		"check-types": "tsc --noEmit"
 	},
 	"devDependencies": {
-		"@trektoeic/config": "workspace:*"
+		"@trektoeic/config": "workspace:*",
+		"@types/crypto-js": "^4.2.2"
 	},
 	"peerDependencies": {
 		"typescript": "^5"
 	},
 	"dependencies": {
+		"crypto-js": "^4.2.0",
 		"nanoid": "^5.1.6",
 		"ts-fsrs": "^5.2.3"
 	}

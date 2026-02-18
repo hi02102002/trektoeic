@@ -20,7 +20,7 @@ export type InferSort<T extends readonly [string, ...string[]]> = z.infer<
 
 export const PaginationInputSchema = z.object({
 	page: z.number().min(1).optional().default(1),
-	limit: z.number().min(1).default(10),
+	limit: z.number().min(1).optional().default(20),
 });
 
 export const PaginatedResultSchema = <TItem>(itemSchema: z.ZodType<TItem>) =>
