@@ -1,1 +1,0 @@
-DROP TABLE "vocabulary_review_logs" CASCADE;

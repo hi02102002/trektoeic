@@ -1,6 +1,8 @@
-import { createFileRoute, notFound, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { AppContent, AppHeader } from "@/components/layouts/app";
+import { buttonVariants } from "@/components/ui/button";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
+import { cn } from "@/lib/utils";
 import { VocabularyCard } from "./_components/vocabulary-card";
 
 export const Route = createFileRoute(
@@ -16,16 +18,6 @@ export const Route = createFileRoute(
 
 		if (!category) {
 			throw notFound();
-		}
-
-		if (category.hasChild) {
-			throw redirect({
-				to: "/app/vocabularies",
-				search: {
-					parentId: category.id,
-					level: category.level + 1,
-				},
-			});
 		}
 
 		const vocabularies = await context.queryClient.ensureQueryData(
@@ -81,6 +73,15 @@ function RouteComponent() {
 			}
 		>
 			<div className="space-y-6">
+				<div className="flex justify-end">
+					<Link
+						to="/app/vocabularies/review"
+						search={{ categoryId: category.id }}
+						className={cn(buttonVariants({ size: "sm" }), "font-medium")}
+					>
+						Học ngay
+					</Link>
+				</div>
 				<div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 					{vocabularies.items.map((word) => (
 						<VocabularyCard key={word.id} word={word} />

@@ -1,4 +1,4 @@
-import type { InferOrderBy } from "@trektoeic/schemas/share-schema";
+import type { InferSort } from "@trektoeic/schemas/share-schema";
 import { withKysely } from "../../utils";
 
 export const getAllKits = withKysely((db) => {
@@ -10,7 +10,7 @@ export const getAllKits = withKysely((db) => {
 		},
 	}: {
 		year: number | "all";
-		orderBy?: InferOrderBy<["year"]>;
+		orderBy?: InferSort<["year"]>;
 	}) => {
 		const records = db
 			.selectFrom("kits")

@@ -13,16 +13,16 @@ export const getAllCategories = withUserAndKysely((_userId, db) => {
 	}) => {
 		const records = await buildCategoriesQuery(db, _userId)
 			.$if(parentId !== undefined, (qb) =>
-				qb.where("vocabularyCategories.parentId", "=", parentId as string),
+				qb.where("vc.parentId", "=", parentId as string),
 			)
 			.$if(level !== undefined, (qb) =>
-				qb.where("vocabularyCategories.level", "=", level as number),
+				qb.where("vc.level", "=", level as number),
 			)
 			.orderBy(
-				kSql`COALESCE(SUBSTRING(vocabulary_categories.name FROM '([0-9]+)')::int, 2147483647)`,
+				kSql`COALESCE(SUBSTRING(vc.name FROM '([0-9]+)')::int, 2147483647)`,
 				"asc",
 			)
-			.orderBy("vocabularyCategories.name", "asc")
+			.orderBy("vc.name", "asc")
 			.execute();
 
 		return VocabularyCategorySchema.array().parse(records);

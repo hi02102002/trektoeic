@@ -1,6 +1,7 @@
 import { vocabularyReviewsQueries } from "@trektoeic/db/queries";
 import { VocabularyReviewGradeSchema } from "@trektoeic/schemas/vocabularies-shared-schema";
 import {
+	GetDueVocabulariesResultSchema,
 	VocabularyReviewCardPreviewSchema,
 	VocabularyReviewCardSchema,
 } from "@trektoeic/schemas/vocabulary-review-schema";
@@ -23,7 +24,7 @@ export const vocabularyReviewRouter = {
 				categoryId: z.string().optional(),
 			}),
 		)
-		.output(z.any())
+		.output(GetDueVocabulariesResultSchema)
 		.handler(async ({ input, context }) => {
 			const records = await vocabularyReviewsQueries.getDueVocabularies(
 				context.kysely,

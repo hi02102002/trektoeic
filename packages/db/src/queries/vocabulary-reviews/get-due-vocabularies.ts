@@ -42,6 +42,9 @@ export const getDueVocabularies = withKysely((db) => {
 					.onRef("v.id", "=", "vrc.vocabularyId")
 					.on("vrc.userId", "=", userId),
 			)
+			.leftJoin("vocabularyCategories as c", (join) =>
+				join.onRef("v.categoryId", "=", "c.id"),
+			)
 			.selectAll("v")
 			.select((eb) => [
 				kJsonObjectAgg(
@@ -52,6 +55,9 @@ export const getDueVocabularies = withKysely((db) => {
 					),
 					{ nullIf: eb.ref("vrc.id") },
 				).as("review"),
+				kJsonObjectAgg(jsonColsFromNames(eb, "c", ["id", "name"]), {
+					nullIf: eb.ref("c.id"),
+				}).as("category"),
 			])
 			.where((eb) =>
 				eb.or([

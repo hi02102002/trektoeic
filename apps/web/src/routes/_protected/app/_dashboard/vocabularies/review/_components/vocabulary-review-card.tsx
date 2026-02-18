@@ -7,6 +7,7 @@ type VocabularyReviewCardProps = {
 	current: VocabularyReviewItem;
 	isRevealed: boolean;
 	cardStyle: string;
+	categoryName?: string;
 	onReveal: () => void;
 	onPlayAudio: () => void;
 };
@@ -15,16 +16,22 @@ export function VocabularyReviewCard({
 	current,
 	isRevealed,
 	cardStyle,
+	categoryName,
 	onReveal,
 	onPlayAudio,
 }: VocabularyReviewCardProps) {
 	return (
 		<div className={cn(cardStyle)}>
-			<div className="mb-7 flex w-full items-center justify-center">
+			<div className="mb-7 flex w-full items-center justify-center gap-2">
 				<span className="inline-flex items-center gap-1 rounded border border-neutral-200 bg-neutral-50 px-2 py-0.5 font-medium text-[10px] text-neutral-600 uppercase tracking-[0.12em]">
 					<LightningIcon className="size-3 text-amber-500" />
 					{current.type}
 				</span>
+				{categoryName ? (
+					<span className="inline-flex items-center rounded border border-neutral-200 bg-white px-2 py-0.5 font-medium text-[10px] text-neutral-600 uppercase tracking-[0.12em]">
+						{categoryName}
+					</span>
+				) : null}
 			</div>
 
 			<div className="space-y-3 text-center">

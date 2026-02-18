@@ -1,14 +1,17 @@
-export const getPagination = <TItem>({
-	limit,
-	page,
-	items,
-	totalItems,
-}: {
-	items: TItem[];
-	totalItems: number;
-	limit: number;
-	page: number;
-}) => {
+import z from "zod";
+
+const PaginationInputSchema = z.object({
+	page: z.number().min(1).optional().default(1),
+	limit: z.number().min(1).default(10),
+	items: z.array(z.unknown()),
+	totalItems: z.preprocess((val) => Number(val), z.number().int().min(0)),
+});
+
+export const getPagination = <TItem>(
+	data: z.infer<typeof PaginationInputSchema>,
+) => {
+	const { items, totalItems, page, limit } = PaginationInputSchema.parse(data);
+
 	const totalPages = Math.ceil(totalItems / limit);
 	const currentPage = page > totalPages ? totalPages : page;
 	const itemsPerPage = limit;
@@ -16,7 +19,7 @@ export const getPagination = <TItem>({
 	const nextPage = currentPage < totalPages ? currentPage + 1 : null;
 
 	return {
-		items,
+		items: items as TItem[],
 		pagination: {
 			totalItems,
 			currentPage,

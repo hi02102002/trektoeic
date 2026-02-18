@@ -75,26 +75,16 @@ export const buildCategoriesQuery = (
 				.where("vrc.state", "=", "mastered")
 				.groupBy("voc.id"),
 		)
-		.selectFrom("vocabularyCategories")
+		.selectFrom("vocabularyCategories as vc")
 		.leftJoin("word_counts", (join) =>
-			join.onRef("word_counts.id", "=", "vocabularyCategories.id"),
+			join.onRef("word_counts.id", "=", "vc.id"),
 		)
-		.leftJoin("due_counts", (join) =>
-			join.onRef("due_counts.id", "=", "vocabularyCategories.id"),
-		)
+		.leftJoin("due_counts", (join) => join.onRef("due_counts.id", "=", "vc.id"))
 		.leftJoin("learned_counts", (join) =>
-			join.onRef("learned_counts.id", "=", "vocabularyCategories.id"),
+			join.onRef("learned_counts.id", "=", "vc.id"),
 		)
+		.selectAll("vc")
 		.select([
-			"vocabularyCategories.id",
-			"vocabularyCategories.name",
-			"vocabularyCategories.slug",
-			"vocabularyCategories.alias",
-			"vocabularyCategories.level",
-			"vocabularyCategories.parentId",
-			"vocabularyCategories.hasChild",
-			"vocabularyCategories.updatedAt",
-			"vocabularyCategories.createdAt",
 			kSql<number>`COALESCE(word_counts.direct_word_count, 0)::int`.as(
 				"totalWords",
 			),

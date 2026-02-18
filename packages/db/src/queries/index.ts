@@ -1,3 +1,4 @@
+export * from "./deck-of-users";
 export * from "./kits";
 export * from "./part-practices";
 export * from "./part-sections";

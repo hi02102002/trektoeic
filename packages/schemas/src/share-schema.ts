@@ -2,18 +2,20 @@ import z from "zod";
 
 export const OrderDirectionSchema = z.enum(["asc", "desc"]);
 
-export const createOrderByInputSchema = <
+export const createSortInputSchema = <
 	TField extends readonly [string, ...string[]],
 >(
 	fields: TField,
 ) =>
-	z.object({
-		field: z.enum(fields),
-		direction: OrderDirectionSchema,
-	});
+	z
+		.object({
+			field: z.enum(fields),
+			direction: OrderDirectionSchema,
+		})
+		.optional();
 
-export type InferOrderBy<T extends readonly [string, ...string[]]> = z.infer<
-	ReturnType<() => ReturnType<typeof createOrderByInputSchema<T>>>
+export type InferSort<T extends readonly [string, ...string[]]> = z.infer<
+	ReturnType<() => ReturnType<typeof createSortInputSchema<T>>>
 >;
 
 export const PaginationInputSchema = z.object({
@@ -41,3 +43,8 @@ export type PaginatedResult<TItem> = z.infer<
 >;
 
 export const DateLikeSchema = z.union([z.string(), z.date()]);
+
+export const QueryInputSchema = z.preprocess<unknown, z.ZodString>(
+	(val) => (typeof val === "string" ? val.trim().toLowerCase() : val),
+	z.string(),
+);

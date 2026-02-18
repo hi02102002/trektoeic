@@ -1,7 +1,7 @@
 import { kitsQueries, questionsQueries } from "@trektoeic/db/queries";
 import { KitSchema } from "@trektoeic/schemas/kit-schema";
 import { QuestionWithSubsSchema } from "@trektoeic/schemas/question-schema";
-import { createOrderByInputSchema } from "@trektoeic/schemas/share-schema";
+import { createSortInputSchema } from "@trektoeic/schemas/share-schema";
 import z from "zod";
 import { cachedMiddleware } from "../middlewares";
 import { publicProcedure } from "../procedures";
@@ -17,7 +17,7 @@ const getAllKits = publicProcedure
 	.input(
 		z.object({
 			year: z.union([z.literal("all"), z.number()]).optional(),
-			orderBy: createOrderByInputSchema(["year"] as const).optional(),
+			orderBy: createSortInputSchema(["year"] as const).optional(),
 		}),
 	)
 	.output(z.array(KitSchema))

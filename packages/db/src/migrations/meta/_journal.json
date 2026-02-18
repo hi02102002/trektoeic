@@ -71,6 +71,13 @@
 			"when": 1771091450778,
 			"tag": "0009_complete_supernaut",
 			"breakpoints": true
+		},
+		{
+			"idx": 10,
+			"version": "7",
+			"when": 1771332928736,
+			"tag": "0010_famous_deadpool",
+			"breakpoints": true
 		}
 	]
 }

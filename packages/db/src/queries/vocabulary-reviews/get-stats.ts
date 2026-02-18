@@ -46,7 +46,12 @@ export const getStats = withUserAndKysely((userId, db) => {
 					.select((eb) => [
 						kSql<number>`CAST(${eb.fn.count("state")} AS INTEGER)`.as("count"),
 					])
-					.where("v_and_vrc.state", "=", "learning"),
+					.where((eb) =>
+						eb.or([
+							eb("v_and_vrc.state", "=", "learning"),
+							eb("v_and_vrc.state", "=", "review"),
+						]),
+					),
 			)
 			.selectFrom("total_words")
 			.leftJoin("master_stat_count", (join) => join.onTrue())

@@ -1,6 +1,7 @@
 import { createId } from "@trektoeic/utils/create-id";
 import { VocabularyReviewScheduler } from "@trektoeic/utils/vocabulary-review-scheduler";
 import { withUserAndKysely } from "../../utils";
+import { upsertDeckOfUserByVocabularyId } from "../deck-of-users/upsert-deck";
 
 export const submitReviewGrade = withUserAndKysely((userId, db) => {
 	return async ({
@@ -23,22 +24,13 @@ export const submitReviewGrade = withUserAndKysely((userId, db) => {
 			grade,
 		});
 
-		const upsertedCard = await db
-			.insertInto("vocabularyReviewCards")
-			.values({
-				id: createId(),
-				userId,
-				vocabularyId,
-				state: computation.after.state,
-				repetitions: computation.after.repetitions,
-				lapses: computation.after.lapses,
-				intervalDays: computation.after.intervalDays,
-				easeFactor: computation.after.easeFactor,
-				nextReviewAt: new Date(computation.nextReviewAt),
-				lastReviewedAt: new Date(),
-			})
-			.onConflict((oc) =>
-				oc.columns(["userId", "vocabularyId"]).doUpdateSet({
+		const [upsertedCard] = await Promise.all([
+			db
+				.insertInto("vocabularyReviewCards")
+				.values({
+					id: createId(),
+					userId,
+					vocabularyId,
 					state: computation.after.state,
 					repetitions: computation.after.repetitions,
 					lapses: computation.after.lapses,
@@ -46,11 +38,26 @@ export const submitReviewGrade = withUserAndKysely((userId, db) => {
 					easeFactor: computation.after.easeFactor,
 					nextReviewAt: new Date(computation.nextReviewAt),
 					lastReviewedAt: new Date(),
-					updatedAt: new Date(),
-				}),
-			)
-			.returningAll()
-			.executeTakeFirstOrThrow();
+				})
+				.onConflict((oc) =>
+					oc.columns(["userId", "vocabularyId"]).doUpdateSet({
+						state: computation.after.state,
+						repetitions: computation.after.repetitions,
+						lapses: computation.after.lapses,
+						intervalDays: computation.after.intervalDays,
+						easeFactor: computation.after.easeFactor,
+						nextReviewAt: new Date(computation.nextReviewAt),
+						lastReviewedAt: new Date(),
+						updatedAt: new Date(),
+					}),
+				)
+				.returningAll()
+				.executeTakeFirstOrThrow(),
+			upsertDeckOfUserByVocabularyId(db)({
+				userId,
+				vocabularyId,
+			}),
+		]);
 
 		const preview = {
 			...computation,

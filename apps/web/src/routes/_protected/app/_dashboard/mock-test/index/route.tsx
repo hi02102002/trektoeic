@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { createOrderByInputSchema } from "@trektoeic/schemas/share-schema";
+import { createSortInputSchema } from "@trektoeic/schemas/share-schema";
 import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
 import {
@@ -15,7 +15,7 @@ export const Route = createFileRoute("/_protected/app/_dashboard/mock-test/")({
 	validateSearch: z.object({
 		search: z.string().optional(),
 		year: z.union([z.literal("all"), z.coerce.number<number>()]).optional(),
-		orderBy: createOrderByInputSchema(["year"] as const).optional(),
+		orderBy: createSortInputSchema(["year"] as const).optional(),
 	}),
 	loaderDeps(opts) {
 		return opts.search;

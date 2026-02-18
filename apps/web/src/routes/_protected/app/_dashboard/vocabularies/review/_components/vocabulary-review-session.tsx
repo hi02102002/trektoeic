@@ -111,6 +111,7 @@ export function VocabularyReviewSession({
 		<div className="space-y-6">
 			<VocabularyReviewProgress
 				category={category}
+				currentCategoryName={current.category?.name}
 				index={index}
 				total={total}
 				completionPercent={completionPercent}
@@ -120,6 +121,7 @@ export function VocabularyReviewSession({
 					current={current}
 					isRevealed={isRevealed}
 					cardStyle={cardStyle}
+					categoryName={current.category?.name}
 					onReveal={handleShowAnswer}
 					onPlayAudio={handlePlayAudio}
 				/>
