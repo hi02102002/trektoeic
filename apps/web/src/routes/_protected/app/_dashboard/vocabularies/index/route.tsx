@@ -41,7 +41,10 @@ export const Route = createFileRoute(
 			),
 			context.queryClient.ensureQueryData(
 				context.orpc.deckOfUsers.getDeckOfUser.queryOptions({
-					input: deps,
+					input: {
+						...deps,
+						limit: 4,
+					},
 				}),
 			),
 		]);
@@ -56,7 +59,6 @@ function RouteComponent() {
 		<AppContent header={<VocabularyDashboardHeader />}>
 			<div className="space-y-6">
 				<VocabularyStatsGrid />
-
 				<div className="grid gap-6 xl:grid-cols-12">
 					<VocabularyCollectionsSection />
 					<VocabularyInsightsSidebar />
