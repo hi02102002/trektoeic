@@ -1,4 +1,3 @@
-import { Link, useParams } from "@tanstack/react-router";
 import {
 	Pagination,
 	PaginationContent,
@@ -40,23 +39,19 @@ const buildPaginationItems = (currentPage: number, totalPages: number) => {
 	] as const;
 };
 
-type VocabularyPaginationProps = {
+type PaginationControlsProps = {
 	page: number;
 	totalPages: number;
-	isFetchingPage?: boolean;
+	isDisabled?: boolean;
 	onPageChange: (page: number) => void;
 };
 
-export function VocabularyPagination({
+export function PaginationControls({
 	page,
 	totalPages,
-	isFetchingPage = false,
+	isDisabled = false,
 	onPageChange,
-}: VocabularyPaginationProps) {
-	const { slug } = useParams({
-		from: "/_protected/app/_dashboard/vocabularies/$slug/",
-	});
-
+}: PaginationControlsProps) {
 	if (totalPages <= 1) return null;
 
 	const isFirstPage = page <= 1;
@@ -68,19 +63,20 @@ export function VocabularyPagination({
 			<PaginationContent>
 				<PaginationItem>
 					<PaginationPrevious
+						href="#"
 						onClick={(event) => {
 							event.preventDefault();
-							if (!isFirstPage && !isFetchingPage) {
-								onPageChange(page - 1);
-							}
+							if (isFirstPage || isDisabled) return;
+							onPageChange(page - 1);
 						}}
 						className={
-							isFirstPage || isFetchingPage
+							isFirstPage || isDisabled
 								? "pointer-events-none opacity-50"
 								: undefined
 						}
 					/>
 				</PaginationItem>
+
 				{buildPaginationItems(page, totalPages).map((item) => {
 					if (item === "ellipsis") {
 						ellipsisKey += 1;
@@ -93,30 +89,31 @@ export function VocabularyPagination({
 
 					return (
 						<PaginationItem key={item}>
-							<PaginationLink isActive={item === page}>
-								<Link
-									to="/app/vocabularies/$slug"
-									params={{ slug }}
-									search={{ page: item }}
-									className="block flex h-full w-full items-center justify-center"
-								>
-									{item}
-								</Link>
+							<PaginationLink
+								href="#"
+								isActive={item === page}
+								onClick={(event) => {
+									event.preventDefault();
+									if (isDisabled || item === page) return;
+									onPageChange(item);
+								}}
+							>
+								{item}
 							</PaginationLink>
 						</PaginationItem>
 					);
 				})}
+
 				<PaginationItem>
 					<PaginationNext
 						href="#"
 						onClick={(event) => {
 							event.preventDefault();
-							if (!isLastPage && !isFetchingPage) {
-								onPageChange(page + 1);
-							}
+							if (isLastPage || isDisabled) return;
+							onPageChange(page + 1);
 						}}
 						className={
-							isLastPage || isFetchingPage
+							isLastPage || isDisabled
 								? "pointer-events-none opacity-50"
 								: undefined
 						}

@@ -3,6 +3,7 @@ import type {
 	InferRouterOutputs,
 	RouterClient,
 } from "@orpc/server";
+import { deckOfUserRouter } from "./deck-of-user";
 import { kitsRouter } from "./kits";
 import { mockTestRouter } from "./mock-test.router";
 import { partPractices } from "./part-practices";
@@ -19,6 +20,7 @@ export const appRouter = {
 	mockTest: mockTestRouter,
 	vocabularies: vocabulariesRouter,
 	vocabularyReview: vocabularyReviewRouter,
+	deckOfUsers: deckOfUserRouter,
 };
 export type AppRouter = typeof appRouter;
 export type AppRouterClient = RouterClient<typeof appRouter>;

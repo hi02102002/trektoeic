@@ -1,90 +1,66 @@
 import { createFileRoute } from "@tanstack/react-router";
+import {
+	createSortInputSchema,
+	PaginationInputSchema,
+	QueryInputSchema,
+} from "@trektoeic/schemas/share-schema";
 import z from "zod";
-import { AppContent, AppHeader } from "@/components/layouts/app";
-import { createOpenGraphData, generateMetadata } from "@/lib/meta";
-import { CategoriesList } from "./_components/categories-list";
+import { AppContent } from "@/components/layouts/app";
+import { VocabularyCollectionsSection } from "./_components/vocabulary-collections-section";
+import { VocabularyDashboardHeader } from "./_components/vocabulary-dashboard-header";
+import { VocabularyInsightsSidebar } from "./_components/vocabulary-insights-sidebar";
+import { VocabularyStatsGrid } from "./_components/vocabulary-stats-grid";
 
 export const Route = createFileRoute(
 	"/_protected/app/_dashboard/vocabularies/",
 )({
-	validateSearch: z.object({
-		parentId: z.string().optional(),
-		level: z.number().optional().default(1),
+	validateSearch: z.object(PaginationInputSchema.shape).extend({
+		query: QueryInputSchema.optional(),
+		sort: createSortInputSchema([
+			"du.updatedAt",
+			"du.createdAt",
+			"vc.name",
+		] as const),
 	}),
 	loaderDeps(opts) {
 		return opts.search;
 	},
 	loader: async ({ context, deps }) => {
-		const [categories, category] = await Promise.all([
+		const [stats, dueWords, categories] = await Promise.all([
 			context.queryClient.ensureQueryData(
-				context.orpc.vocabularies.getAllCategories.queryOptions({
+				context.orpc.vocabularyReview.getStats.queryOptions({
+					input: {},
+				}),
+			),
+			context.queryClient.ensureQueryData(
+				context.orpc.vocabularyReview.getDueVocabularies.queryOptions({
 					input: {
-						parentId: deps.parentId,
-						level: deps.level,
+						limit: 50,
 					},
 				}),
 			),
-			deps.parentId
-				? context.queryClient.ensureQueryData(
-						context.orpc.vocabularies.getCategoryById.queryOptions({
-							input: { id: deps.parentId },
-						}),
-					)
-				: null,
+			context.queryClient.ensureQueryData(
+				context.orpc.deckOfUsers.getDeckOfUser.queryOptions({
+					input: deps,
+				}),
+			),
 		]);
 
-		return { categories, category };
+		return { stats, dueWords, categories };
 	},
 	component: RouteComponent,
-	head: ({ match, loaderData }) => {
-		const { meta, links } = generateMetadata({
-			title: loaderData?.category?.name ?? "Từ vựng theo chủ đề",
-			description:
-				"Học từ vựng TOEIC quan trọng theo chủ đề. Nắm vững vốn từ vựng cần thiết để đạt điểm cao trong kỳ thi TOEIC.",
-			keywords: [
-				"từ vựng TOEIC",
-				"học từ vựng TOEIC",
-				"vocabulary TOEIC",
-				"từ vựng theo chủ đề TOEIC",
-				"từ vựng cần thiết TOEIC",
-			],
-			...createOpenGraphData(
-				"Từ vựng TOEIC | TrekToeic",
-				"Học từ vựng TOEIC quan trọng theo chủ đề. Nắm vững vốn từ vựng cần thiết để đạt điểm cao trong kỳ thi TOEIC.",
-				match.pathname,
-			),
-			robots: {
-				index: false,
-				follow: false,
-			},
-			alternates: {
-				canonical: match.pathname,
-			},
-		});
-
-		return { meta, links };
-	},
 });
 
 function RouteComponent() {
-	const { category } = Route.useLoaderData();
-
 	return (
-		<AppContent
-			header={
-				<AppHeader
-					title={category ? category.name : "Từ vựng theo chủ đề"}
-					description={
-						category
-							? undefined
-							: "Học từ vựng TOEIC quan trọng theo chủ đề. Nắm vững vốn từ vựng cần thiết để đạt điểm cao trong kỳ thi TOEIC."
-					}
-					className="max-w-2xl"
-				/>
-			}
-		>
+		<AppContent header={<VocabularyDashboardHeader />}>
 			<div className="space-y-6">
-				<CategoriesList />
+				<VocabularyStatsGrid />
+
+				<div className="grid gap-6 xl:grid-cols-12">
+					<VocabularyCollectionsSection />
+					<VocabularyInsightsSidebar />
+				</div>
 			</div>
 		</AppContent>
 	);

@@ -7,13 +7,28 @@ export const buildCategoriesQuery = (
 	userId: string,
 ) => {
 	return db
+		.withRecursive("category_tree", (qb) =>
+			qb
+				.selectFrom("vocabularyCategories as root")
+				.select(["root.id as rootId", "root.id as categoryId"])
+				.unionAll(
+					qb
+						.selectFrom("category_tree as ct")
+						.innerJoin(
+							"vocabularyCategories as child",
+							"child.parentId",
+							"ct.categoryId",
+						)
+						.select(["ct.rootId as rootId", "child.id as categoryId"]),
+				),
+		)
 		.with("voc", (qb) =>
 			qb
-				.selectFrom("vocabularyCategories")
+				.selectFrom("category_tree as ct")
 				.leftJoin("vocabularies", (join) =>
-					join.onRef("vocabularies.categoryId", "=", "vocabularyCategories.id"),
+					join.onRef("vocabularies.categoryId", "=", "ct.categoryId"),
 				)
-				.select(["vocabularyCategories.id", "vocabularies.id as vocabularyId"]),
+				.select(["ct.rootId as id", "vocabularies.id as vocabularyId"]),
 		)
 		.with("word_counts", (qb) =>
 			qb
@@ -60,26 +75,16 @@ export const buildCategoriesQuery = (
 				.where("vrc.state", "=", "mastered")
 				.groupBy("voc.id"),
 		)
-		.selectFrom("vocabularyCategories")
+		.selectFrom("vocabularyCategories as vc")
 		.leftJoin("word_counts", (join) =>
-			join.onRef("word_counts.id", "=", "vocabularyCategories.id"),
+			join.onRef("word_counts.id", "=", "vc.id"),
 		)
-		.leftJoin("due_counts", (join) =>
-			join.onRef("due_counts.id", "=", "vocabularyCategories.id"),
-		)
+		.leftJoin("due_counts", (join) => join.onRef("due_counts.id", "=", "vc.id"))
 		.leftJoin("learned_counts", (join) =>
-			join.onRef("learned_counts.id", "=", "vocabularyCategories.id"),
+			join.onRef("learned_counts.id", "=", "vc.id"),
 		)
+		.selectAll("vc")
 		.select([
-			"vocabularyCategories.id",
-			"vocabularyCategories.name",
-			"vocabularyCategories.slug",
-			"vocabularyCategories.alias",
-			"vocabularyCategories.level",
-			"vocabularyCategories.parentId",
-			"vocabularyCategories.hasChild",
-			"vocabularyCategories.updatedAt",
-			"vocabularyCategories.createdAt",
 			kSql<number>`COALESCE(word_counts.direct_word_count, 0)::int`.as(
 				"totalWords",
 			),

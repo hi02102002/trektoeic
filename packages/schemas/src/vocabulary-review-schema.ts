@@ -40,6 +40,11 @@ export const VocabularyReviewCardPreviewSchema = z.object({
 	intervalLabel: z.string(),
 });
 
+export const DueVocabularyCategorySchema = z.object({
+	id: z.string(),
+	name: z.string(),
+});
+
 export const GetDueVocabulariesResultSchema = z.array(
 	z.object(VocabularySchema.shape).extend({
 		review: VocabularyReviewCardSchema.nullable().optional(),
@@ -47,6 +52,7 @@ export const GetDueVocabulariesResultSchema = z.array(
 			.record(z.string(), VocabularyReviewCardPreviewSchema)
 			.nullable()
 			.optional(),
+		category: DueVocabularyCategorySchema.nullable().optional(),
 	}),
 );
 

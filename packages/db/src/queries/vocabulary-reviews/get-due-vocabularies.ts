@@ -8,6 +8,7 @@ import {
 } from "../../libs/kysely";
 import { vocabularyReviewCards } from "../../schema";
 import { withKysely } from "../../utils";
+import { whereCategoryInTree } from "../shared";
 
 const withScheduler = (
 	records: z.infer<typeof GetDueVocabulariesResultSchema>,
@@ -41,6 +42,9 @@ export const getDueVocabularies = withKysely((db) => {
 					.onRef("v.id", "=", "vrc.vocabularyId")
 					.on("vrc.userId", "=", userId),
 			)
+			.leftJoin("vocabularyCategories as c", (join) =>
+				join.onRef("v.categoryId", "=", "c.id"),
+			)
 			.selectAll("v")
 			.select((eb) => [
 				kJsonObjectAgg(
@@ -51,6 +55,9 @@ export const getDueVocabularies = withKysely((db) => {
 					),
 					{ nullIf: eb.ref("vrc.id") },
 				).as("review"),
+				kJsonObjectAgg(jsonColsFromNames(eb, "c", ["id", "name"]), {
+					nullIf: eb.ref("c.id"),
+				}).as("category"),
 			])
 			.where((eb) =>
 				eb.or([
@@ -59,7 +66,7 @@ export const getDueVocabularies = withKysely((db) => {
 				]),
 			)
 			.$if(!!categoryId, (eb) =>
-				eb.where("v.categoryId", "=", categoryId as string),
+				eb.where(whereCategoryInTree(db, "v.categoryId", categoryId as string)),
 			)
 			.orderBy("vrc.nextReviewAt", "asc")
 			.orderBy("v.createdAt", "asc")

@@ -1,4 +1,5 @@
 export * from "./auth";
+export * from "./deck-of-user";
 export * from "./history";
 export * from "./kit";
 export * from "./question";

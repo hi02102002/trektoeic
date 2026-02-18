@@ -30,7 +30,18 @@ export const createRpcHandler = <T extends Context>(router: AnyRouter<T>) => {
 	return new RPCHandler(router, {
 		interceptors: [
 			onError((error) => {
-				console.error(error);
+				console.error("RPC Error:", error);
+
+				if (error instanceof ZodError) {
+					throw new ORPCError("VALIDATION_ERROR", {
+						status: 400,
+						message: z.prettifyError(error),
+						data: z.flattenError(error),
+						cause: error.cause,
+					});
+				}
+
+				throw error;
 			}),
 		],
 		plugins,
@@ -52,6 +63,8 @@ export const createOpenApiHandler = <T extends Context>(
 	return new OpenAPIHandler(router, {
 		interceptors: [
 			onError((error) => {
+				console.error("OpenAPI Handler Error:", error);
+
 				if (error instanceof ZodError) {
 					throw new ORPCError("VALIDATION_ERROR", {
 						status: 400,

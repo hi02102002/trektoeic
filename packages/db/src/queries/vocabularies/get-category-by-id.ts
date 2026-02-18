@@ -5,7 +5,7 @@ import { buildCategoriesQuery } from "./build-categories-query";
 export const getCategoryById = withUserAndKysely((_userId, db) => {
 	return async ({ id }: { id: string }) => {
 		const record = await buildCategoriesQuery(db, _userId)
-			.where("vocabularyCategories.id", "=", id)
+			.where("vc.id", "=", id)
 			.executeTakeFirst();
 		return VocabularyCategorySchema.parse(record);
 	};

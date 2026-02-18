@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 export const AppHeader = ({
@@ -7,7 +8,7 @@ export const AppHeader = ({
 	className,
 }: {
 	title: string;
-	description?: string;
+	description?: ReactNode;
 	right?: React.ReactNode;
 	className?: string;
 }) => {

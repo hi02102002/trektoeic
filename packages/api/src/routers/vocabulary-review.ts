@@ -1,4 +1,10 @@
 import { vocabularyReviewsQueries } from "@trektoeic/db/queries";
+import { VocabularyReviewGradeSchema } from "@trektoeic/schemas/vocabularies-shared-schema";
+import {
+	GetDueVocabulariesResultSchema,
+	VocabularyReviewCardPreviewSchema,
+	VocabularyReviewCardSchema,
+} from "@trektoeic/schemas/vocabulary-review-schema";
 import z from "zod";
 import { requiredAuthProcedure } from "../procedures";
 
@@ -18,7 +24,7 @@ export const vocabularyReviewRouter = {
 				categoryId: z.string().optional(),
 			}),
 		)
-		.output(z.any())
+		.output(GetDueVocabulariesResultSchema)
 		.handler(async ({ input, context }) => {
 			const records = await vocabularyReviewsQueries.getDueVocabularies(
 				context.kysely,
@@ -57,5 +63,34 @@ export const vocabularyReviewRouter = {
 				categoryId: input.categoryId,
 			});
 			return stats;
+		}),
+	submitReviewGrade: requiredAuthProcedure
+		.route({
+			method: "POST",
+			tags: TAGS,
+			description: "Submit a review grade for a vocabulary card",
+		})
+		.input(
+			z.object({
+				vocabularyId: z.string(),
+				grade: VocabularyReviewGradeSchema,
+			}),
+		)
+		.output(
+			z.object({
+				review: VocabularyReviewCardSchema,
+				preview: VocabularyReviewCardPreviewSchema,
+			}),
+		)
+		.handler(async ({ input, context }) => {
+			const result = await vocabularyReviewsQueries.submitReviewGrade(
+				context.session.user.id,
+				context.kysely,
+			)({
+				vocabularyId: input.vocabularyId,
+				grade: input.grade,
+			});
+
+			return result;
 		}),
 };
