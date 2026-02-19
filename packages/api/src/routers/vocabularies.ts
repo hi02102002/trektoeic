@@ -12,8 +12,14 @@ import { searchDunnoDictionary } from "@trektoeic/utils/search-dunno-dictionary"
 import z from "zod";
 import { requiredAuthProcedure } from "../procedures";
 
+const TAGS = ["Vocabularies"];
+
 export const vocabulariesRouter = {
 	getAllCategories: requiredAuthProcedure
+		.route({
+			method: "GET",
+			tags: TAGS,
+		})
 		.input(
 			z.object({
 				parentId: z.string().optional(),
@@ -31,6 +37,10 @@ export const vocabulariesRouter = {
 			});
 		}),
 	getCategoryById: requiredAuthProcedure
+		.route({
+			method: "GET",
+			tags: TAGS,
+		})
 		.input(z.object({ id: z.string() }))
 		.output(VocabularyCategorySchema.nullable())
 		.handler(async ({ input, context }) => {
@@ -40,6 +50,10 @@ export const vocabulariesRouter = {
 			)({ id: input.id });
 		}),
 	getCategoryBySlug: requiredAuthProcedure
+		.route({
+			method: "GET",
+			tags: TAGS,
+		})
 		.input(z.object({ slug: z.string() }))
 		.output(VocabularyCategorySchema.nullable())
 		.handler(async ({ input, context }) => {
@@ -49,6 +63,10 @@ export const vocabulariesRouter = {
 			)({ slug: input.slug });
 		}),
 	getVocabulariesByCategoryId: requiredAuthProcedure
+		.route({
+			method: "GET",
+			tags: TAGS,
+		})
 		.input(
 			z.object({
 				categoryId: z.string(),
@@ -68,6 +86,10 @@ export const vocabulariesRouter = {
 			});
 		}),
 	getDunnoDetail: requiredAuthProcedure
+		.route({
+			method: "GET",
+			tags: TAGS,
+		})
 		.input(
 			z.object({
 				keyword: z.string().trim().min(1),
