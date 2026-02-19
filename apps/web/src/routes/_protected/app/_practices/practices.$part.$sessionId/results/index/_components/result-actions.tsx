@@ -7,7 +7,7 @@ import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { client } from "@/lib/orpc/orpc";
 
 const routeApi = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id/results/",
+	"/_protected/app/_practices/practices/$part/$sessionId/results/",
 );
 
 export const ResultActions = () => {
@@ -20,7 +20,7 @@ export const ResultActions = () => {
 		startTransition(async () => {
 			try {
 				const result = await client.partPractices.redoPartPractices({
-					historyId: params["session-id"],
+					historyId: params["sessionId"],
 				});
 
 				if (!result) {
@@ -29,10 +29,10 @@ export const ResultActions = () => {
 				}
 
 				navigate({
-					to: "/app/practices/$part/$session-id",
+					to: "/app/practices/$part/$sessionId",
 					params: {
 						part: params.part,
-						"session-id": result.cacheKey,
+						sessionId: result.cacheKey,
 					},
 					search: {
 						mode: history.metadata.mode,

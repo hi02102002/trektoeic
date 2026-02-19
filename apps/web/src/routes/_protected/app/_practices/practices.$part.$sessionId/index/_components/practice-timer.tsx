@@ -4,7 +4,7 @@ import { LoadingOverlay } from "@/components/ui/loading-overlay";
 import { useSubmitPractice } from "../_hooks/use-submit-practice";
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id/",
+	"/_protected/app/_practices/practices/$part/$sessionId/",
 );
 
 export const PracticeTimer = () => {

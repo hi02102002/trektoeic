@@ -52,10 +52,10 @@ export const ConfigSession = () => {
 	const handleStartSession = form.handleSubmit(async (data) => {
 		startTransition(async () => {
 			await navigate({
-				to: "/app/practices/$part/$session-id",
+				to: "/app/practices/$part/$sessionId",
 				params: {
 					part: `${part}`,
-					"session-id": createId(),
+					sessionId: createId(),
 				},
 				search: {
 					mode: data.mode,

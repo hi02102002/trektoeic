@@ -1,8 +1,10 @@
 import { getRouteApi } from "@tanstack/react-router";
 import { QuestionsNavigator as SharedQuestionsNavigator } from "@/components/practices/questions-navigator";
+import { ResultMainScore } from "./result-main-score";
+import { ResultTimeStats } from "./result-time-stats";
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id/",
+	"/_protected/app/_practices/practices/$part/$sessionId/results/",
 );
 
 export const QuestionsNavigator = ({
@@ -20,8 +22,14 @@ export const QuestionsNavigator = ({
 			isOpen={isOpen}
 			onOpenChange={onOpenChange}
 			questions={questions}
-			mode="practice"
+			mode="result"
 			part={part}
+			extra={
+				<>
+					<ResultMainScore />
+					<ResultTimeStats />
+				</>
+			}
 		/>
 	);
 };

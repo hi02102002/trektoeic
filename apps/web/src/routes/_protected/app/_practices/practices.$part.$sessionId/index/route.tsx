@@ -1,5 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useMount } from "ahooks";
+import { createFileRoute, defer } from "@tanstack/react-router";
 import { useState } from "react";
 import z from "zod";
 import { Header } from "@/components/practices/header";
@@ -18,7 +17,7 @@ import { PracticeActionBar } from "./_components/pratice-action-bar";
 import { QuestionsNavigator } from "./_components/questions-navigator";
 
 export const Route = createFileRoute(
-	"/_protected/app/_practices/practices/$part/$session-id/",
+	"/_protected/app/_practices/practices/$part/$sessionId/",
 )({
 	validateSearch: z.object({
 		duration: z.coerce.number().optional(),
@@ -34,8 +33,15 @@ export const Route = createFileRoute(
 				input: {
 					part: Number(params.part),
 					limit: deps.numberOfQuestions,
-					unique: params["session-id"],
+					unique: params.sessionId,
 				},
+			}),
+		);
+
+		defer(
+			context.queryClient.ensureQueryData({
+				queryKey: ["prefetch-questions", params],
+				queryFn: () => prefetchQuestionMedia(questions),
 			}),
 		);
 
@@ -63,10 +69,6 @@ function RouteComponent() {
 	const { part } = Route.useParams();
 	const { questions } = Route.useLoaderData();
 	const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
-
-	useMount(() => {
-		prefetchQuestionMedia(questions);
-	});
 
 	return (
 		<CurrentQuestionProvider

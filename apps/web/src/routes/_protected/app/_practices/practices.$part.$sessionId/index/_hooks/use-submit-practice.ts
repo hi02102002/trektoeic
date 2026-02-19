@@ -5,7 +5,7 @@ import { orpc } from "@/lib/orpc/orpc";
 import { useAnswersApi, useQuestionTimerApi } from "@/stores/attempt";
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id/",
+	"/_protected/app/_practices/practices/$part/$sessionId/",
 );
 
 export const useSubmitPractice = () => {
@@ -66,14 +66,14 @@ export const useSubmitPractice = () => {
 					avgTimePerQuestion,
 					performancePercentile,
 				},
-				id: params["session-id"],
+				id: params["sessionId"],
 			});
 
 			await navigate({
-				to: "/app/practices/$part/$session-id/results",
+				to: "/app/practices/$part/$sessionId/results",
 				params: {
 					part: params.part,
-					"session-id": params["session-id"],
+					sessionId: params["sessionId"],
 				},
 				replace: true,
 				ignoreBlocker: true,

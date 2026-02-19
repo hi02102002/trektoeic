@@ -12,13 +12,13 @@ import { ResultActionBar } from "./_components/result-action-bar";
 import { ResultQuestionsList } from "./_components/result-questions-list";
 
 export const Route = createFileRoute(
-	"/_protected/app/_practices/practices/$part/$session-id/results/",
+	"/_protected/app/_practices/practices/$part/$sessionId/results/",
 )({
 	async loader({ context, params }) {
 		const res = await context.queryClient.ensureQueryData(
 			context.orpc.partPractices.getPartPracticeHistoryById.queryOptions({
 				input: {
-					id: params["session-id"],
+					id: params["sessionId"],
 				},
 			}),
 		);

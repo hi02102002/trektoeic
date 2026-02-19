@@ -1,7 +1,7 @@
 import { getRouteApi } from "@tanstack/react-router";
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id/results/",
+	"/_protected/app/_practices/practices/$part/$sessionId/results/",
 );
 
 export const ResultMainScore = () => {

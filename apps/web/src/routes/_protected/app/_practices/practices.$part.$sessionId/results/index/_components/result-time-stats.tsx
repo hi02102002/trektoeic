@@ -3,7 +3,7 @@ import { getTime } from "@trektoeic/utils/get-time";
 import { dayjs } from "@/lib/dayjs";
 
 const Route = getRouteApi(
-	"/_protected/app/_practices/practices/$part/$session-id/results/",
+	"/_protected/app/_practices/practices/$part/$sessionId/results/",
 );
 
 export const ResultTimeStats = () => {
