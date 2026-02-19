@@ -1,5 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useMount } from "ahooks";
+import { createFileRoute, defer, notFound } from "@tanstack/react-router";
 import { useState } from "react";
 import { Header } from "@/components/practices/header";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
@@ -30,6 +29,8 @@ export const Route = createFileRoute(
 		if (!result) {
 			throw notFound();
 		}
+
+		defer(prefetchQuestionMedia(result.questions));
 
 		return result;
 	},
@@ -64,10 +65,6 @@ export const Route = createFileRoute(
 function RouteComponent() {
 	const { questions, kit } = Route.useLoaderData();
 	const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
-
-	useMount(() => {
-		prefetchQuestionMedia(questions);
-	});
 
 	return (
 		<CurrentQuestionProvider

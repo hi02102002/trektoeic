@@ -1,3 +1,4 @@
+import { createClientOnlyFn } from "@tanstack/react-start";
 import type { QuestionWithSubs } from "@trektoeic/schemas/question-schema";
 import { getProxiedAudioUrl, getProxiedImageUrl } from "./proxy-image";
 
@@ -51,55 +52,57 @@ const extractMediaUrls = (
  * @param onProgress - Optional callback to track progress
  * @returns Promise that resolves when all media is prefetched
  */
-export const prefetchQuestionMedia = async (
-	questions: QuestionWithSubs[],
-	onProgress?: (loaded: number, total: number) => void,
-): Promise<{ success: number; failed: number; errors: Error[] }> => {
-	const { images, audios } = extractMediaUrls(questions);
-	const total = images.length + audios.length;
+export const prefetchQuestionMedia = createClientOnlyFn(
+	async (
+		questions: QuestionWithSubs[],
+		onProgress?: (loaded: number, total: number) => void,
+	): Promise<{ success: number; failed: number; errors: Error[] }> => {
+		const { images, audios } = extractMediaUrls(questions);
+		const total = images.length + audios.length;
 
-	if (total === 0) {
-		return { success: 0, failed: 0, errors: [] };
-	}
+		if (total === 0) {
+			return { success: 0, failed: 0, errors: [] };
+		}
 
-	let loaded = 0;
-	const errors: Error[] = [];
+		let loaded = 0;
+		const errors: Error[] = [];
 
-	const prefetchPromises = [
-		...images.map((url) =>
-			prefetchMedia(url, "image")
-				.then(() => {
-					loaded++;
-					onProgress?.(loaded, total);
-				})
-				.catch((error) => {
-					loaded++;
-					errors.push(error);
-					onProgress?.(loaded, total);
-				}),
-		),
-		...audios.map((url) =>
-			prefetchMedia(url, "audio")
-				.then(() => {
-					loaded++;
-					onProgress?.(loaded, total);
-				})
-				.catch((error) => {
-					loaded++;
-					errors.push(error);
-					onProgress?.(loaded, total);
-				}),
-		),
-	];
+		const prefetchPromises = [
+			...images.map((url) =>
+				prefetchMedia(url, "image")
+					.then(() => {
+						loaded++;
+						onProgress?.(loaded, total);
+					})
+					.catch((error) => {
+						loaded++;
+						errors.push(error);
+						onProgress?.(loaded, total);
+					}),
+			),
+			...audios.map((url) =>
+				prefetchMedia(url, "audio")
+					.then(() => {
+						loaded++;
+						onProgress?.(loaded, total);
+					})
+					.catch((error) => {
+						loaded++;
+						errors.push(error);
+						onProgress?.(loaded, total);
+					}),
+			),
+		];
 
-	await Promise.allSettled(prefetchPromises);
+		await Promise.allSettled(prefetchPromises);
 
-	return {
-		success: total - errors.length,
-		failed: errors.length,
-		errors,
-	};
-};
+		return {
+			success: total - errors.length,
+			failed: errors.length,
+			errors,
+		};
+	},
+);
 
 /**
  * Hook to prefetch media in the background

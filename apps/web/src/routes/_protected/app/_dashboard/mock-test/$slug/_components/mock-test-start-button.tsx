@@ -1,7 +1,7 @@
 import { PlayIcon } from "@phosphor-icons/react";
-import { useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import type { Kit } from "@trektoeic/schemas/kit-schema";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -10,8 +10,6 @@ type Props = {
 };
 
 export const MockTestStartButton = ({ className, kit }: Props) => {
-	const navigate = useNavigate();
-
 	return (
 		<div
 			className={cn(
@@ -29,18 +27,18 @@ export const MockTestStartButton = ({ className, kit }: Props) => {
 					Bạn sẽ có 120 phút để hoàn thành 200 câu hỏi. Hãy đảm bảo bạn có đủ
 					thời gian và không gian yên tĩnh để làm bài.
 				</p>
-				<Button
-					className="w-full gap-2"
-					leadingIcon={<PlayIcon weight="fill" />}
-					onClick={() => {
-						navigate({
-							to: "/app/mock-test/$slug/start",
-							params: { slug: kit.slug },
-						});
+				<Link
+					to="/app/mock-test/$slug/start"
+					params={{
+						slug: kit.slug,
 					}}
+					className={buttonVariants({
+						className: "w-full gap-2",
+					})}
 				>
+					<PlayIcon weight="fill" />
 					Bắt đầu làm bài
-				</Button>
+				</Link>
 			</div>
 		</div>
 	);
