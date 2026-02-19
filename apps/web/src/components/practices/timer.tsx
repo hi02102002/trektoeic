@@ -1,6 +1,7 @@
 import { TimerIcon } from "@phosphor-icons/react";
 import { useCountDown } from "ahooks";
 import { cva } from "class-variance-authority";
+import type { Duration } from "dayjs/plugin/duration";
 import { forwardRef, useEffect, useImperativeHandle } from "react";
 import { useCountUpMs } from "@/hooks/use-count-up";
 import { dayjs } from "@/lib/dayjs";
@@ -43,6 +44,14 @@ export const timerVariants = cva(
 	"flex min-w-[80px] items-center gap-1.5 rounded-full border border-border bg-neutral-100 px-2 py-1 text-primary text-xs sm:min-w-[93px] sm:gap-2 sm:px-3 sm:py-1.5 sm:text-sm",
 );
 
+const getFormat = (duration: Duration) => {
+	const minutes = (duration.hours() * 60 + duration.minutes())
+		.toString()
+		.padStart(2, "0");
+	const seconds = duration.seconds().toString().padStart(2, "0");
+	return `${minutes}:${seconds}`;
+};
+
 export const Timer = forwardRef<TimerRef, Props>((props, ref) => {
 	if (props.mode === "up") {
 		const { className, onChange } = props;
@@ -79,15 +88,17 @@ const TimerUp = forwardRef<TimerRef, TimerUpProps>(
 			autoStart: true,
 		});
 
+		const dDuration = dayjs.duration(elapsedMs);
+
 		useImperativeHandle(
 			ref,
 			() => ({
 				getElapsed: () => elapsedMs,
 				getRemaining: () => 0,
-				getFormatted: () => dayjs.duration(elapsedMs).format("mm:ss"),
+				getFormatted: () => getFormat(dDuration),
 				reset,
 			}),
-			[elapsedMs, reset],
+			[elapsedMs, reset, dDuration],
 		);
 
 		useEffect(() => {
@@ -97,7 +108,7 @@ const TimerUp = forwardRef<TimerRef, TimerUpProps>(
 		return (
 			<div className={cn(className)}>
 				<TimerIcon className="size-5 text-indigo-700" weight="duotone" />
-				<span>{dayjs.duration(elapsedMs).format("mm:ss")}</span>
+				<span>{getFormat(dDuration)}</span>
 			</div>
 		);
 	},
@@ -112,17 +123,19 @@ const TimerDown = forwardRef<TimerRef, TimerDownProps>(
 
 		const elapsed = duration - countdown;
 
+		const dDuration = dayjs.duration(countdown);
+
 		useImperativeHandle(
 			ref,
 			() => ({
 				getElapsed: () => elapsed,
 				getRemaining: () => countdown,
-				getFormatted: () => dayjs.duration(countdown).format("mm:ss"),
+				getFormatted: () => getFormat(dDuration),
 				reset: () => {
 					// Not implemented for countdown mode
 				},
 			}),
-			[elapsed, countdown],
+			[elapsed, countdown, dDuration],
 		);
 
 		useEffect(() => {
@@ -132,7 +145,7 @@ const TimerDown = forwardRef<TimerRef, TimerDownProps>(
 		return (
 			<div className={cn(className)}>
 				<TimerIcon className="size-5 text-indigo-700" weight="duotone" />
-				<span>{dayjs.duration(countdown).format("mm:ss")}</span>
+				<span>{getFormat(dDuration)}</span>
 			</div>
 		);
 	},
