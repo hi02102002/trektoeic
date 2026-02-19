@@ -30,7 +30,12 @@ export const Route = createFileRoute(
 			throw notFound();
 		}
 
-		defer(prefetchQuestionMedia(result.questions));
+		defer(
+			context.queryClient.ensureQueryData({
+				queryKey: ["prefetch-media", params],
+				queryFn: () => prefetchQuestionMedia(result.questions),
+			}),
+		);
 
 		return result;
 	},
