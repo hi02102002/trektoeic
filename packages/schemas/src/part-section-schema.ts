@@ -4,7 +4,7 @@ export const PartSchema = z.coerce.number().min(1).max(7);
 
 export const PartSectionSchema = z.object({
 	id: z.string(),
-	name: z.string().nullable(),
+	name: z.string().nullable().optional(),
 	createdAt: z.coerce.date(),
 	updatedAt: z.coerce.date(),
 	part: PartSchema,
