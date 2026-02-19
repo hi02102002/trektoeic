@@ -42,11 +42,11 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.4.1",
-		"@types/node": "^25.2.3",
+		"@types/node": "^25.3.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7",
 		"tsx": "^4.21.0",
-		"turbo": "^2.8.9"
+		"turbo": "^2.8.10"
 	},
 	"lint-staged": {
 		"*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
