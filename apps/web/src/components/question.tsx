@@ -474,12 +474,18 @@ export const QuestionSubOptions = ({
 				const isCorrect =
 					isCorrectAnswerAvailable(key) || isChooseCorrectAnswer(key);
 				const isWrong = isChooseWrongAnswer(key);
+				const valueForRender =
+					mode === "review"
+						? value
+						: PART_WITHOUT_TEXT.has(question.part)
+							? ""
+							: value;
 
 				return (
 					<li key={key}>
 						<QuestionOption
 							label={key.toUpperCase()}
-							value={PART_WITHOUT_TEXT.has(question.part) ? "" : value}
+							value={valueForRender}
 							isSelected={isSelected}
 							isCorrect={isCorrect}
 							isWrong={isWrong}
