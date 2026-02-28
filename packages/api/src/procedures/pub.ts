@@ -7,3 +7,4 @@ export const publicProcedure = o
 	.use(dbProviderMiddleware)
 	.use(kvProviderMiddleware)
 	.use(kyselyProviderMiddleware);
+// .use(rateLimitMiddleware);

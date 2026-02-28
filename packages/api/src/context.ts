@@ -1,4 +1,9 @@
 import type { LoggerContext } from "@orpc/experimental-pino";
+import type { Ratelimiter } from "@orpc/experimental-ratelimit";
+import type {
+	RequestHeadersPluginContext,
+	ResponseHeadersPluginContext,
+} from "@orpc/server/plugins";
 import { auth } from "@trektoeic/auth";
 import { kysely } from "@trektoeic/db";
 import { type Database, db } from "@trektoeic/db/db";
@@ -26,9 +31,11 @@ export async function createContext({ headers }: { headers: any }) {
 
 type AuthContext = NonNullable<Awaited<ReturnType<typeof createContext>>>;
 
-export interface Context extends LoggerContext {
+export type Context = LoggerContext & {
 	session: AuthContext["session"];
 	kv?: typeof storage;
 	db: Database;
 	kysely: KyselyDb;
-}
+	limiter?: Ratelimiter;
+} & ResponseHeadersPluginContext &
+	RequestHeadersPluginContext;

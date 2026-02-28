@@ -31,6 +31,7 @@
 		"@orpc/client": "catalog:",
 		"@orpc/contract": "catalog:",
 		"@orpc/experimental-pino": "catalog:",
+		"@orpc/experimental-ratelimit": "^1.13.5",
 		"@orpc/json-schema": "catalog:",
 		"@orpc/openapi": "catalog:",
 		"@orpc/server": "catalog:",

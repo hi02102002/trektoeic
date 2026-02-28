@@ -16,6 +16,7 @@ import {
 	smartCoercion,
 } from "./plugins";
 import { batchHandler } from "./plugins/batch-handler";
+import { requestHeader } from "./plugins/request-header";
 
 type AnyRouter<T extends Context> = Router<ContractRouter<any>, T>;
 
@@ -26,12 +27,12 @@ export const createRpcHandler = <T extends Context>(router: AnyRouter<T>) => {
 		batchHandler(),
 		smartCoercion<T>(),
 		responseHeader(),
+		// compression(),
+		requestHeader(),
 	].filter((p) => p !== null);
 	return new RPCHandler(router, {
 		interceptors: [
 			onError((error) => {
-				console.error("RPC Error:", error);
-
 				if (error instanceof ZodError) {
 					throw new ORPCError("VALIDATION_ERROR", {
 						status: 400,
@@ -58,13 +59,12 @@ export const createOpenApiHandler = <T extends Context>(
 		logger(),
 		responseHeader(),
 		batchHandler(),
+		requestHeader(),
 	].filter((p) => p !== null);
 
 	return new OpenAPIHandler(router, {
 		interceptors: [
 			onError((error) => {
-				console.error("OpenAPI Handler Error:", error);
-
 				if (error instanceof ZodError) {
 					throw new ORPCError("VALIDATION_ERROR", {
 						status: 400,
