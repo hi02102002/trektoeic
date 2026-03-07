@@ -1,8 +1,5 @@
-import { LightningIcon } from "@phosphor-icons/react";
-import { getRouteApi, Link } from "@tanstack/react-router";
+import { getRouteApi } from "@tanstack/react-router";
 import { AppHeader } from "@/components/layouts/app";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 const Route = getRouteApi("/_protected/app/_dashboard/vocabularies/");
 
@@ -23,15 +20,6 @@ export function VocabularyDashboardHeader() {
 				}
 				className="max-w-3xl"
 			/>
-			<div className="flex items-center gap-2">
-				<Link
-					to="/app/vocabularies/review"
-					className={cn(buttonVariants({ size: "sm" }))}
-				>
-					<LightningIcon className="size-4" />
-					Quick Review
-				</Link>
-			</div>
 		</div>
 	);
 }

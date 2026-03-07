@@ -1,9 +1,14 @@
 import { partPracticesQueries } from "@trektoeic/db/queries";
 import {
 	InputPartPracticeHistorySchema,
+	PartPracticeHistorySchema,
 	PartPracticeMetadataSchema,
 } from "@trektoeic/schemas/part-practice-schema";
 import { QuestionWithSubsSchema } from "@trektoeic/schemas/question-schema";
+import {
+	PaginatedResultSchema,
+	PaginationInputSchema,
+} from "@trektoeic/schemas/share-schema";
 import { createId } from "@trektoeic/utils/create-id";
 import z from "zod";
 import { requiredAuthProcedure } from "../procedures";
@@ -98,6 +103,25 @@ const getPartPracticeHistoryById = requiredAuthProcedure
 		return result;
 	});
 
+const getPartPracticeHistories = requiredAuthProcedure
+	.route({
+		method: "GET",
+		tags,
+	})
+	.input(PaginationInputSchema)
+	.output(PaginatedResultSchema(PartPracticeHistorySchema))
+	.handler(async ({ input, context }) => {
+		const histories = await partPracticesQueries.getPartPracticeHistories(
+			context.session.user.id,
+			context.kysely,
+		)({
+			limit: input.limit,
+			page: input.page,
+		});
+
+		return histories;
+	});
+
 export const getCurrentProgressOfPartPractice = requiredAuthProcedure
 	.route({
 		method: "GET",
@@ -179,4 +203,5 @@ export const partPractices = {
 	getPartPracticeHistoryById,
 	getCurrentProgressOfPartPractice,
 	redoPartPractices,
+	getPartPracticeHistories,
 };

@@ -9,6 +9,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { Analytics } from "@vercel/analytics/react";
 import { useMount } from "ahooks";
+import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import { scan } from "react-scan";
 import { NProgress } from "@/components/nprogress";
 import { Toaster } from "@/components/ui/sonner";
@@ -148,12 +149,14 @@ function RootDocument() {
 				<HeadContent />
 			</head>
 			<body>
-				<NProgress />
-				<Outlet />
-				<Toaster position="top-center" />
-				<TanStackRouterDevtools position="bottom-left" />
-				<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
-				<Scripts />
+				<NuqsAdapter>
+					<NProgress />
+					<Outlet />
+					<Toaster position="top-center" />
+					<TanStackRouterDevtools position="bottom-left" />
+					<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+					<Scripts />
+				</NuqsAdapter>
 			</body>
 			<Analytics />
 		</html>

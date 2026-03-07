@@ -28,6 +28,7 @@ import { Route as ProtectedAppDashboardGrammarRouteRouteImport } from './routes/
 import { Route as ProtectedAppDashboardIndexRouteRouteImport } from './routes/_protected/app/_dashboard/index/route'
 import { Route as ProtectedAppDashboardVocabulariesReviewRouteRouteImport } from './routes/_protected/app/_dashboard/vocabularies/review/route'
 import { Route as ProtectedAppDashboardPracticesPartChar123partChar125RouteRouteImport } from './routes/_protected/app/_dashboard/practices/part-{$part}/route'
+import { Route as ProtectedAppDashboardPracticesHistoryRouteRouteImport } from './routes/_protected/app/_dashboard/practices/history/route'
 import { Route as ProtectedAppDashboardMockTestSlugRouteRouteImport } from './routes/_protected/app/_dashboard/mock-test/$slug/route'
 import { Route as ProtectedAppDashboardVocabulariesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/vocabularies/index/route'
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
@@ -139,6 +140,12 @@ const ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute =
     path: '/practices/part-{$part}',
     getParentRoute: () => ProtectedAppDashboardRoute,
   } as any)
+const ProtectedAppDashboardPracticesHistoryRouteRoute =
+  ProtectedAppDashboardPracticesHistoryRouteRouteImport.update({
+    id: '/practices/history',
+    path: '/practices/history',
+    getParentRoute: () => ProtectedAppDashboardRoute,
+  } as any)
 const ProtectedAppDashboardMockTestSlugRouteRoute =
   ProtectedAppDashboardMockTestSlugRouteRouteImport.update({
     id: '/mock-test/$slug',
@@ -237,6 +244,7 @@ export interface FileRoutesByFullPath {
   '/app/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/vocabularies/': typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
   '/app/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
+  '/app/practices/history': typeof ProtectedAppDashboardPracticesHistoryRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
   '/app/vocabularies/review': typeof ProtectedAppDashboardVocabulariesReviewRouteRoute
   '/app/vocabularies/explore/': typeof ProtectedAppDashboardVocabulariesExploreIndexRouteRoute
@@ -266,6 +274,7 @@ export interface FileRoutesByTo {
   '/app/practices': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/vocabularies': typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
   '/app/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
+  '/app/practices/history': typeof ProtectedAppDashboardPracticesHistoryRouteRoute
   '/app/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
   '/app/vocabularies/review': typeof ProtectedAppDashboardVocabulariesReviewRouteRoute
   '/app/vocabularies/explore': typeof ProtectedAppDashboardVocabulariesExploreIndexRouteRoute
@@ -300,6 +309,7 @@ export interface FileRoutesById {
   '/_protected/app/_dashboard/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/_protected/app/_dashboard/vocabularies/': typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
   '/_protected/app/_dashboard/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
+  '/_protected/app/_dashboard/practices/history': typeof ProtectedAppDashboardPracticesHistoryRouteRoute
   '/_protected/app/_dashboard/practices/part-{$part}': typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
   '/_protected/app/_dashboard/vocabularies/review': typeof ProtectedAppDashboardVocabulariesReviewRouteRoute
   '/_protected/app/_dashboard/vocabularies/explore/': typeof ProtectedAppDashboardVocabulariesExploreIndexRouteRoute
@@ -332,6 +342,7 @@ export interface FileRouteTypes {
     | '/app/practices/'
     | '/app/vocabularies/'
     | '/app/mock-test/$slug'
+    | '/app/practices/history'
     | '/app/practices/part-{$part}'
     | '/app/vocabularies/review'
     | '/app/vocabularies/explore/'
@@ -361,6 +372,7 @@ export interface FileRouteTypes {
     | '/app/practices'
     | '/app/vocabularies'
     | '/app/mock-test/$slug'
+    | '/app/practices/history'
     | '/app/practices/part-{$part}'
     | '/app/vocabularies/review'
     | '/app/vocabularies/explore'
@@ -394,6 +406,7 @@ export interface FileRouteTypes {
     | '/_protected/app/_dashboard/practices/'
     | '/_protected/app/_dashboard/vocabularies/'
     | '/_protected/app/_dashboard/mock-test/$slug'
+    | '/_protected/app/_dashboard/practices/history'
     | '/_protected/app/_dashboard/practices/part-{$part}'
     | '/_protected/app/_dashboard/vocabularies/review'
     | '/_protected/app/_dashboard/vocabularies/explore/'
@@ -555,6 +568,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRouteImport
       parentRoute: typeof ProtectedAppDashboardRoute
     }
+    '/_protected/app/_dashboard/practices/history': {
+      id: '/_protected/app/_dashboard/practices/history'
+      path: '/practices/history'
+      fullPath: '/app/practices/history'
+      preLoaderRoute: typeof ProtectedAppDashboardPracticesHistoryRouteRouteImport
+      parentRoute: typeof ProtectedAppDashboardRoute
+    }
     '/_protected/app/_dashboard/mock-test/$slug': {
       id: '/_protected/app/_dashboard/mock-test/$slug'
       path: '/mock-test/$slug'
@@ -659,6 +679,7 @@ interface ProtectedAppDashboardRouteChildren {
   ProtectedAppDashboardPracticesIndexRouteRoute: typeof ProtectedAppDashboardPracticesIndexRouteRoute
   ProtectedAppDashboardVocabulariesIndexRouteRoute: typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
   ProtectedAppDashboardMockTestSlugRouteRoute: typeof ProtectedAppDashboardMockTestSlugRouteRoute
+  ProtectedAppDashboardPracticesHistoryRouteRoute: typeof ProtectedAppDashboardPracticesHistoryRouteRoute
   ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute: typeof ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute
   ProtectedAppDashboardVocabulariesReviewRouteRoute: typeof ProtectedAppDashboardVocabulariesReviewRouteRoute
   ProtectedAppDashboardVocabulariesExploreIndexRouteRoute: typeof ProtectedAppDashboardVocabulariesExploreIndexRouteRoute
@@ -678,6 +699,8 @@ const ProtectedAppDashboardRouteChildren: ProtectedAppDashboardRouteChildren = {
     ProtectedAppDashboardVocabulariesIndexRouteRoute,
   ProtectedAppDashboardMockTestSlugRouteRoute:
     ProtectedAppDashboardMockTestSlugRouteRoute,
+  ProtectedAppDashboardPracticesHistoryRouteRoute:
+    ProtectedAppDashboardPracticesHistoryRouteRoute,
   ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute:
     ProtectedAppDashboardPracticesPartChar123partChar125RouteRoute,
   ProtectedAppDashboardVocabulariesReviewRouteRoute:
