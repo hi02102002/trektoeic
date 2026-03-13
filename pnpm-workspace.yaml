@@ -3,13 +3,13 @@ packages:
   - 'packages/*'
 
 catalog:
-  '@orpc/server': ^1.13.5
-  '@orpc/client': ^1.13.5
-  '@orpc/openapi': ^1.13.5
-  '@orpc/zod': ^1.13.5
-  '@orpc/json-schema': ^1.13.5
-  '@orpc/tanstack-query': ^1.13.5
-  "@orpc/experimental-pino": ^1.13.5
-  "@orpc/contract": ^1.13.5
-  better-auth: ^1.4.19
+  '@orpc/server': ^1.13.7
+  '@orpc/client': ^1.13.7
+  '@orpc/openapi': ^1.13.7
+  '@orpc/zod': ^1.13.7
+  '@orpc/json-schema': ^1.13.7
+  '@orpc/tanstack-query': ^1.13.7
+  "@orpc/experimental-pino": ^1.13.7
+  "@orpc/contract": ^1.13.7
+  better-auth: ^1.5.5
   dotenv: ^17.2.2
