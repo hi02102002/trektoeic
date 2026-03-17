@@ -14,7 +14,7 @@ export const columns: ColumnDef<HistoryRow>[] = [
 	{
 		id: "createdAt",
 		accessorKey: "createdAt",
-		header: "Thời gian luyện tập",
+		header: "Ngày luyện tập",
 		cell: ({ row }) => {
 			const createdAt = new Date(row.original.createdAt);
 
@@ -31,7 +31,7 @@ export const columns: ColumnDef<HistoryRow>[] = [
 	{
 		id: "part",
 		accessorFn: (row) => String(row.metadata.part),
-		header: "Part luyện tập",
+		header: "Part",
 		enableSorting: false,
 		cell: ({ row }) => {
 			const part = row.original.metadata.part;

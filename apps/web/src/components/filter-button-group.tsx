@@ -25,7 +25,7 @@ export function FilterButtonGroup({
 			type="single"
 			value={String(value)}
 			onValueChange={onValueChange}
-			className={cn("flex gap-3", className)}
+			className={cn("flex gap-3 overflow-x-auto", className)}
 		>
 			{options.map((option) => (
 				<ToggleGroup.Item
