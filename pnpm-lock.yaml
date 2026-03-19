@@ -405,22 +405,22 @@ importers:
         version: 1.13.5
       '@orpc/experimental-pino':
         specifier: 'catalog:'
-        version: 1.13.5(crossws@0.4.3(srvx@0.11.8))(pino@10.3.1)(ws@8.19.0)
+        version: 1.13.5(crossws@0.4.3(srvx@0.11.12))(pino@10.3.1)(ws@8.19.0)
       '@orpc/experimental-ratelimit':
         specifier: ^1.13.5
-        version: 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+        version: 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/json-schema':
         specifier: 'catalog:'
-        version: 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+        version: 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/openapi':
         specifier: 'catalog:'
-        version: 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+        version: 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/server':
         specifier: 'catalog:'
-        version: 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+        version: 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/zod':
         specifier: 'catalog:'
-        version: 1.13.5(@orpc/contract@1.13.5)(@orpc/server@1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)(zod@4.3.6)
+        version: 1.13.5(@orpc/contract@1.13.5)(@orpc/server@1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)(zod@4.3.6)
       '@trektoeic/auth':
         specifier: workspace:*
         version: link:../auth
@@ -447,7 +447,7 @@ importers:
         version: 5.9.3
       unstorage:
         specifier: ^1.17.4
-        version: 1.17.4(@upstash/redis@1.36.2)(aws4fetch@1.0.20)(db0@0.3.4(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0)))(idb-keyval@6.2.2)(ioredis@5.9.3)
+        version: 1.17.4(@upstash/redis@1.36.2)(aws4fetch@1.0.20)(db0@0.3.4(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0)))(idb-keyval@6.2.2)(ioredis@5.9.3)
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -469,7 +469,7 @@ importers:
         version: link:../mailer
       better-auth:
         specifier: 'catalog:'
-        version: 1.4.20(@tanstack/react-start@1.163.3(crossws@0.4.3(srvx@0.11.8))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0))(next@16.1.6(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.19.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10)
+        version: 1.4.20(@tanstack/react-start@1.163.3(crossws@0.4.3(srvx@0.11.12))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0))(next@16.1.6(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.19.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10)
       typescript:
         specifier: ^5
         version: 5.9.3
@@ -542,13 +542,13 @@ importers:
         version: link:../utils
       drizzle-orm:
         specifier: ^0.45.1
-        version: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0)
+        version: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0)
       drizzle-orm-helpers:
         specifier: ^0.7.6
-        version: 0.7.6(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0))(zod@4.3.6)
+        version: 0.7.6(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0))(zod@4.3.6)
       kysely:
-        specifier: ^0.28.11
-        version: 0.28.11
+        specifier: ^0.28.12
+        version: 0.28.12
       pg:
         specifier: ^8.19.0
         version: 8.19.0
@@ -1630,14 +1630,14 @@ packages:
   '@floating-ui/core@1.7.3':
     resolution: {integrity: sha512-sGnvb5dmrJaKEZ+LDIpguvdX3bDlEllmv4/ClQ9awcmCZrlx5jQyyMWFM5kBI+EyNOCDDiKk8il0zeuX3Zlg/w==}
 
-  '@floating-ui/core@1.7.4':
-    resolution: {integrity: sha512-C3HlIdsBxszvm5McXlB8PeOEWfBhcGBTZGkGlWc2U0KFY5IwG5OQEuQ8rq52DZmcHDlPLd+YFBK+cZcytwIFWg==}
+  '@floating-ui/core@1.7.5':
+    resolution: {integrity: sha512-1Ih4WTWyw0+lKyFMcBHGbb5U5FtuHJuujoyyr5zTaWS5EYMeT6Jb2AuDeftsCsEuchO+mM2ij5+q9crhydzLhQ==}
 
   '@floating-ui/dom@1.7.4':
     resolution: {integrity: sha512-OOchDgh4F2CchOX94cRVqhvy7b3AFb+/rQXyswmzmGakRfkMgoWVjfnLWkRirfLEfuD4ysVW16eXzwt3jHIzKA==}
 
-  '@floating-ui/dom@1.7.5':
-    resolution: {integrity: sha512-N0bD2kIPInNHUHehXhMke1rBGs1dwqvC9O9KYMyyjK7iXt7GAhnro7UlcuYcGdS/yYOlq0MAVgrow8IbWJwyqg==}
+  '@floating-ui/dom@1.7.6':
+    resolution: {integrity: sha512-9gZSAI5XM36880PPMm//9dfiEngYoC6Am2izES1FF406YFsjvyBMmeJ2g4SAju3xWwtuynNRFL2s9hgxpLI5SQ==}
 
   '@floating-ui/react-dom@2.1.6':
     resolution: {integrity: sha512-4JX6rEatQEvlmgU80wZyq9RT96HZJa88q8hp0pBd+LrczeDI4o6uA2M+uvxngVHo4Ihr8uibXxH6+70zhAFrVw==}
@@ -1645,8 +1645,8 @@ packages:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
 
-  '@floating-ui/react-dom@2.1.7':
-    resolution: {integrity: sha512-0tLRojf/1Go2JgEVm+3Frg9A3IW8bJgKgdO0BN5RkF//ufuz2joZM63Npau2ff3J6lUVYgDSNzNkR+aH3IVfjg==}
+  '@floating-ui/react-dom@2.1.8':
+    resolution: {integrity: sha512-cC52bHwM/n/CxS87FH0yWdngEZrjdtLW/qVruo68qg+prK7ZQ4YGdut2GyDVpoGeAYe/h899rVeOVm6Oi40k2A==}
     peerDependencies:
       react: '>=16.8.0'
       react-dom: '>=16.8.0'
@@ -1659,6 +1659,9 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@floating-ui/utils@0.2.11':
+    resolution: {integrity: sha512-RiB/yIh78pcIxl6lLMG0CgBXAZ2Y0eVHqMPYugu+9U0AeT6YBeiJpf7lbdJNIugFP5SIjwNRgo4DhR1Qxi26Gg==}
 
   '@fontsource-variable/montserrat@5.2.8':
     resolution: {integrity: sha512-d8wykq7GCKhEOlLwEuQIOK3w3qsXNxwDlH0meru4AZZzQ4/+rZyvHWKL6BBtHdmbovSHEEQDkwkD8qYUKlcFtQ==}
@@ -5227,6 +5230,10 @@ packages:
     resolution: {integrity: sha512-zpGIFg0HuoC893rIjYX1BETkVWdDnzTzF5e0kWXJFg5lE0k1/LfNWBejrcnOFu8Q2Rfq/hTDTU7XLUM8QOrpzg==}
     engines: {node: '>=20.0.0'}
 
+  kysely@0.28.12:
+    resolution: {integrity: sha512-kWiueDWXhbCchgiotwXkwdxZE/6h56IHAeFWg4euUfW0YsmO9sxbAxzx1KLLv2lox15EfuuxHQvgJ1qIfZuHGw==}
+    engines: {node: '>=20.0.0'}
+
   leac@0.6.0:
     resolution: {integrity: sha512-y+SqErxb8h7nE/fiEX07jsbuhrpO9lL8eca7/Y1nuWV2moNlXhyd59iDGcRf6moVyDMbmTNzL40SUyrFU/yDpg==}
 
@@ -6149,6 +6156,11 @@ packages:
 
   srvx@0.10.1:
     resolution: {integrity: sha512-A//xtfak4eESMWWydSRFUVvCTQbSwivnGCEf8YGPe2eHU0+Z6znfUTCPF0a7oV3sObSOcrXHlL6Bs9vVctfXdg==}
+    engines: {node: '>=20.16.0'}
+    hasBin: true
+
+  srvx@0.11.12:
+    resolution: {integrity: sha512-AQfrGqntqVPXgP03pvBDN1KyevHC+KmYVqb8vVf4N+aomQqdhaZxjvoVp+AOm4u6x+GgNQY3MVzAUIn+TqwkOA==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -7400,19 +7412,19 @@ snapshots:
     dependencies:
       '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/core@1.7.4':
+  '@floating-ui/core@1.7.5':
     dependencies:
-      '@floating-ui/utils': 0.2.10
+      '@floating-ui/utils': 0.2.11
 
   '@floating-ui/dom@1.7.4':
     dependencies:
       '@floating-ui/core': 1.7.3
       '@floating-ui/utils': 0.2.10
 
-  '@floating-ui/dom@1.7.5':
+  '@floating-ui/dom@1.7.6':
     dependencies:
-      '@floating-ui/core': 1.7.4
-      '@floating-ui/utils': 0.2.10
+      '@floating-ui/core': 1.7.5
+      '@floating-ui/utils': 0.2.11
 
   '@floating-ui/react-dom@2.1.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
@@ -7420,21 +7432,23 @@ snapshots:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
-  '@floating-ui/react-dom@2.1.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@floating-ui/react-dom@2.1.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@floating-ui/dom': 1.7.5
+      '@floating-ui/dom': 1.7.6
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
   '@floating-ui/react@0.27.16(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@floating-ui/utils': 0.2.10
+      '@floating-ui/react-dom': 2.1.8(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@floating-ui/utils': 0.2.11
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
       tabbable: 6.4.0
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@floating-ui/utils@0.2.11': {}
 
   '@fontsource-variable/montserrat@5.2.8': {}
 
@@ -7656,10 +7670,10 @@ snapshots:
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
-  '@orpc/experimental-pino@1.13.5(crossws@0.4.3(srvx@0.11.8))(pino@10.3.1)(ws@8.19.0)':
+  '@orpc/experimental-pino@1.13.5(crossws@0.4.3(srvx@0.11.12))(pino@10.3.1)(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.5
-      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/shared': 1.13.5
       pino: 10.3.1
     transitivePeerDependencies:
@@ -7668,10 +7682,10 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/experimental-ratelimit@1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)':
+  '@orpc/experimental-ratelimit@1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.5
-      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/shared': 1.13.5
       '@orpc/standard-server': 1.13.5
     transitivePeerDependencies:
@@ -7696,12 +7710,12 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/json-schema@1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)':
+  '@orpc/json-schema@1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)':
     dependencies:
       '@orpc/contract': 1.13.5
       '@orpc/interop': 1.13.5
-      '@orpc/openapi': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
-      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+      '@orpc/openapi': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
+      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/shared': 1.13.5
       json-schema-typed: 8.0.2
     transitivePeerDependencies:
@@ -7736,13 +7750,13 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/openapi@1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)':
+  '@orpc/openapi@1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.5
       '@orpc/contract': 1.13.5
       '@orpc/interop': 1.13.5
       '@orpc/openapi-client': 1.13.5
-      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/shared': 1.13.5
       '@orpc/standard-server': 1.13.5
       json-schema-typed: 8.0.2
@@ -7773,7 +7787,7 @@ snapshots:
       - '@opentelemetry/api'
       - fastify
 
-  '@orpc/server@1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)':
+  '@orpc/server@1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.5
       '@orpc/contract': 1.13.5
@@ -7787,7 +7801,7 @@ snapshots:
       '@orpc/standard-server-peer': 1.13.5
       cookie: 1.1.1
     optionalDependencies:
-      crossws: 0.4.3(srvx@0.11.8)
+      crossws: 0.4.3(srvx@0.11.12)
       ws: 8.19.0
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -7867,12 +7881,12 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/zod@1.13.5(@orpc/contract@1.13.5)(@orpc/server@1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)(zod@4.3.6)':
+  '@orpc/zod@1.13.5(@orpc/contract@1.13.5)(@orpc/server@1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)(zod@4.3.6)':
     dependencies:
       '@orpc/contract': 1.13.5
-      '@orpc/json-schema': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
-      '@orpc/openapi': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
-      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.8))(ws@8.19.0)
+      '@orpc/json-schema': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
+      '@orpc/openapi': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
+      '@orpc/server': 1.13.5(crossws@0.4.3(srvx@0.11.12))(ws@8.19.0)
       '@orpc/shared': 1.13.5
       escape-string-regexp: 5.0.0
       wildcard-match: 5.1.4
@@ -9372,13 +9386,13 @@ snapshots:
     transitivePeerDependencies:
       - crossws
 
-  '@tanstack/react-start-server@1.163.3(crossws@0.4.3(srvx@0.11.8))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@tanstack/react-start-server@1.163.3(crossws@0.4.3(srvx@0.11.12))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@tanstack/history': 1.161.4
       '@tanstack/react-router': 1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/router-core': 1.163.3
       '@tanstack/start-client-core': 1.163.3
-      '@tanstack/start-server-core': 1.163.3(crossws@0.4.3(srvx@0.11.8))
+      '@tanstack/start-server-core': 1.163.3(crossws@0.4.3(srvx@0.11.12))
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
     transitivePeerDependencies:
@@ -9405,15 +9419,15 @@ snapshots:
       - vite-plugin-solid
       - webpack
 
-  '@tanstack/react-start@1.163.3(crossws@0.4.3(srvx@0.11.8))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))':
+  '@tanstack/react-start@1.163.3(crossws@0.4.3(srvx@0.11.12))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       '@tanstack/react-router': 1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/react-start-client': 1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@tanstack/react-start-server': 1.163.3(crossws@0.4.3(srvx@0.11.8))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@tanstack/react-start-server': 1.163.3(crossws@0.4.3(srvx@0.11.12))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/router-utils': 1.161.4
       '@tanstack/start-client-core': 1.163.3
-      '@tanstack/start-plugin-core': 1.163.3(@tanstack/react-router@1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.8))(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
-      '@tanstack/start-server-core': 1.163.3(crossws@0.4.3(srvx@0.11.8))
+      '@tanstack/start-plugin-core': 1.163.3(@tanstack/react-router@1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.12))(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/start-server-core': 1.163.3(crossws@0.4.3(srvx@0.11.12))
       pathe: 2.0.3
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -9556,7 +9570,7 @@ snapshots:
       - vite-plugin-solid
       - webpack
 
-  '@tanstack/start-plugin-core@1.163.3(@tanstack/react-router@1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.8))(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))':
+  '@tanstack/start-plugin-core@1.163.3(@tanstack/react-router@1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.12))(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/core': 7.29.0
@@ -9567,7 +9581,7 @@ snapshots:
       '@tanstack/router-plugin': 1.163.3(@tanstack/react-router@1.163.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
       '@tanstack/router-utils': 1.161.4
       '@tanstack/start-client-core': 1.163.3
-      '@tanstack/start-server-core': 1.163.3(crossws@0.4.3(srvx@0.11.8))
+      '@tanstack/start-server-core': 1.163.3(crossws@0.4.3(srvx@0.11.12))
       cheerio: 1.2.0
       exsolve: 1.0.8
       pathe: 2.0.3
@@ -9601,13 +9615,13 @@ snapshots:
     transitivePeerDependencies:
       - crossws
 
-  '@tanstack/start-server-core@1.163.3(crossws@0.4.3(srvx@0.11.8))':
+  '@tanstack/start-server-core@1.163.3(crossws@0.4.3(srvx@0.11.12))':
     dependencies:
       '@tanstack/history': 1.161.4
       '@tanstack/router-core': 1.163.3
       '@tanstack/start-client-core': 1.163.3
       '@tanstack/start-storage-context': 1.163.3
-      h3-v2: h3@2.0.1-rc.14(crossws@0.4.3(srvx@0.11.8))
+      h3-v2: h3@2.0.1-rc.14(crossws@0.4.3(srvx@0.11.12))
       seroval: 1.5.0
       tiny-invariant: 1.3.3
     transitivePeerDependencies:
@@ -9960,7 +9974,7 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
       solid-js: 1.9.10
 
-  better-auth@1.4.20(@tanstack/react-start@1.163.3(crossws@0.4.3(srvx@0.11.8))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0))(next@16.1.6(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.19.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10):
+  better-auth@1.4.20(@tanstack/react-start@1.163.3(crossws@0.4.3(srvx@0.11.12))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.9)(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0))(next@16.1.6(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.19.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10):
     dependencies:
       '@better-auth/core': 1.4.20(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.11)(nanostores@1.1.0)
       '@better-auth/telemetry': 1.4.20(@better-auth/core@1.4.20(@better-auth/utils@0.3.0)(@better-fetch/fetch@1.1.21)(better-call@1.1.8(zod@4.3.6))(jose@6.1.3)(kysely@0.28.11)(nanostores@1.1.0))
@@ -9975,9 +9989,9 @@ snapshots:
       nanostores: 1.1.0
       zod: 4.3.6
     optionalDependencies:
-      '@tanstack/react-start': 1.163.3(crossws@0.4.3(srvx@0.11.8))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/react-start': 1.163.3(crossws@0.4.3(srvx@0.11.12))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
       drizzle-kit: 0.31.9
-      drizzle-orm: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0)
+      drizzle-orm: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0)
       next: 16.1.6(@babel/core@7.29.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       pg: 8.19.0
       react: 19.2.4
@@ -10198,9 +10212,9 @@ snapshots:
     optionalDependencies:
       srvx: 0.10.1
 
-  crossws@0.4.3(srvx@0.11.8):
+  crossws@0.4.3(srvx@0.11.12):
     optionalDependencies:
-      srvx: 0.11.8
+      srvx: 0.11.12
     optional: true
 
   crypto-js@4.2.0: {}
@@ -10285,6 +10299,11 @@ snapshots:
   db0@0.3.4(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0)):
     optionalDependencies:
       drizzle-orm: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0)
+
+  db0@0.3.4(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0)):
+    optionalDependencies:
+      drizzle-orm: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0)
+    optional: true
 
   debounce-fn@6.0.0:
     dependencies:
@@ -10380,9 +10399,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm-helpers@0.7.6(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0))(zod@4.3.6):
+  drizzle-orm-helpers@0.7.6(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0))(zod@4.3.6):
     dependencies:
-      drizzle-orm: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0)
+      drizzle-orm: 0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0)
       postgres-date: 2.1.0
       postgres-range: 1.1.4
     optionalDependencies:
@@ -10393,6 +10412,14 @@ snapshots:
       '@types/pg': 8.16.0
       '@upstash/redis': 1.36.2
       kysely: 0.28.11
+      pg: 8.19.0
+    optional: true
+
+  drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0):
+    optionalDependencies:
+      '@types/pg': 8.16.0
+      '@upstash/redis': 1.36.2
+      kysely: 0.28.12
       pg: 8.19.0
 
   dunder-proto@1.0.1:
@@ -10791,16 +10818,16 @@ snapshots:
   h3@2.0.1-rc.14(crossws@0.4.3(srvx@0.10.1)):
     dependencies:
       rou3: 0.7.12
-      srvx: 0.11.8
+      srvx: 0.11.12
     optionalDependencies:
       crossws: 0.4.3(srvx@0.10.1)
 
-  h3@2.0.1-rc.14(crossws@0.4.3(srvx@0.11.8)):
+  h3@2.0.1-rc.14(crossws@0.4.3(srvx@0.11.12)):
     dependencies:
       rou3: 0.7.12
-      srvx: 0.11.8
+      srvx: 0.11.12
     optionalDependencies:
-      crossws: 0.4.3(srvx@0.11.8)
+      crossws: 0.4.3(srvx@0.11.12)
     optional: true
 
   has-symbols@1.1.0: {}
@@ -10987,6 +11014,8 @@ snapshots:
   kleur@3.0.3: {}
 
   kysely@0.28.11: {}
+
+  kysely@0.28.12: {}
 
   leac@0.6.0: {}
 
@@ -12091,6 +12120,8 @@ snapshots:
 
   srvx@0.10.1: {}
 
+  srvx@0.11.12: {}
+
   srvx@0.11.8: {}
 
   standard-as-callback@2.1.0:
@@ -12334,6 +12365,23 @@ snapshots:
       '@upstash/redis': 1.36.2
       aws4fetch: 1.0.20
       db0: 0.3.4(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.11)(pg@8.19.0))
+      idb-keyval: 6.2.2
+      ioredis: 5.9.3
+
+  unstorage@1.17.4(@upstash/redis@1.36.2)(aws4fetch@1.0.20)(db0@0.3.4(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0)))(idb-keyval@6.2.2)(ioredis@5.9.3):
+    dependencies:
+      anymatch: 3.1.3
+      chokidar: 5.0.0
+      destr: 2.0.5
+      h3: 1.15.5
+      lru-cache: 11.2.4
+      node-fetch-native: 1.6.7
+      ofetch: 1.5.1
+      ufo: 1.6.3
+    optionalDependencies:
+      '@upstash/redis': 1.36.2
+      aws4fetch: 1.0.20
+      db0: 0.3.4(drizzle-orm@0.45.1(@types/pg@8.16.0)(@upstash/redis@1.36.2)(kysely@0.28.12)(pg@8.19.0))
       idb-keyval: 6.2.2
       ioredis: 5.9.3
 
