@@ -33,6 +33,7 @@ import {
 const PART_WITHOUT_TEXT = new Set([1, 2]);
 const PART_WITHOUT_SUB_POS = new Set([1, 2, 5]);
 const PART_NOT_SHOW_TEASER = new Set([1, 2, 3, 4]);
+const READING_PARTS = new Set([6, 7]);
 
 type TQuestionContext = {
 	question: QuestionWithSubs;
@@ -182,8 +183,33 @@ const QuestionAudioContent = ({ onComplete }: { onComplete?: () => void }) => {
 export const QuestionImage = () => {
 	const { question } = useQuestionContext();
 
-	if (!question?.imageUrl || question?.teaser?.text) {
+	if (!question?.imageUrl) {
 		return null;
+	}
+
+	const urls = question.imageUrl.split(",");
+
+	if (urls.length > 1) {
+		return (
+			<div className="grid grid-cols-1 gap-4">
+				{urls.map((url, index) => (
+					<ImageZoom
+						key={url}
+						backdropClassName={cn(
+							'[&_[data-rmiz-modal-overlay="visible"]]:bg-black/80',
+						)}
+					>
+						<img
+							alt={`Hình ảnh cho câu hỏi ${question.id} - ${index + 1}`}
+							className={cn("mx-auto h-80 w-auto rounded-md object-contain", {
+								"h-auto": READING_PARTS.has(question.part),
+							})}
+							src={getProxiedImageUrl(url)}
+						/>
+					</ImageZoom>
+				))}
+			</div>
+		);
 	}
 
 	return (
@@ -194,7 +220,9 @@ export const QuestionImage = () => {
 		>
 			<img
 				alt={`Hình ảnh cho câu hỏi ${question.id}`}
-				className="mx-auto h-80 w-auto rounded-md object-contain"
+				className={cn("mx-auto h-80 w-auto rounded-md object-contain", {
+					"h-auto": READING_PARTS.has(question.part),
+				})}
 				src={getProxiedImageUrl(question.imageUrl)}
 			/>
 		</ImageZoom>
@@ -209,6 +237,10 @@ export const QuestionTeaser = () => {
 	}
 
 	if (!question?.teaser?.text) {
+		return null;
+	}
+
+	if (question.imageUrl) {
 		return null;
 	}
 
