@@ -308,6 +308,10 @@ export const QuestionTeaser = ({
 		mode === "review" || (mode === "practice" && isReadyToReveal);
 
 	const shouldShowOriginal = (() => {
+		if (PART_NOT_SHOW_TEASER.has(question.part)) {
+			return false;
+		}
+
 		if (hasImage && shouldRevealExtraContent) {
 			return true;
 		}
@@ -318,10 +322,6 @@ export const QuestionTeaser = ({
 
 		if (PART_TEASER_REVEAL_ON_REVIEW.has(question.part)) {
 			return shouldRevealExtraContent;
-		}
-
-		if (PART_NOT_SHOW_TEASER.has(question.part)) {
-			return false;
 		}
 
 		return !question.imageUrl;

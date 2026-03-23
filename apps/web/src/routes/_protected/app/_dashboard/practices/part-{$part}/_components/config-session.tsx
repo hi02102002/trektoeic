@@ -13,9 +13,11 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
+import { MAP_PART } from "@/constants";
 
 const ConfigSessionSchema = z
 	.object({
+		part: z.string().transform((val) => Number.parseInt(val, 10)),
 		mode: z.enum(["normal", "timed"]),
 		numberOfQuestions: z.string().transform((val) => Number.parseInt(val, 10)),
 		limitTime: z.number().optional(),
@@ -40,10 +42,15 @@ export const ConfigSession = () => {
 		from: "/_protected/app/_dashboard/practices/part-{$part}",
 	});
 	const navigate = useNavigate();
+	const defaultQuestionCount = Math.min(
+		10,
+		MAP_PART[`${part}` as keyof typeof MAP_PART].questions,
+	);
 	const form = useForm<TConfigSessionForm>({
 		defaultValues: {
+			part,
 			mode: "normal",
-			numberOfQuestions: 10,
+			numberOfQuestions: defaultQuestionCount,
 		},
 	});
 
@@ -54,7 +61,7 @@ export const ConfigSession = () => {
 			await navigate({
 				to: "/app/practices/$part/$sessionId",
 				params: {
-					part: `${part}`,
+					part: `${data.part}`,
 					sessionId: createId(),
 				},
 				search: {
@@ -66,24 +73,58 @@ export const ConfigSession = () => {
 		});
 	});
 
+	const selectedPart = form.watch("part");
 	const mode = form.watch("mode");
 	const numberOfQuestions = form.watch("numberOfQuestions");
+	const maxQuestions =
+		MAP_PART[`${selectedPart}` as keyof typeof MAP_PART].questions;
+	const questionOptions = useMemo(() => {
+		const preset = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50].filter(
+			(num) => num < maxQuestions,
+		);
+
+		return [...new Set([...preset, maxQuestions])];
+	}, [maxQuestions]);
 
 	const timeNeedToFinish = useMemo(
 		() =>
 			mode === "timed"
 				? calculateEstimatedDurationMs({
-						part,
+						part: selectedPart,
 						questionCount: numberOfQuestions,
 					})
 				: undefined,
-		[mode, numberOfQuestions, part],
+		[mode, numberOfQuestions, selectedPart],
 	);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: <no>
 	useEffect(() => {
 		form.setValue("limitTime", timeNeedToFinish);
 	}, [timeNeedToFinish]);
+
+	useEffect(() => {
+		if (selectedPart === part) {
+			return;
+		}
+
+		startTransition(async () => {
+			await navigate({
+				to: "/app/practices/part-{$part}",
+				params: {
+					part: selectedPart,
+				},
+				replace: true,
+			});
+		});
+	}, [navigate, part, selectedPart, startTransition]);
+
+	useEffect(() => {
+		if (numberOfQuestions <= maxQuestions) {
+			return;
+		}
+
+		form.setValue("numberOfQuestions", maxQuestions);
+	}, [form, maxQuestions, numberOfQuestions]);
 
 	return (
 		<div className="overflow-hidden rounded-md border border-neutral-200 bg-white">
@@ -95,6 +136,37 @@ export const ConfigSession = () => {
 			<div className="p-4">
 				<form onSubmit={handleStartSession}>
 					<FieldGroup>
+						<Controller
+							name="part"
+							control={form.control}
+							render={({ field, fieldState }) => {
+								return (
+									<Field>
+										<FieldLabel>Phần luyện tập</FieldLabel>
+										<Select
+											name={field.name}
+											value={field.value?.toString()}
+											defaultValue={field.value?.toString() || `${part}`}
+											onValueChange={field.onChange}
+										>
+											<SelectTrigger
+												id={field.name}
+												aria-invalid={fieldState.invalid}
+											>
+												<SelectValue placeholder="Chọn phần" />
+											</SelectTrigger>
+											<SelectContent>
+												{Object.entries(MAP_PART).map(([key, value]) => (
+													<SelectItem key={key} value={key}>
+														Part {key} - {value.title}
+													</SelectItem>
+												))}
+											</SelectContent>
+										</Select>
+									</Field>
+								);
+							}}
+						/>
 						<Controller
 							name="mode"
 							control={form.control}
@@ -143,8 +215,8 @@ export const ConfigSession = () => {
 												<SelectValue placeholder="Chọn" />
 											</SelectTrigger>
 											<SelectContent>
-												{["10", "15", "20", "25", "30"].map((num) => (
-													<SelectItem key={num} value={num}>
+												{questionOptions.map((num) => (
+													<SelectItem key={num} value={`${num}`}>
 														{num} câu
 													</SelectItem>
 												))}
