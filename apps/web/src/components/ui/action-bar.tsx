@@ -658,10 +658,10 @@ function ActionBarSeparator(props: ActionBarSeparatorProps) {
 
 export {
 	ActionBar,
-	ActionBarSelection,
+	ActionBarClose,
 	ActionBarGroup,
 	ActionBarItem,
-	ActionBarClose,
-	ActionBarSeparator,
 	type ActionBarProps,
+	ActionBarSelection,
+	ActionBarSeparator,
 };

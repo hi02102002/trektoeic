@@ -340,9 +340,11 @@ export const storage = createStorage({
 	driver: new MultiLayerDriver(),
 });
 
-export { memoryStorage, cloudflareStorage };
-
-export { saveCountersNow as flushStorageCounters };
+export {
+	cloudflareStorage,
+	memoryStorage,
+	saveCountersNow as flushStorageCounters,
+};
 
 export async function getStorageStats() {
 	await loadCounters();

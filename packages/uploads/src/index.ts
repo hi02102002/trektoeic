@@ -36,8 +36,8 @@ const backblazeRouter: betterUploadServer.Router = {
 };
 
 export {
-	betterUploadServer,
-	cloudflareRouter,
 	backblazeRouter,
 	betterUploadClient,
+	betterUploadServer,
+	cloudflareRouter,
 };
