@@ -96,12 +96,12 @@ function RouteComponent() {
 					onNavigatorToggle={() => setIsNavigatorOpen(true)}
 					action={<ResultActions />}
 				/>
-				<div className="flex flex-col pt-16">
+				<div className="flex h-svh flex-col overflow-hidden pt-16">
 					<QuestionsNavigator
 						isOpen={isNavigatorOpen}
 						onOpenChange={setIsNavigatorOpen}
 					/>
-					<div className="xl:ml-64">
+					<div className="min-h-0 flex-1 xl:ml-64">
 						<ResultQuestionsList />
 					</div>
 				</div>

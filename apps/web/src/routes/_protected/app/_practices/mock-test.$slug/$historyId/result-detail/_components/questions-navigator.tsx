@@ -42,10 +42,6 @@ export const QuestionsNavigator = ({
 
 		gotoQuestion(questionIdx);
 		setSubQuestionIdx(subQuestionIdx);
-		setTimeout(() => {
-			const el = document.getElementById(`question-sub-${subQuestionId}`);
-			el?.scrollIntoView({ behavior: "smooth", block: "center" });
-		}, 300);
 	});
 
 	return (

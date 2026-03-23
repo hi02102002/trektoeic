@@ -1,5 +1,5 @@
 import { getRouteApi } from "@tanstack/react-router";
-import { Activity, useEffect, useMemo, useRef } from "react";
+import { Activity, useEffect, useMemo } from "react";
 import {
 	QuestionAudio,
 	QuestionImage,
@@ -11,6 +11,7 @@ import {
 	QuestionSubText,
 	QuestionTeaser,
 } from "@/components/question";
+import { QuestionSplitLayout } from "@/components/question-split-layout";
 import { cn } from "@/lib/utils";
 import { useAnswers, useCurrentQuestion } from "@/stores/attempt";
 
@@ -21,13 +22,12 @@ const Route = getRouteApi(
 const PART_LAYOUT_HORIZONTAL = new Set([6, 7]);
 
 export const ResultQuestionsList = () => {
-	const leftSideRef = useRef<HTMLDivElement>(null);
-	const rightSideRef = useRef<HTMLDivElement>(null);
 	const { questions } = Route.useLoaderData();
 
 	const { currentQuestionIdx } = useCurrentQuestion((s) => ({
 		currentQuestionIdx: s.idx,
 	}));
+	const currentSubQuestionIdx = useCurrentQuestion((s) => s.subQuestionIdx);
 
 	const answers = useAnswers();
 
@@ -36,77 +36,71 @@ export const ResultQuestionsList = () => {
 		[currentQuestionIdx, questions],
 	);
 
+	useEffect(() => {
+		const subQuestionId = currentQuestion?.subs[currentSubQuestionIdx]?.id;
+		if (!subQuestionId) {
+			return;
+		}
+
+		const rafId = window.requestAnimationFrame(() => {
+			document
+				.getElementById(`question-sub-${subQuestionId}`)
+				?.scrollIntoView({ behavior: "smooth", block: "center" });
+		});
+
+		return () => {
+			window.cancelAnimationFrame(rafId);
+		};
+	}, [currentQuestion, currentSubQuestionIdx]);
+
 	const isHorizontalLayout = PART_LAYOUT_HORIZONTAL.has(
 		currentQuestion?.part ?? 0,
 	);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <Need to only run on currentQuestionIdx change>
-	useEffect(() => {
-		leftSideRef.current?.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
-		rightSideRef.current?.scrollTo({
-			top: 0,
-			behavior: "smooth",
-		});
-	}, [currentQuestionIdx]);
-
 	return (
-		<div
-			className={cn("mx-auto h-full max-w-3xl space-y-8 pb-20", {
-				"lg:!flex-row flex h-[calc(100svh_-_4rem)] max-w-full flex-col space-y-0":
-					isHorizontalLayout,
-			})}
-		>
-			<QuestionProvider question={currentQuestion}>
-				<div
-					className={cn("space-y-3 p-4 pb-0", {
-						"w-full overflow-auto pb-4 lg:max-w-3xl": isHorizontalLayout,
-					})}
-					ref={leftSideRef}
-				>
-					<div className="flex items-center justify-between">
-						<QuestionPos externalPos={`${currentQuestionIdx + 1}`} />
-					</div>
-					<QuestionAudio />
-					<QuestionImage mode="review" isReadyToReveal={true} />
-					<QuestionTeaser mode="review" isReadyToReveal={true} />
-				</div>
-				<QuestionSubs
-					classNames={{
-						wrapper: cn("w-full space-y-8 p-4 pt-0", {
-							"overflow-y-auto border-input border-l pt-4": isHorizontalLayout,
-						}),
-					}}
-					ref={rightSideRef}
-				>
-					{({ subQuestionId }) => {
-						const currentAnswer = answers.answers[subQuestionId];
-						const value = currentAnswer
-							? {
-									choice: currentAnswer.choice,
-									isCorrect: currentAnswer.isCorrect,
-									subQuestionId: currentAnswer.subQuestionId,
-									questionId: currentAnswer.parentQuestionId,
-								}
-							: null;
-						return (
-							<div className="space-y-3" key={subQuestionId}>
-								<QuestionSubText />
-								<QuestionSubOptions mode="review" value={value} />
-								<Activity mode="visible">
-									<QuestionSubExplanation
-										mode="review"
-										isAnswerSelected={true}
-										defaultOpen={true}
-									/>
-								</Activity>
-							</div>
-						);
-					}}
-				</QuestionSubs>
-			</QuestionProvider>
-		</div>
+		<QuestionProvider question={currentQuestion}>
+			<QuestionSplitLayout
+				enabled={isHorizontalLayout}
+				resetKey={currentQuestionIdx}
+				renderTop={() => (
+					<>
+						<div className="flex items-center justify-between">
+							<QuestionPos externalPos={`${currentQuestionIdx + 1}`} />
+						</div>
+						<QuestionAudio />
+						<QuestionImage mode="review" isReadyToReveal={true} />
+						<QuestionTeaser mode="review" isReadyToReveal={true} />
+					</>
+				)}
+				renderBottom={() => (
+					<QuestionSubs classNames={{ wrapper: cn("w-full") }}>
+						{({ subQuestionId }) => {
+							const currentAnswer = answers.answers[subQuestionId];
+							const value = currentAnswer
+								? {
+										choice: currentAnswer.choice,
+										isCorrect: currentAnswer.isCorrect,
+										subQuestionId: currentAnswer.subQuestionId,
+										questionId: currentAnswer.parentQuestionId,
+									}
+								: null;
+							return (
+								<div className="space-y-3" key={subQuestionId}>
+									<QuestionSubText />
+									<QuestionSubOptions mode="review" value={value} />
+									<Activity mode="visible">
+										<QuestionSubExplanation
+											mode="review"
+											isAnswerSelected={true}
+											defaultOpen={true}
+										/>
+									</Activity>
+								</div>
+							);
+						}}
+					</QuestionSubs>
+				)}
+			/>
+		</QuestionProvider>
 	);
 };

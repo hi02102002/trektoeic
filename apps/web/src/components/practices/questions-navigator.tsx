@@ -9,7 +9,6 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useAnswers, useCurrentQuestion } from "@/stores/attempt";
 
 const PART_HAVE_MULTIPLE_SUBS = new Set([3, 4, 6, 7]);
-const SCROLL_DELAY_MS = 100;
 
 type Question = {
 	id: string;
@@ -164,10 +163,6 @@ export const QuestionsNavigator = ({
 		gotoQuestion(pIdx);
 		setSubQuestionIdx(idx);
 		onOpenChange(false);
-		setTimeout(() => {
-			const el = document.getElementById(`question-sub-${questionId}`);
-			el?.scrollIntoView({ behavior: "smooth", block: "center" });
-		}, SCROLL_DELAY_MS);
 	};
 
 	return (
