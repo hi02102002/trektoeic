@@ -54,6 +54,13 @@ export const PracticeQuestionsList = () => {
 		() => questions[currentQuestionIdx],
 		[currentQuestionIdx, questions],
 	);
+	const isCurrentQuestionFullyAnswered = useMemo(
+		() =>
+			currentQuestion.subs.every(
+				(sub) => (answers.answers[sub.id]?.choice ?? "") !== "",
+			),
+		[currentQuestion, answers.answers],
+	);
 
 	const isHorizontalLayout = PART_LAYOUT_HORIZONTAL.has(Number(part));
 
@@ -109,9 +116,15 @@ export const PracticeQuestionsList = () => {
 							/>
 						)}
 					</div>
-					<QuestionAudio />
+					<QuestionAudio
+						disableSeek={mode === "timed"}
+						disableSpeed={mode === "timed"}
+					/>
 					<QuestionImage />
-					<QuestionTeaser />
+					<QuestionTeaser
+						mode={mode === "timed" ? "exam" : "practice"}
+						isReadyToReveal={isCurrentQuestionFullyAnswered}
+					/>
 				</div>
 				<QuestionSubs
 					classNames={{
@@ -154,16 +167,26 @@ export const PracticeQuestionsList = () => {
 											return;
 										}
 
-										const { questionId } = opts;
-										questionTimer.markAsAnswered(questionId);
-
 										answers.setAnswer({
 											choice: opts.choice,
 											isCorrect: opts.isCorrect ?? false,
 											subQuestionId: opts.subQuestionId,
-											parentQuestionId: questionId,
+											parentQuestionId: opts.questionId,
 											part: Number(part),
 										});
+
+										const isParentQuestionFullyAnswered =
+											currentQuestion.subs.every((sub) => {
+												if (sub.id === opts.subQuestionId) {
+													return opts.choice !== "";
+												}
+
+												return (answers.answers[sub.id]?.choice ?? "") !== "";
+											});
+
+										if (isParentQuestionFullyAnswered) {
+											questionTimer.markAsAnswered(opts.questionId);
+										}
 									}}
 								/>
 								<Activity mode={currentAnswer.choice ? "visible" : "hidden"}>

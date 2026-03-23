@@ -44,6 +44,13 @@ export const MockQuestionsList = () => {
 		() => questions[currentQuestionIdx],
 		[currentQuestionIdx, questions],
 	);
+	const isCurrentQuestionFullyAnswered = useMemo(
+		() =>
+			currentQuestion.subs.every(
+				(sub) => (answers.answers[sub.id]?.choice ?? "") !== "",
+			),
+		[currentQuestion, answers.answers],
+	);
 
 	const isHorizontalLayout = PART_LAYOUT_HORIZONTAL.has(
 		Number(currentQuestion.part),
@@ -101,9 +108,12 @@ export const MockQuestionsList = () => {
 							/>
 						)}
 					</div>
-					<QuestionAudio />
+					<QuestionAudio disableSeek={true} disableSpeed={true} />
 					<QuestionImage />
-					<QuestionTeaser />
+					<QuestionTeaser
+						mode="exam"
+						isReadyToReveal={isCurrentQuestionFullyAnswered}
+					/>
 				</div>
 				<QuestionSubs
 					classNames={{
@@ -145,16 +155,26 @@ export const MockQuestionsList = () => {
 											return;
 										}
 
-										const { questionId } = opts;
-										questionTimer.markAsAnswered(questionId);
-
 										answers.setAnswer({
 											choice: opts.choice,
 											isCorrect: opts.isCorrect ?? false,
 											subQuestionId: opts.subQuestionId,
-											parentQuestionId: questionId,
+											parentQuestionId: opts.questionId,
 											part: Number(currentQuestion.part),
 										});
+
+										const isParentQuestionFullyAnswered =
+											currentQuestion.subs.every((sub) => {
+												if (sub.id === opts.subQuestionId) {
+													return opts.choice !== "";
+												}
+
+												return (answers.answers[sub.id]?.choice ?? "") !== "";
+											});
+
+										if (isParentQuestionFullyAnswered) {
+											questionTimer.markAsAnswered(opts.questionId);
+										}
 									}}
 								/>
 							</div>

@@ -29,11 +29,24 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "./ui/collapsible";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const PART_WITHOUT_TEXT = new Set([1, 2]);
 const PART_WITHOUT_SUB_POS = new Set([1, 2, 5]);
 const PART_NOT_SHOW_TEASER = new Set([1, 2, 3, 4]);
+const PART_TEASER_REVEAL_ON_REVIEW = new Set([3, 4]);
+const PART_TEASER_TRANSLATION = new Set([3, 4, 6, 7]);
+const PART_TEASER_TAB_LAYOUT = new Set([3, 4, 6, 7]);
 const READING_PARTS = new Set([6, 7]);
+
+const sanitizeQuestionHtml = (value?: string | null) =>
+	(value ?? "")
+		.replace(/<p[^>]*>\s*&nbsp;\s*<\/p>/gi, "")
+		.replace(/<p[^>]*>\s*<\/p>/gi, "")
+		.replace(/<br\s*\/?>/gi, "\n");
+
+const hasRenderableQuestionHtml = (value: string) =>
+	value.replace(/<[^>]+>/g, " ").trim().length > 0;
 
 type TQuestionContext = {
 	question: QuestionWithSubs;
@@ -118,7 +131,15 @@ export const QuestionFlagButton = ({
 	);
 };
 
-export const QuestionAudio = ({ onComplete }: { onComplete?: () => void }) => {
+export const QuestionAudio = ({
+	onComplete,
+	disableSeek = false,
+	disableSpeed = false,
+}: {
+	onComplete?: () => void;
+	disableSeek?: boolean;
+	disableSpeed?: boolean;
+}) => {
 	const { question } = useQuestionContext();
 
 	if (!question?.audioUrl) {
@@ -127,12 +148,24 @@ export const QuestionAudio = ({ onComplete }: { onComplete?: () => void }) => {
 
 	return (
 		<AudioPlayerProvider key={question.id}>
-			<QuestionAudioContent onComplete={onComplete} />
+			<QuestionAudioContent
+				onComplete={onComplete}
+				disableSeek={disableSeek}
+				disableSpeed={disableSpeed}
+			/>
 		</AudioPlayerProvider>
 	);
 };
 
-const QuestionAudioContent = ({ onComplete }: { onComplete?: () => void }) => {
+const QuestionAudioContent = ({
+	onComplete,
+	disableSeek = false,
+	disableSpeed = false,
+}: {
+	onComplete?: () => void;
+	disableSeek?: boolean;
+	disableSpeed?: boolean;
+}) => {
 	const player = useAudioPlayer();
 	const { question } = useQuestionContext();
 
@@ -172,9 +205,14 @@ const QuestionAudioContent = ({ onComplete }: { onComplete?: () => void }) => {
 			/>
 			<div className="flex flex-1 items-center gap-3">
 				<AudioPlayerTime className="text-xs tabular-nums" />
-				<AudioPlayerProgress className="flex-1" />
+				<AudioPlayerProgress className="flex-1" disabled={disableSeek} />
 				<AudioPlayerDuration className="text-xs tabular-nums" />
-				<AudioPlayerSpeed variant="ghost" size="icon" className="size-9" />
+				<AudioPlayerSpeed
+					variant="ghost"
+					size="icon"
+					className="size-9"
+					disabled={disableSpeed}
+				/>
 			</div>
 		</div>
 	);
@@ -229,34 +267,114 @@ export const QuestionImage = () => {
 	);
 };
 
-export const QuestionTeaser = () => {
+export const QuestionTeaser = ({
+	mode = "exam",
+	isReadyToReveal = false,
+}: {
+	mode?: "practice" | "review" | "exam";
+	isReadyToReveal?: boolean;
+}) => {
 	const { question } = useQuestionContext();
 
-	if (PART_NOT_SHOW_TEASER.has(question.part)) {
+	const cleanedText = sanitizeQuestionHtml(question?.teaser?.text);
+	const cleanedTranslation = sanitizeQuestionHtml(question?.teaser?.tran?.vi);
+
+	const hasTeaser = hasRenderableQuestionHtml(cleanedText);
+	const hasTranslation = hasRenderableQuestionHtml(cleanedTranslation);
+	const shouldRevealExtraContent =
+		mode === "review" || (mode === "practice" && isReadyToReveal);
+
+	const shouldShowOriginal = (() => {
+		if (!hasTeaser) {
+			return false;
+		}
+
+		if (PART_TEASER_REVEAL_ON_REVIEW.has(question.part)) {
+			return shouldRevealExtraContent;
+		}
+
+		if (PART_NOT_SHOW_TEASER.has(question.part)) {
+			return false;
+		}
+
+		return !question.imageUrl;
+	})();
+
+	const shouldShowTranslation =
+		PART_TEASER_TRANSLATION.has(question.part) &&
+		hasTranslation &&
+		shouldRevealExtraContent;
+
+	if (!shouldShowOriginal && !shouldShowTranslation) {
 		return null;
 	}
 
-	if (!question?.teaser?.text) {
-		return null;
-	}
+	const proseClassName =
+		"prose prose-neutral prose !max-w-full font-serif [&_p]:leading-relaxed";
+	const teaserTitle = READING_PARTS.has(question.part) ? "Bài đọc" : "Teaser";
 
-	if (question.imageUrl) {
-		return null;
+	if (
+		PART_TEASER_TAB_LAYOUT.has(question.part) &&
+		shouldShowOriginal &&
+		shouldShowTranslation
+	) {
+		return (
+			<Tabs defaultValue="original" className="rounded-lg border bg-white p-3">
+				<TabsList>
+					<TabsTrigger value="original">{teaserTitle}</TabsTrigger>
+					<TabsTrigger value="translation">Bản dịch</TabsTrigger>
+				</TabsList>
+				<TabsContent value="original">
+					<div
+						// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+						dangerouslySetInnerHTML={{
+							__html: cleanedText,
+						}}
+						className={proseClassName}
+					/>
+				</TabsContent>
+				<TabsContent value="translation">
+					<div
+						// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+						dangerouslySetInnerHTML={{
+							__html: cleanedTranslation,
+						}}
+						className={proseClassName}
+					/>
+				</TabsContent>
+			</Tabs>
+		);
 	}
-
-	const cleanedText = question.teaser.text
-		.replace(/<p[^>]*>\s*&nbsp;\s*<\/p>/gi, "")
-		.replace(/<p[^>]*>\s*<\/p>/gi, "")
-		.replace(/<br\s*\/?>/gi, "\n");
 
 	return (
-		<div
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
-			dangerouslySetInnerHTML={{
-				__html: cleanedText,
-			}}
-			className="prose prose-neutral prose !max-w-full font-serif"
-		/>
+		<div className="space-y-3">
+			{shouldShowOriginal ? (
+				<div className="rounded-lg border bg-white p-4">
+					<p className="mb-3 font-medium text-gray-900 text-sm">
+						{teaserTitle}
+					</p>
+					<div
+						// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+						dangerouslySetInnerHTML={{
+							__html: cleanedText,
+						}}
+						className={proseClassName}
+					/>
+				</div>
+			) : null}
+			{shouldShowTranslation ? (
+				<div className="rounded-lg border bg-white p-4">
+					<p className="mb-3 font-medium text-gray-900 text-sm">Bản dịch</p>
+					<div
+						// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+						dangerouslySetInnerHTML={{
+							__html: cleanedTranslation,
+						}}
+						className={proseClassName}
+					/>
+				</div>
+			) : null}
+		</div>
 	);
 };
 
@@ -499,21 +617,21 @@ export const QuestionSubOptions = ({
 	const isChecked =
 		mode === "review" || (mode === "practice" && !!internal?.choice);
 
-		const getValueForRender = (value: string) => {
-			if (mode === "review") {
+	const getValueForRender = (value: string) => {
+		if (mode === "review") {
+			return value;
+		}
+
+		if (mode === "practice") {
+			if (PART_WITHOUT_TEXT.has(question.part) && internal?.choice) {
 				return value;
 			}
 
-			if (mode === "practice") {
-				if (PART_WITHOUT_TEXT.has(question.part) && internal?.choice) {
-					return value;
-				}
-
-				return PART_WITHOUT_TEXT.has(question.part) ? "" : value;
-			}
-
 			return PART_WITHOUT_TEXT.has(question.part) ? "" : value;
-		};
+		}
+
+		return PART_WITHOUT_TEXT.has(question.part) ? "" : value;
+	};
 
 	return (
 		<ul className="space-y-1">
@@ -559,7 +677,7 @@ export const QuestionSubExplanation = ({
 
 	// Only show explanation when:
 	// - In review mode (always)
-	// - In practice mode after an answer is selected
+	// - In practice mode after this sub question is answered
 	// - Never in exam mode
 	const shouldShow =
 		mode === "review" || (mode === "practice" && isAnswerSelected);

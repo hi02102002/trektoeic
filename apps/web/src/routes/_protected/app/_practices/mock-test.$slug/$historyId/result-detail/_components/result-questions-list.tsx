@@ -71,7 +71,7 @@ export const ResultQuestionsList = () => {
 					</div>
 					<QuestionAudio />
 					<QuestionImage />
-					<QuestionTeaser />
+					<QuestionTeaser mode="review" isReadyToReveal={true} />
 				</div>
 				<QuestionSubs
 					classNames={{
@@ -98,7 +98,7 @@ export const ResultQuestionsList = () => {
 								<Activity mode="visible">
 									<QuestionSubExplanation
 										mode="review"
-										isAnswerSelected={!!currentAnswer?.choice}
+										isAnswerSelected={true}
 										defaultOpen={true}
 									/>
 								</Activity>

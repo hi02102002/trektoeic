@@ -278,6 +278,7 @@ export function AudioPlayerProvider<TData = unknown>({
 }
 
 export const AudioPlayerProgress = ({
+	disabled,
 	...otherProps
 }: Omit<
 	ComponentProps<typeof SliderPrimitive.Root>,
@@ -286,12 +287,20 @@ export const AudioPlayerProgress = ({
 	const player = useAudioPlayer();
 	const time = useAudioPlayerTime();
 	const wasPlayingRef = useRef(false);
+	const isDisabled =
+		disabled ||
+		player.duration === undefined ||
+		!Number.isFinite(player.duration) ||
+		Number.isNaN(player.duration);
 
 	return (
 		<SliderPrimitive.Root
 			{...otherProps}
 			value={[time]}
 			onValueChange={(vals) => {
+				if (isDisabled) {
+					return;
+				}
 				player.seek(vals[0]);
 				otherProps.onValueChange?.(vals);
 			}}
@@ -299,11 +308,19 @@ export const AudioPlayerProgress = ({
 			max={player.duration ?? 0}
 			step={otherProps.step || 0.25}
 			onPointerDown={(e) => {
+				if (isDisabled) {
+					otherProps.onPointerDown?.(e);
+					return;
+				}
 				wasPlayingRef.current = player.isPlaying;
 				player.pause();
 				otherProps.onPointerDown?.(e);
 			}}
 			onPointerUp={(e) => {
+				if (isDisabled) {
+					otherProps.onPointerUp?.(e);
+					return;
+				}
 				if (wasPlayingRef.current) {
 					player.play();
 				}
@@ -314,6 +331,10 @@ export const AudioPlayerProgress = ({
 				otherProps.className,
 			)}
 			onKeyDown={(e) => {
+				if (isDisabled) {
+					otherProps.onKeyDown?.(e);
+					return;
+				}
 				if (e.key === " ") {
 					e.preventDefault();
 					if (!player.isPlaying) {
@@ -324,11 +345,7 @@ export const AudioPlayerProgress = ({
 				}
 				otherProps.onKeyDown?.(e);
 			}}
-			disabled={
-				player.duration === undefined ||
-				!Number.isFinite(player.duration) ||
-				Number.isNaN(player.duration)
-			}
+			disabled={isDisabled}
 		>
 			<SliderPrimitive.Track className="relative h-[4px] w-full grow overflow-hidden rounded-full bg-muted">
 				<SliderPrimitive.Range className="absolute h-full bg-primary" />
@@ -570,10 +587,12 @@ export function AudioPlayerSpeed({
 export interface AudioPlayerSpeedButtonGroupProps
 	extends Omit<React.HTMLAttributes<HTMLDivElement>, "children"> {
 	speeds?: readonly number[];
+	disabled?: boolean;
 }
 
 export function AudioPlayerSpeedButtonGroup({
 	speeds = [0.5, 1, 1.5, 2],
+	disabled = false,
 	className,
 	...props
 }: AudioPlayerSpeedButtonGroupProps) {
@@ -592,6 +611,7 @@ export function AudioPlayerSpeedButtonGroup({
 					key={speed}
 					variant={currentSpeed === speed ? "default" : "outline"}
 					size="sm"
+					disabled={disabled}
 					onClick={() => player.setPlaybackRate(speed)}
 					className="min-w-[50px] font-mono text-xs"
 				>
