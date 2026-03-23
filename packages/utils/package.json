@@ -21,7 +21,7 @@
 	},
 	"dependencies": {
 		"crypto-js": "^4.2.0",
-		"nanoid": "^5.1.6",
-		"ts-fsrs": "^5.2.3"
+		"nanoid": "^5.1.7",
+		"ts-fsrs": "^5.3.1"
 	}
 }

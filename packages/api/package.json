@@ -31,7 +31,7 @@
 		"@orpc/client": "catalog:",
 		"@orpc/contract": "catalog:",
 		"@orpc/experimental-pino": "catalog:",
-		"@orpc/experimental-ratelimit": "^1.13.5",
+		"@orpc/experimental-ratelimit": "^1.13.9",
 		"@orpc/json-schema": "catalog:",
 		"@orpc/openapi": "catalog:",
 		"@orpc/server": "catalog:",
@@ -42,7 +42,7 @@
 		"@trektoeic/logger": "workspace:*",
 		"@trektoeic/schemas": "workspace:*",
 		"@trektoeic/utils": "workspace:*",
-		"lru-cache": "^11.2.6",
+		"lru-cache": "^11.2.7",
 		"unstorage": "^1.17.4",
 		"zod": "^4.3.6"
 	}
