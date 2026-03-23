@@ -6,6 +6,7 @@ import {
 	AnswersProvider,
 	CurrentQuestionProvider,
 	QuestionTimerProvider,
+	useCurrentQuestion,
 } from "@/stores/attempt";
 import { prefetchQuestionMedia } from "@/utils/prefetch-media";
 import { ExitMockTestDialog } from "./_components/exit-practice-dialog";
@@ -99,19 +100,56 @@ function RouteComponent() {
 						className="fixed top-0 right-0 left-0 z-40"
 						onNavigatorToggle={() => setIsNavigatorOpen(true)}
 					/>
-					<div className="flex h-svh flex-col overflow-hidden pt-16">
-						<QuestionsNavigator
-							isOpen={isNavigatorOpen}
-							onOpenChange={setIsNavigatorOpen}
-						/>
-						<div className="min-h-0 flex-1 xl:ml-64">
-							<MockQuestionsList />
-						</div>
-					</div>
+					<MockTestStartContent
+						isNavigatorOpen={isNavigatorOpen}
+						onNavigatorOpenChange={setIsNavigatorOpen}
+						questions={questions}
+					/>
 					<MockActionBar />
 					<ExitMockTestDialog />
 				</QuestionTimerProvider>
 			</AnswersProvider>
 		</CurrentQuestionProvider>
+	);
+}
+
+type MockTestStartLayoutQuestion = {
+	part: number;
+};
+
+function MockTestStartContent({
+	isNavigatorOpen,
+	onNavigatorOpenChange,
+	questions,
+}: {
+	isNavigatorOpen: boolean;
+	onNavigatorOpenChange: (open: boolean) => void;
+	questions: MockTestStartLayoutQuestion[];
+}) {
+	const currentQuestionIdx = useCurrentQuestion((s) => s.idx);
+	const isViewportScrollPart = [6, 7].includes(
+		questions[currentQuestionIdx]?.part ?? 0,
+	);
+
+	return (
+		<div
+			className={
+				isViewportScrollPart
+					? "flex h-svh flex-col overflow-hidden pt-16"
+					: "flex flex-col pt-16"
+			}
+		>
+			<QuestionsNavigator
+				isOpen={isNavigatorOpen}
+				onOpenChange={onNavigatorOpenChange}
+			/>
+			<div
+				className={
+					isViewportScrollPart ? "min-h-0 flex-1 xl:ml-64" : "xl:ml-64"
+				}
+			>
+				<MockQuestionsList />
+			</div>
+		</div>
 	);
 }

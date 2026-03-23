@@ -69,6 +69,7 @@ function RouteComponent() {
 	const { part } = Route.useParams();
 	const { questions } = Route.useLoaderData();
 	const [isNavigatorOpen, setIsNavigatorOpen] = useState(false);
+	const isViewportScrollPart = Number(part) === 6 || Number(part) === 7;
 
 	return (
 		<CurrentQuestionProvider
@@ -98,12 +99,22 @@ function RouteComponent() {
 						className="fixed top-0 right-0 left-0 z-40"
 						onNavigatorToggle={() => setIsNavigatorOpen(true)}
 					/>
-					<div className="flex h-svh flex-col overflow-hidden pt-16">
+					<div
+						className={
+							isViewportScrollPart
+								? "flex h-svh flex-col overflow-hidden pt-16"
+								: "flex flex-col pt-16"
+						}
+					>
 						<QuestionsNavigator
 							isOpen={isNavigatorOpen}
 							onOpenChange={setIsNavigatorOpen}
 						/>
-						<div className="min-h-0 flex-1 xl:ml-64">
+						<div
+							className={
+								isViewportScrollPart ? "min-h-0 flex-1 xl:ml-64" : "xl:ml-64"
+							}
+						>
 							<PracticeQuestionsList />
 						</div>
 					</div>

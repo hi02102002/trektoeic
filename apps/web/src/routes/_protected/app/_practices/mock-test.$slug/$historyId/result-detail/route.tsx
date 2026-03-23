@@ -7,6 +7,7 @@ import {
 	type Answer,
 	AnswersProvider,
 	CurrentQuestionProvider,
+	useCurrentQuestion,
 } from "@/stores/attempt";
 import { QuestionsNavigator } from "./_components/questions-navigator";
 import { ResultActionBar } from "./_components/result-action-bar";
@@ -96,17 +97,54 @@ function RouteComponent() {
 					onNavigatorToggle={() => setIsNavigatorOpen(true)}
 					action={<ResultActions />}
 				/>
-				<div className="flex h-svh flex-col overflow-hidden pt-16">
-					<QuestionsNavigator
-						isOpen={isNavigatorOpen}
-						onOpenChange={setIsNavigatorOpen}
-					/>
-					<div className="min-h-0 flex-1 xl:ml-64">
-						<ResultQuestionsList />
-					</div>
-				</div>
+				<MockTestResultContent
+					isNavigatorOpen={isNavigatorOpen}
+					onNavigatorOpenChange={setIsNavigatorOpen}
+					questions={questions}
+				/>
 				<ResultActionBar />
 			</AnswersProvider>
 		</CurrentQuestionProvider>
+	);
+}
+
+type MockTestResultLayoutQuestion = {
+	part: number;
+};
+
+function MockTestResultContent({
+	isNavigatorOpen,
+	onNavigatorOpenChange,
+	questions,
+}: {
+	isNavigatorOpen: boolean;
+	onNavigatorOpenChange: (open: boolean) => void;
+	questions: MockTestResultLayoutQuestion[];
+}) {
+	const currentQuestionIdx = useCurrentQuestion((s) => s.idx);
+	const isViewportScrollPart = [6, 7].includes(
+		questions[currentQuestionIdx]?.part ?? 0,
+	);
+
+	return (
+		<div
+			className={
+				isViewportScrollPart
+					? "flex h-svh flex-col overflow-hidden pt-16"
+					: "flex flex-col pt-16"
+			}
+		>
+			<QuestionsNavigator
+				isOpen={isNavigatorOpen}
+				onOpenChange={onNavigatorOpenChange}
+			/>
+			<div
+				className={
+					isViewportScrollPart ? "min-h-0 flex-1 xl:ml-64" : "xl:ml-64"
+				}
+			>
+				<ResultQuestionsList />
+			</div>
+		</div>
 	);
 }

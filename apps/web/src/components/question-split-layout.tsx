@@ -64,16 +64,11 @@ export const QuestionSplitLayout = ({
 
 	if (!enabled) {
 		return (
-			<div
-				className={cn(
-					"mx-auto w-full max-w-3xl overflow-hidden",
-					CONTENT_HEIGHT_CLASS,
-				)}
-			>
-				<div className="h-full overflow-y-auto pb-20" ref={mobileTopRef}>
-					<div className="space-y-3 p-4 pb-0">{renderTop()}</div>
-					<div className="w-full space-y-8 p-4 pt-8">{renderBottom()}</div>
+			<div className="mx-auto h-full max-w-3xl space-y-8 pb-20">
+				<div className="space-y-3 p-4 pb-0" ref={mobileTopRef}>
+					{renderTop()}
 				</div>
+				<div className="w-full space-y-8 p-4 pt-0">{renderBottom()}</div>
 			</div>
 		);
 	}

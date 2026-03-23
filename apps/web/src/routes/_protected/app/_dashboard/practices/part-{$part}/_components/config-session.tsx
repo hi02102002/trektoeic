@@ -37,15 +37,16 @@ const ConfigSessionSchema = z
 
 type TConfigSessionForm = z.infer<typeof ConfigSessionSchema>;
 
+const getDefaultQuestionCount = (part: string | number) => {
+	return Math.min(10, MAP_PART[`${part}` as keyof typeof MAP_PART].questions);
+};
+
 export const ConfigSession = () => {
 	const { part } = useParams({
 		from: "/_protected/app/_dashboard/practices/part-{$part}",
 	});
 	const navigate = useNavigate();
-	const defaultQuestionCount = Math.min(
-		10,
-		MAP_PART[`${part}` as keyof typeof MAP_PART].questions,
-	);
+	const defaultQuestionCount = getDefaultQuestionCount(part);
 	const form = useForm<TConfigSessionForm>({
 		defaultValues: {
 			part,
@@ -78,6 +79,7 @@ export const ConfigSession = () => {
 	const numberOfQuestions = form.watch("numberOfQuestions");
 	const maxQuestions =
 		MAP_PART[`${selectedPart}` as keyof typeof MAP_PART].questions;
+	const defaultQuestionCountByPart = getDefaultQuestionCount(selectedPart);
 	const questionOptions = useMemo(() => {
 		const preset = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50].filter(
 			(num) => num < maxQuestions,
@@ -107,24 +109,22 @@ export const ConfigSession = () => {
 			return;
 		}
 
-		startTransition(async () => {
-			await navigate({
-				to: "/app/practices/part-{$part}",
-				params: {
-					part: selectedPart,
-				},
-				replace: true,
-			});
+		navigate({
+			to: "/app/practices/part-{$part}",
+			params: {
+				part: selectedPart,
+			},
+			replace: true,
 		});
-	}, [navigate, part, selectedPart, startTransition]);
+	}, [navigate, part, selectedPart]);
 
 	useEffect(() => {
-		if (numberOfQuestions <= maxQuestions) {
+		if (questionOptions.includes(numberOfQuestions)) {
 			return;
 		}
 
-		form.setValue("numberOfQuestions", maxQuestions);
-	}, [form, maxQuestions, numberOfQuestions]);
+		form.setValue("numberOfQuestions", defaultQuestionCountByPart);
+	}, [defaultQuestionCountByPart, form, numberOfQuestions, questionOptions]);
 
 	return (
 		<div className="overflow-hidden rounded-md border border-neutral-200 bg-white">
