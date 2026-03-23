@@ -499,6 +499,22 @@ export const QuestionSubOptions = ({
 	const isChecked =
 		mode === "review" || (mode === "practice" && !!internal?.choice);
 
+		const getValueForRender = (value: string) => {
+			if (mode === "review") {
+				return value;
+			}
+
+			if (mode === "practice") {
+				if (PART_WITHOUT_TEXT.has(question.part) && internal?.choice) {
+					return value;
+				}
+
+				return PART_WITHOUT_TEXT.has(question.part) ? "" : value;
+			}
+
+			return PART_WITHOUT_TEXT.has(question.part) ? "" : value;
+		};
+
 	return (
 		<ul className="space-y-1">
 			{Object.entries(sub.options).map(([key, value]) => {
@@ -506,18 +522,12 @@ export const QuestionSubOptions = ({
 				const isCorrect =
 					isCorrectAnswerAvailable(key) || isChooseCorrectAnswer(key);
 				const isWrong = isChooseWrongAnswer(key);
-				const valueForRender =
-					mode === "review"
-						? value
-						: PART_WITHOUT_TEXT.has(question.part)
-							? ""
-							: value;
 
 				return (
 					<li key={key}>
 						<QuestionOption
 							label={key.toUpperCase()}
-							value={valueForRender}
+							value={getValueForRender(value)}
 							isSelected={isSelected}
 							isCorrect={isCorrect}
 							isWrong={isWrong}
