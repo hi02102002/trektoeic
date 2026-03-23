@@ -120,7 +120,10 @@ export const PracticeQuestionsList = () => {
 						disableSeek={mode === "timed"}
 						disableSpeed={mode === "timed"}
 					/>
-					<QuestionImage />
+					<QuestionImage
+						mode={mode === "timed" ? "exam" : "practice"}
+						isReadyToReveal={isCurrentQuestionFullyAnswered}
+					/>
 					<QuestionTeaser
 						mode={mode === "timed" ? "exam" : "practice"}
 						isReadyToReveal={isCurrentQuestionFullyAnswered}

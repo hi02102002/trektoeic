@@ -69,7 +69,7 @@ export const ResultQuestionsList = () => {
 						<QuestionPos externalPos={`${currentQuestionIdx + 1}`} />
 					</div>
 					<QuestionAudio />
-					<QuestionImage />
+					<QuestionImage mode="review" isReadyToReveal={true} />
 					<QuestionTeaser mode="review" isReadyToReveal={true} />
 				</div>
 				<QuestionSubs

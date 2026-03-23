@@ -52,6 +52,8 @@ type TQuestionContext = {
 	question: QuestionWithSubs;
 };
 
+type QuestionViewMode = "practice" | "review" | "exam";
+
 export const QuestionContext = createContext<TQuestionContext | null>(null);
 
 export const useQuestionContext = () => {
@@ -218,10 +220,30 @@ const QuestionAudioContent = ({
 	);
 };
 
-export const QuestionImage = () => {
+export const QuestionImage = ({
+	mode = "exam",
+	isReadyToReveal = false,
+}: {
+	mode?: QuestionViewMode;
+	isReadyToReveal?: boolean;
+}) => {
 	const { question } = useQuestionContext();
 
 	if (!question?.imageUrl) {
+		return null;
+	}
+
+	const shouldRevealExtraContent =
+		mode === "review" || (mode === "practice" && isReadyToReveal);
+	const hasTranslation = hasRenderableQuestionHtml(
+		sanitizeQuestionHtml(question?.teaser?.tran?.vi),
+	);
+	const shouldRenderInTabs =
+		PART_TEASER_TAB_LAYOUT.has(question.part) &&
+		hasTranslation &&
+		shouldRevealExtraContent;
+
+	if (shouldRenderInTabs) {
 		return null;
 	}
 
@@ -271,13 +293,14 @@ export const QuestionTeaser = ({
 	mode = "exam",
 	isReadyToReveal = false,
 }: {
-	mode?: "practice" | "review" | "exam";
+	mode?: QuestionViewMode;
 	isReadyToReveal?: boolean;
 }) => {
 	const { question } = useQuestionContext();
 
 	const cleanedText = sanitizeQuestionHtml(question?.teaser?.text);
 	const cleanedTranslation = sanitizeQuestionHtml(question?.teaser?.tran?.vi);
+	const hasImage = !!question.imageUrl;
 
 	const hasTeaser = hasRenderableQuestionHtml(cleanedText);
 	const hasTranslation = hasRenderableQuestionHtml(cleanedTranslation);
@@ -285,6 +308,10 @@ export const QuestionTeaser = ({
 		mode === "review" || (mode === "practice" && isReadyToReveal);
 
 	const shouldShowOriginal = (() => {
+		if (hasImage && shouldRevealExtraContent) {
+			return true;
+		}
+
 		if (!hasTeaser) {
 			return false;
 		}
@@ -325,13 +352,20 @@ export const QuestionTeaser = ({
 					<TabsTrigger value="translation">Bản dịch</TabsTrigger>
 				</TabsList>
 				<TabsContent value="original">
-					<div
-						// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
-						dangerouslySetInnerHTML={{
-							__html: cleanedText,
-						}}
-						className={proseClassName}
-					/>
+					<div className="space-y-4">
+						{hasImage ? (
+							<QuestionImage mode={mode} isReadyToReveal={false} />
+						) : null}
+						{hasTeaser ? (
+							<div
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+								dangerouslySetInnerHTML={{
+									__html: cleanedText,
+								}}
+								className={proseClassName}
+							/>
+						) : null}
+					</div>
 				</TabsContent>
 				<TabsContent value="translation">
 					<div
@@ -353,13 +387,20 @@ export const QuestionTeaser = ({
 					<p className="mb-3 font-medium text-gray-900 text-sm">
 						{teaserTitle}
 					</p>
-					<div
-						// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
-						dangerouslySetInnerHTML={{
-							__html: cleanedText,
-						}}
-						className={proseClassName}
-					/>
+					<div className="space-y-4">
+						{hasImage ? (
+							<QuestionImage mode={mode} isReadyToReveal={false} />
+						) : null}
+						{hasTeaser ? (
+							<div
+								// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+								dangerouslySetInnerHTML={{
+									__html: cleanedText,
+								}}
+								className={proseClassName}
+							/>
+						) : null}
+					</div>
 				</div>
 			) : null}
 			{shouldShowTranslation ? (

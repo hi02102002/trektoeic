@@ -109,7 +109,10 @@ export const MockQuestionsList = () => {
 						)}
 					</div>
 					<QuestionAudio disableSeek={true} disableSpeed={true} />
-					<QuestionImage />
+					<QuestionImage
+						mode="exam"
+						isReadyToReveal={isCurrentQuestionFullyAnswered}
+					/>
 					<QuestionTeaser
 						mode="exam"
 						isReadyToReveal={isCurrentQuestionFullyAnswered}
