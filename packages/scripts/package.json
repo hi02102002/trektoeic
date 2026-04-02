@@ -35,6 +35,6 @@
 		"@trektoeic/crawler": "workspace:*",
 		"@trektoeic/db": "workspace:*",
 		"@trektoeic/env": "workspace:*",
-		"lodash-es": "^4.17.23"
+		"lodash-es": "^4.18.1"
 	}
 }
