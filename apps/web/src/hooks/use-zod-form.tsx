@@ -26,30 +26,30 @@ type SchemaInput<TSchema extends z.ZodType> = Extract<
 >;
 
 export function useZodForm<TSchema extends z.ZodType>(
-		props: Omit<UseFormProps<SchemaInput<TSchema>>, "resolver"> & {
-			schema: TSchema;
-			id?: string;
-		},
-	) {
-		const id = useId();
-		const form = useForm<SchemaInput<TSchema>>({
-			...props,
-			// @ts-expect-error
-			resolver: zodResolver(props.schema, undefined, {
-				// This makes it so we can use `.transform()`s on the schema without same transform getting applied again when it reaches the server
-				raw: true,
-			}),
-		}) as UseFormReturn<SchemaInput<TSchema>>;
+	props: Omit<UseFormProps<SchemaInput<TSchema>>, "resolver"> & {
+		schema: TSchema;
+		id?: string;
+	},
+) {
+	const id = useId();
+	const form = useForm<SchemaInput<TSchema>>({
+		...props,
+		// @ts-expect-error
+		resolver: zodResolver(props.schema, undefined, {
+			// This makes it so we can use `.transform()`s on the schema without same transform getting applied again when it reaches the server
+			raw: true,
+		}),
+	}) as UseFormReturn<SchemaInput<TSchema>>;
 
-		return useMemo(
-			() =>
-				({
-					...form,
-					id: `form-${id}${props.id ? `-${props.id}` : ""}`,
-				}) as UseZodForm<SchemaInput<TSchema>>,
-			[form, id, props.id],
-		);
-	}
+	return useMemo(
+		() =>
+			({
+				...form,
+				id: `form-${id}${props.id ? `-${props.id}` : ""}`,
+			}) as UseZodForm<SchemaInput<TSchema>>,
+		[form, id, props.id],
+	);
+}
 
 export type AnyZodForm = Pick<UseZodForm<FieldValues>, "id" | "formState">;
 
