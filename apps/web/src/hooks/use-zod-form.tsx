@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Slot } from "@radix-ui/react-slot";
-import { useId } from "react";
+import { useId, useMemo } from "react";
 import {
 	type FieldValues,
 	FormProvider,
@@ -19,31 +19,39 @@ type UseZodForm<TInput extends FieldValues> = UseFormReturn<TInput> & {
 	 */
 	id: string;
 };
+
+type SchemaInput<TSchema extends z.ZodType> = Extract<
+	TSchema["_input"],
+	FieldValues
+>;
+
 export function useZodForm<TSchema extends z.ZodType>(
-	// @ts-expect-error
-	props: Omit<UseFormProps<TSchema["_input"]>, "resolver"> & {
-		schema: TSchema;
-		id?: string;
-	},
-) {
-	// @ts-expect-error
-	const form = useForm<TSchema["_input"]>({
-		...props,
-		// @ts-expect-error
-		resolver: zodResolver(props.schema, undefined, {
-			// This makes it so we can use `.transform()`s on the schema without same transform getting applied again when it reaches the server
-			raw: true,
-		}),
-		// @ts-expect-error
-	}) as UseZodForm<TSchema["_input"]>;
+		props: Omit<UseFormProps<SchemaInput<TSchema>>, "resolver"> & {
+			schema: TSchema;
+			id?: string;
+		},
+	) {
+		const id = useId();
+		const form = useForm<SchemaInput<TSchema>>({
+			...props,
+			// @ts-expect-error
+			resolver: zodResolver(props.schema, undefined, {
+				// This makes it so we can use `.transform()`s on the schema without same transform getting applied again when it reaches the server
+				raw: true,
+			}),
+		}) as UseFormReturn<SchemaInput<TSchema>>;
 
-	form.id = `form-${useId()}${props.id ? `-${props.id}` : ""}`;
+		return useMemo(
+			() =>
+				({
+					...form,
+					id: `form-${id}${props.id ? `-${props.id}` : ""}`,
+				}) as UseZodForm<SchemaInput<TSchema>>,
+			[form, id, props.id],
+		);
+	}
 
-	return form;
-}
-
-// biome-ignore lint/suspicious/noExplicitAny: <it is needed>
-export type AnyZodForm = UseZodForm<any>;
+export type AnyZodForm = Pick<UseZodForm<FieldValues>, "id" | "formState">;
 
 export function Form<TInput extends FieldValues>(
 	props: Omit<React.ComponentProps<"form">, "onSubmit" | "id"> & {

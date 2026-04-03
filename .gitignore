@@ -55,3 +55,4 @@ data/*.json
 .claude
 google-cookies.json
 cookies.json
+.codex

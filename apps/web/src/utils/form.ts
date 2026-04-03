@@ -1,5 +1,6 @@
-import type { AnyZodForm } from "@/hooks/use-zod-form";
-
-export const getFieldId = (form: AnyZodForm, fieldName: string) => {
+export const getFieldId = <TFieldName extends string>(
+	form: { id: string },
+	fieldName: TFieldName,
+) => {
 	return `${form.id}-${fieldName}`;
 };
