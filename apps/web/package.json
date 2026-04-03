@@ -62,7 +62,7 @@
 		"@trektoeic/schemas": "workspace:*",
 		"@trektoeic/uploads": "workspace:*",
 		"@trektoeic/utils": "workspace:*",
-		"@vercel/analytics": "^1.6.1",
+		"@vercel/analytics": "^2.0.1",
 		"ahooks": "^3.9.7",
 		"better-auth": "catalog:",
 		"class-variance-authority": "^0.7.1",
