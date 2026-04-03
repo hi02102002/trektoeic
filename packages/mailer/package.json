@@ -27,7 +27,7 @@
 	"dependencies": {
 		"@react-email/components": "1.0.11",
 		"@trektoeic/env": "workspace:*",
-		"@unosend/node": "^1.1.0",
+		"@unosend/node": "^2.1.0",
 		"nodemailer": "^7.0.13",
 		"react": "^19.2.4",
 		"react-dom": "^19.2.4"
