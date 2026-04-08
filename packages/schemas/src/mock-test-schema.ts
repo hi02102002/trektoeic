@@ -1,4 +1,5 @@
 import z from "zod";
+import { KitSchema } from "./kit-schema";
 
 export const MockTestContentSchema = z.object({
 	questionId: z.string(),
@@ -37,6 +38,16 @@ export const MockTestHistorySchema = z.object({
 	action: z.literal("mock_test"),
 });
 
+export const MockTestHistoryListItemSchema = z.object({
+	history: MockTestHistorySchema,
+	kit: KitSchema.pick({
+		id: true,
+		slug: true,
+		name: true,
+		year: true,
+	}).nullable(),
+});
+
 export const InputMockTestHistorySchema = z.object({
 	metadata: MockTestMetadataSchema,
 	contents: z.array(MockTestContentSchema),
@@ -46,4 +57,7 @@ export const InputMockTestHistorySchema = z.object({
 export type MockTestContent = z.infer<typeof MockTestContentSchema>;
 export type MockTestMetadata = z.infer<typeof MockTestMetadataSchema>;
 export type MockTestHistory = z.infer<typeof MockTestHistorySchema>;
+export type MockTestHistoryListItem = z.infer<
+	typeof MockTestHistoryListItemSchema
+>;
 export type InputMockTestHistory = z.infer<typeof InputMockTestHistorySchema>;

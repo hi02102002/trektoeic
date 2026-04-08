@@ -8,7 +8,6 @@ import z from "zod";
 import { AppContent } from "@/components/layouts/app";
 import { VocabularyCollectionsSection } from "./_components/vocabulary-collections-section";
 import { VocabularyDashboardHeader } from "./_components/vocabulary-dashboard-header";
-import { VocabularyInsightsSidebar } from "./_components/vocabulary-insights-sidebar";
 import { VocabularyStatsGrid } from "./_components/vocabulary-stats-grid";
 
 export const Route = createFileRoute(
@@ -59,9 +58,8 @@ function RouteComponent() {
 		<AppContent header={<VocabularyDashboardHeader />}>
 			<div className="space-y-6">
 				<VocabularyStatsGrid />
-				<div className="grid gap-6 xl:grid-cols-12">
+				<div className="grid gap-6">
 					<VocabularyCollectionsSection />
-					<VocabularyInsightsSidebar />
 				</div>
 			</div>
 		</AppContent>

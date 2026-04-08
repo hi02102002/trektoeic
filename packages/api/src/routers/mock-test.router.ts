@@ -1,10 +1,19 @@
-import { createMockTestHistory } from "@trektoeic/db/queries/mock-tests/create-mock-test-history";
-import { getMockTestHistoryById } from "@trektoeic/db/queries/mock-tests/get-mock-test-history-by-id";
+import {
+	createMockTestHistory,
+	getMockTestHistories,
+	getMockTestHistoryById,
+} from "@trektoeic/db/queries";
+
 import {
 	InputMockTestHistorySchema,
+	MockTestHistoryListItemSchema,
 	MockTestHistorySchema,
 } from "@trektoeic/schemas/mock-test-schema";
 import { QuestionWithSubsSchema } from "@trektoeic/schemas/question-schema";
+import {
+	PaginatedResultSchema,
+	PaginationInputSchema,
+} from "@trektoeic/schemas/share-schema";
 import z from "zod";
 import { cachedMiddleware } from "../middlewares";
 import { requiredAuthProcedure } from "../procedures";
@@ -25,6 +34,24 @@ export const mockTestRouter = {
 			)(input);
 
 			return inserted;
+		}),
+	getMockTestHistories: requiredAuthProcedure
+		.route({
+			method: "GET",
+			tags: TAGS,
+		})
+		.input(PaginationInputSchema)
+		.output(PaginatedResultSchema(MockTestHistoryListItemSchema))
+		.handler(async ({ input, context }) => {
+			const histories = await getMockTestHistories(
+				context.session.user.id,
+				context.kysely,
+			)({
+				limit: input.limit,
+				page: input.page,
+			});
+
+			return histories;
 		}),
 	getMockTestByHistoryId: requiredAuthProcedure
 		.use(

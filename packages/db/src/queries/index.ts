@@ -1,5 +1,6 @@
 export * from "./deck-of-users";
 export * from "./kits";
+export * from "./mock-tests";
 export * from "./part-practices";
 export * from "./part-sections";
 export * from "./questions";

@@ -16,12 +16,12 @@ export function VocabularyCollectionsSection() {
 	const totalPages = pagination.totalPages;
 
 	return (
-		<div className="space-y-4 xl:col-span-8">
+		<div className="grid-cols-12 space-y-4">
 			<div className="flex items-center justify-between">
 				<h2 className="font-semibold text-lg">Bộ sưu tập</h2>
 			</div>
 
-			<div className="grid gap-4 md:grid-cols-2">
+			<div className="grid gap-4 md:grid-cols-3">
 				{categories.items.map((category) => {
 					const progress = category.progressPct ?? 0;
 					const label = `${category.learnedWords ?? 0} / ${category.totalWords ?? 0} words`;

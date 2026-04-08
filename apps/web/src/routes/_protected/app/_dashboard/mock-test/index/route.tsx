@@ -1,7 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { createSortInputSchema } from "@trektoeic/schemas/share-schema";
 import z from "zod";
 import { AppContent, AppHeader } from "@/components/layouts/app";
+import { buttonVariants } from "@/components/ui/button";
 import {
 	Empty,
 	EmptyDescription,
@@ -9,6 +10,7 @@ import {
 	EmptyTitle,
 } from "@/components/ui/empty";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
+import { cn } from "@/lib/utils";
 import { MockTestCard, MockTestFilter } from "../_components";
 
 export const Route = createFileRoute("/_protected/app/_dashboard/mock-test/")({
@@ -84,8 +86,17 @@ function RouteComponent() {
 		>
 			<div className="space-y-6">
 				<MockTestFilter />
-				<div className="flex items-center justify-between border-neutral-200 border-b pb-4">
+				<div className="flex items-center justify-between gap-3 border-neutral-200 border-b pb-4">
 					<p className="text-neutral-500 text-sm">{kits.length} đề thi</p>
+					<Link
+						to="/app/mock-test/history"
+						className={cn(
+							buttonVariants({ variant: "outline", size: "sm" }),
+							"text-xs",
+						)}
+					>
+						Xem lịch sử luyện thi
+					</Link>
 				</div>
 
 				{kits.length > 0 ? (
