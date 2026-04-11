@@ -85,8 +85,16 @@ export const GrammarTopicSummarySchema = z.object({
 	exerciseCount: z.number().int().nonnegative(),
 	courseSlug: z.string(),
 	courseTitle: z.string(),
+	/** Người dùng đã đánh dấu đã học chủ đề này. */
+	studied: z.boolean(),
 });
 export type GrammarTopicSummary = z.infer<typeof GrammarTopicSummarySchema>;
+
+/** Chi tiết chủ đề từ API (kèm trạng thái đã học). */
+export const GrammarTopicDetailSchema = GrammarTopicSchema.extend({
+	studied: z.boolean(),
+});
+export type GrammarTopicDetail = z.infer<typeof GrammarTopicDetailSchema>;
 
 const GrammarCourseTrekSchema = z.object({
 	id: z.string().optional(),

@@ -5,7 +5,11 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { createOpenGraphData, generateMetadata } from "@/lib/meta";
 import { cn } from "@/lib/utils";
-import { GrammarExercises, GrammarLessonHtml } from "../_components";
+import {
+	GrammarExercises,
+	GrammarLessonHtml,
+	GrammarTopicStudiedToggle,
+} from "../_components";
 import { GrammarRichLine } from "../_components/grammar-rich-line";
 
 export const Route = createFileRoute(
@@ -111,14 +115,20 @@ function TopicNeighborsNav({
 
 function RouteComponent() {
 	const { topic, prevTopic, nextTopic } = Route.useLoaderData();
+	const { studied, ...topicContent } = topic;
 
 	return (
 		<AppContent
 			header={
 				<AppHeader
-					title={topic.title}
-					description={topic.description}
+					title={topicContent.title}
+					description={topicContent.description}
 					className="max-w-2xl"
+					right={
+						<div className="mt-4">
+							<GrammarTopicStudiedToggle slug={topic.slug} studied={studied} />
+						</div>
+					}
 				/>
 			}
 		>
@@ -136,16 +146,16 @@ function RouteComponent() {
 			</div>
 
 			<div className="space-y-10">
-				{(topic.lessonHtml ||
-					(topic.sections && topic.sections.length > 0)) && (
+				{(topicContent.lessonHtml ||
+					(topicContent.sections && topicContent.sections.length > 0)) && (
 					<div className="space-y-8">
 						<h2 className="font-semibold text-base text-neutral-900">
 							Lý thuyết
 						</h2>
-						{topic.lessonHtml ? (
-							<GrammarLessonHtml html={topic.lessonHtml} />
+						{topicContent.lessonHtml ? (
+							<GrammarLessonHtml html={topicContent.lessonHtml} />
 						) : null}
-						{topic.sections.map((section) => (
+						{topicContent.sections.map((section) => (
 							<section key={section.heading} className="space-y-3">
 								<h3 className="font-medium text-neutral-800 text-sm">
 									{section.heading}
@@ -162,12 +172,12 @@ function RouteComponent() {
 					</div>
 				)}
 
-				{topic.exercises.length > 0 ? <Separator /> : null}
+				{topicContent.exercises.length > 0 ? <Separator /> : null}
 
 				<GrammarExercises
-					exercises={topic.exercises}
-					exerciseTypeName={topic.exerciseTypeName}
-					exerciseTypeDes={topic.exerciseTypeDes}
+					exercises={topicContent.exercises}
+					exerciseTypeName={topicContent.exerciseTypeName}
+					exerciseTypeDes={topicContent.exerciseTypeDes}
 				/>
 
 				<div className="border-neutral-200 border-t pt-6">

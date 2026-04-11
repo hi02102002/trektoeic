@@ -4,9 +4,12 @@ import {
 	jsonb,
 	pgTable,
 	text,
+	timestamp,
+	unique,
 	uniqueIndex,
 } from "drizzle-orm/pg-core";
 import { DEFAULT_SCHEMA } from "../constants";
+import { user } from "./auth";
 
 export const grammarCourses = pgTable(
 	"grammar_courses",
@@ -82,5 +85,30 @@ export const grammarExercises = pgTable(
 			table.topicId,
 			table.exerciseKey,
 		),
+	],
+);
+
+/** Người dùng đánh dấu chủ đề ngữ pháp đã học. */
+export const grammarTopicStudied = pgTable(
+	"grammar_topic_studied",
+	{
+		...DEFAULT_SCHEMA,
+		userId: text("user_id")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		topicId: text("topic_id")
+			.notNull()
+			.references(() => grammarTopics.id, { onDelete: "cascade" }),
+		studiedAt: timestamp("studied_at", { withTimezone: true })
+			.notNull()
+			.defaultNow(),
+	},
+	(table) => [
+		unique("grammar_topic_studied_user_topic_unique").on(
+			table.userId,
+			table.topicId,
+		),
+		index("grammar_topic_studied_user_id_idx").on(table.userId),
+		index("grammar_topic_studied_topic_id_idx").on(table.topicId),
 	],
 );

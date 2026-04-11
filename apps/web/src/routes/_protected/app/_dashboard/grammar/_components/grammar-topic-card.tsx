@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, CheckCircleIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 import type { GrammarTopicSummary } from "@trektoeic/schemas/grammar-course-file-schema";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,15 @@ export function GrammarTopicCard({ topic }: { topic: GrammarTopicSummary }) {
 				<CardContent className="flex h-full min-h-0 flex-1 flex-col">
 					<div className="flex min-h-0 flex-1 flex-col">
 						<div className="mb-3 flex shrink-0 flex-wrap gap-1.5">
+							{topic.studied ? (
+								<Badge
+									variant="outline"
+									className="gap-0.5 border-emerald-200 bg-emerald-50 font-medium text-[10px] text-emerald-800"
+								>
+									<CheckCircleIcon className="size-3" weight="fill" />
+									Đã học
+								</Badge>
+							) : null}
 							{topic.relatedParts.map((p) => (
 								<Badge
 									key={p}

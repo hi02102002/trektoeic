@@ -17,6 +17,9 @@ export function GrammarTopicsGrid({ byCourse }: { byCourse: CourseEntry[] }) {
 						</h2>
 						<p className="text-neutral-500 text-xs">
 							{items.length} chủ đề trong khóa này
+							{items.some((t) => t.studied)
+								? ` · ${items.filter((t) => t.studied).length} đã học`
+								: null}
 						</p>
 					</div>
 					<div className="grid min-h-0 min-w-0 grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 xl:grid-cols-3">

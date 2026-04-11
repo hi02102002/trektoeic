@@ -55,9 +55,14 @@ function mapExerciseRow(e: {
 	};
 }
 
+export type GrammarTopicWithStudied = GrammarTopic & { studied: boolean };
+
 export const getGrammarTopicBySlug = withKysely(
 	(db) =>
-		async (slug: string): Promise<GrammarTopic | null> => {
+		async (
+			slug: string,
+			userId?: string | null,
+		): Promise<GrammarTopicWithStudied | null> => {
 			const topic = await db
 				.selectFrom("grammarTopics")
 				.selectAll()
@@ -65,6 +70,17 @@ export const getGrammarTopicBySlug = withKysely(
 				.executeTakeFirst();
 
 			if (!topic) return null;
+
+			let studied = false;
+			if (userId) {
+				const row = await db
+					.selectFrom("grammarTopicStudied")
+					.select("id")
+					.where("userId", "=", userId)
+					.where("topicId", "=", topic.id)
+					.executeTakeFirst();
+				studied = Boolean(row);
+			}
 
 			const sections = await db
 				.selectFrom("grammarSections")
@@ -104,6 +120,7 @@ export const getGrammarTopicBySlug = withKysely(
 						explanation: row.explanation,
 					}),
 				),
+				studied,
 			};
 		},
 );

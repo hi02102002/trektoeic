@@ -58,6 +58,11 @@ function RouteComponent() {
 		return [...map.entries()];
 	}, [topics]);
 
+	const studiedCount = useMemo(
+		() => topics.filter((t) => t.studied).length,
+		[topics],
+	);
+
 	return (
 		<AppContent
 			header={
@@ -70,8 +75,8 @@ function RouteComponent() {
 		>
 			<div className="space-y-10">
 				<p className="text-neutral-500 text-sm">
-					{topics.length} chủ đề · {byCourse.length} khóa · cập nhật dần theo
-					nhu cầu ôn thi
+					{topics.length} chủ đề · {byCourse.length} khóa · {studiedCount} đã
+					học · cập nhật dần theo nhu cầu ôn thi
 				</p>
 				<GrammarTopicsGrid byCourse={byCourse} />
 			</div>
