@@ -93,6 +93,7 @@ export const ResultQuestionsList = () => {
 											mode="review"
 											isAnswerSelected={true}
 											defaultOpen={true}
+											answerCorrect={currentAnswer?.isCorrect}
 										/>
 									</Activity>
 								</div>

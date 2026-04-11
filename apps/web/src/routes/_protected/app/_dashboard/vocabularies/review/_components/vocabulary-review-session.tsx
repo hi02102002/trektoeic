@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import type { VocabularyCategory } from "@trektoeic/schemas/vocabularies-schema";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useCardStyle } from "@/hooks/styles/use-card-style";
 import { orpc } from "@/lib/orpc/orpc";
 import { playAudioExclusive } from "@/utils/play-audio-exclusive";
 import { GRADES, HOTKEY_HINTS } from "./review-session-constants";
@@ -25,7 +24,6 @@ export function VocabularyReviewSession({
 }: VocabularyReviewSessionProps) {
 	const [index, setIndex] = useState(0);
 	const [isRevealed, setIsRevealed] = useState(false);
-	const cardStyle = useCardStyle();
 	const submitReviewGradeMutation = useMutation(
 		orpc.vocabularyReview.submitReviewGrade.mutationOptions(),
 	);
@@ -120,7 +118,6 @@ export function VocabularyReviewSession({
 				<VocabularyReviewCard
 					current={current}
 					isRevealed={isRevealed}
-					cardStyle={cardStyle}
 					categoryName={current.category?.name}
 					onReveal={handleShowAnswer}
 				/>

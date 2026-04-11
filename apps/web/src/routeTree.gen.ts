@@ -24,16 +24,17 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ProtectedAppDashboardRouteImport } from './routes/_protected/app/_dashboard'
 import { Route as marketingMarketingAboutRouteRouteImport } from './routes/(marketing)/_marketing/about/route'
 import { Route as marketingMarketingIndexRouteRouteImport } from './routes/(marketing)/_marketing/index/route'
-import { Route as ProtectedAppDashboardGrammarRouteRouteImport } from './routes/_protected/app/_dashboard/grammar/route'
 import { Route as ProtectedAppDashboardIndexRouteRouteImport } from './routes/_protected/app/_dashboard/index/route'
 import { Route as ProtectedAppDashboardVocabulariesReviewRouteRouteImport } from './routes/_protected/app/_dashboard/vocabularies/review/route'
 import { Route as ProtectedAppDashboardPracticesPartChar123partChar125RouteRouteImport } from './routes/_protected/app/_dashboard/practices/part-{$part}/route'
 import { Route as ProtectedAppDashboardPracticesHistoryRouteRouteImport } from './routes/_protected/app/_dashboard/practices/history/route'
 import { Route as ProtectedAppDashboardMockTestHistoryRouteRouteImport } from './routes/_protected/app/_dashboard/mock-test/history/route'
 import { Route as ProtectedAppDashboardMockTestSlugRouteRouteImport } from './routes/_protected/app/_dashboard/mock-test/$slug/route'
+import { Route as ProtectedAppDashboardGrammarSlugRouteRouteImport } from './routes/_protected/app/_dashboard/grammar/$slug/route'
 import { Route as ProtectedAppDashboardVocabulariesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/vocabularies/index/route'
 import { Route as ProtectedAppDashboardPracticesIndexRouteRouteImport } from './routes/_protected/app/_dashboard/practices/index/route'
 import { Route as ProtectedAppDashboardMockTestIndexRouteRouteImport } from './routes/_protected/app/_dashboard/mock-test/index/route'
+import { Route as ProtectedAppDashboardGrammarIndexRouteRouteImport } from './routes/_protected/app/_dashboard/grammar/index/route'
 import { Route as ProtectedAppPracticesMockTestSlugStartRouteRouteImport } from './routes/_protected/app/_practices/mock-test.$slug/start/route'
 import { Route as ProtectedAppDashboardMockTestSlugHistoryIdRouteRouteImport } from './routes/_protected/app/_dashboard/mock-test/$slug_.$historyId/route'
 import { Route as ProtectedAppDashboardVocabulariesExploreIndexRouteRouteImport } from './routes/_protected/app/_dashboard/vocabularies/explore/index/route'
@@ -117,12 +118,6 @@ const marketingMarketingIndexRouteRoute =
     path: '',
     getParentRoute: () => marketingMarketingRoute,
   } as any)
-const ProtectedAppDashboardGrammarRouteRoute =
-  ProtectedAppDashboardGrammarRouteRouteImport.update({
-    id: '/grammar',
-    path: '/grammar',
-    getParentRoute: () => ProtectedAppDashboardRoute,
-  } as any)
 const ProtectedAppDashboardIndexRouteRoute =
   ProtectedAppDashboardIndexRouteRouteImport.update({
     id: '/',
@@ -159,6 +154,12 @@ const ProtectedAppDashboardMockTestSlugRouteRoute =
     path: '/mock-test/$slug',
     getParentRoute: () => ProtectedAppDashboardRoute,
   } as any)
+const ProtectedAppDashboardGrammarSlugRouteRoute =
+  ProtectedAppDashboardGrammarSlugRouteRouteImport.update({
+    id: '/grammar/$slug',
+    path: '/grammar/$slug',
+    getParentRoute: () => ProtectedAppDashboardRoute,
+  } as any)
 const ProtectedAppDashboardVocabulariesIndexRouteRoute =
   ProtectedAppDashboardVocabulariesIndexRouteRouteImport.update({
     id: '/vocabularies/',
@@ -175,6 +176,12 @@ const ProtectedAppDashboardMockTestIndexRouteRoute =
   ProtectedAppDashboardMockTestIndexRouteRouteImport.update({
     id: '/mock-test/',
     path: '/mock-test',
+    getParentRoute: () => ProtectedAppDashboardRoute,
+  } as any)
+const ProtectedAppDashboardGrammarIndexRouteRoute =
+  ProtectedAppDashboardGrammarIndexRouteRouteImport.update({
+    id: '/grammar/',
+    path: '/grammar',
     getParentRoute: () => ProtectedAppDashboardRoute,
   } as any)
 const ProtectedAppPracticesMockTestSlugStartRouteRoute =
@@ -246,10 +253,11 @@ export interface FileRoutesByFullPath {
   '/api/upload/cloudflare': typeof ApiUploadCloudflareRoute
   '/login/': typeof AuthLoginIndexRoute
   '/app/': typeof ProtectedAppDashboardIndexRouteRoute
-  '/app/grammar': typeof ProtectedAppDashboardGrammarRouteRoute
+  '/app/grammar/': typeof ProtectedAppDashboardGrammarIndexRouteRoute
   '/app/mock-test/': typeof ProtectedAppDashboardMockTestIndexRouteRoute
   '/app/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/vocabularies/': typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
+  '/app/grammar/$slug': typeof ProtectedAppDashboardGrammarSlugRouteRoute
   '/app/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
   '/app/mock-test/history': typeof ProtectedAppDashboardMockTestHistoryRouteRoute
   '/app/practices/history': typeof ProtectedAppDashboardPracticesHistoryRouteRoute
@@ -277,10 +285,11 @@ export interface FileRoutesByTo {
   '/api/upload/backblaze': typeof ApiUploadBackblazeRoute
   '/api/upload/cloudflare': typeof ApiUploadCloudflareRoute
   '/login': typeof AuthLoginIndexRoute
-  '/app/grammar': typeof ProtectedAppDashboardGrammarRouteRoute
+  '/app/grammar': typeof ProtectedAppDashboardGrammarIndexRouteRoute
   '/app/mock-test': typeof ProtectedAppDashboardMockTestIndexRouteRoute
   '/app/practices': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/app/vocabularies': typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
+  '/app/grammar/$slug': typeof ProtectedAppDashboardGrammarSlugRouteRoute
   '/app/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
   '/app/mock-test/history': typeof ProtectedAppDashboardMockTestHistoryRouteRoute
   '/app/practices/history': typeof ProtectedAppDashboardPracticesHistoryRouteRoute
@@ -313,10 +322,11 @@ export interface FileRoutesById {
   '/api/upload/cloudflare': typeof ApiUploadCloudflareRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_protected/app/_dashboard/': typeof ProtectedAppDashboardIndexRouteRoute
-  '/_protected/app/_dashboard/grammar': typeof ProtectedAppDashboardGrammarRouteRoute
+  '/_protected/app/_dashboard/grammar/': typeof ProtectedAppDashboardGrammarIndexRouteRoute
   '/_protected/app/_dashboard/mock-test/': typeof ProtectedAppDashboardMockTestIndexRouteRoute
   '/_protected/app/_dashboard/practices/': typeof ProtectedAppDashboardPracticesIndexRouteRoute
   '/_protected/app/_dashboard/vocabularies/': typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
+  '/_protected/app/_dashboard/grammar/$slug': typeof ProtectedAppDashboardGrammarSlugRouteRoute
   '/_protected/app/_dashboard/mock-test/$slug': typeof ProtectedAppDashboardMockTestSlugRouteRoute
   '/_protected/app/_dashboard/mock-test/history': typeof ProtectedAppDashboardMockTestHistoryRouteRoute
   '/_protected/app/_dashboard/practices/history': typeof ProtectedAppDashboardPracticesHistoryRouteRoute
@@ -347,10 +357,11 @@ export interface FileRouteTypes {
     | '/api/upload/cloudflare'
     | '/login/'
     | '/app/'
-    | '/app/grammar'
+    | '/app/grammar/'
     | '/app/mock-test/'
     | '/app/practices/'
     | '/app/vocabularies/'
+    | '/app/grammar/$slug'
     | '/app/mock-test/$slug'
     | '/app/mock-test/history'
     | '/app/practices/history'
@@ -382,6 +393,7 @@ export interface FileRouteTypes {
     | '/app/mock-test'
     | '/app/practices'
     | '/app/vocabularies'
+    | '/app/grammar/$slug'
     | '/app/mock-test/$slug'
     | '/app/mock-test/history'
     | '/app/practices/history'
@@ -413,10 +425,11 @@ export interface FileRouteTypes {
     | '/api/upload/cloudflare'
     | '/_auth/login/'
     | '/_protected/app/_dashboard/'
-    | '/_protected/app/_dashboard/grammar'
+    | '/_protected/app/_dashboard/grammar/'
     | '/_protected/app/_dashboard/mock-test/'
     | '/_protected/app/_dashboard/practices/'
     | '/_protected/app/_dashboard/vocabularies/'
+    | '/_protected/app/_dashboard/grammar/$slug'
     | '/_protected/app/_dashboard/mock-test/$slug'
     | '/_protected/app/_dashboard/mock-test/history'
     | '/_protected/app/_dashboard/practices/history'
@@ -553,13 +566,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof marketingMarketingIndexRouteRouteImport
       parentRoute: typeof marketingMarketingRoute
     }
-    '/_protected/app/_dashboard/grammar': {
-      id: '/_protected/app/_dashboard/grammar'
-      path: '/grammar'
-      fullPath: '/app/grammar'
-      preLoaderRoute: typeof ProtectedAppDashboardGrammarRouteRouteImport
-      parentRoute: typeof ProtectedAppDashboardRoute
-    }
     '/_protected/app/_dashboard/': {
       id: '/_protected/app/_dashboard/'
       path: ''
@@ -602,6 +608,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAppDashboardMockTestSlugRouteRouteImport
       parentRoute: typeof ProtectedAppDashboardRoute
     }
+    '/_protected/app/_dashboard/grammar/$slug': {
+      id: '/_protected/app/_dashboard/grammar/$slug'
+      path: '/grammar/$slug'
+      fullPath: '/app/grammar/$slug'
+      preLoaderRoute: typeof ProtectedAppDashboardGrammarSlugRouteRouteImport
+      parentRoute: typeof ProtectedAppDashboardRoute
+    }
     '/_protected/app/_dashboard/vocabularies/': {
       id: '/_protected/app/_dashboard/vocabularies/'
       path: '/vocabularies'
@@ -621,6 +634,13 @@ declare module '@tanstack/react-router' {
       path: '/mock-test'
       fullPath: '/app/mock-test/'
       preLoaderRoute: typeof ProtectedAppDashboardMockTestIndexRouteRouteImport
+      parentRoute: typeof ProtectedAppDashboardRoute
+    }
+    '/_protected/app/_dashboard/grammar/': {
+      id: '/_protected/app/_dashboard/grammar/'
+      path: '/grammar'
+      fullPath: '/app/grammar/'
+      preLoaderRoute: typeof ProtectedAppDashboardGrammarIndexRouteRouteImport
       parentRoute: typeof ProtectedAppDashboardRoute
     }
     '/_protected/app/_practices/mock-test/$slug/start': {
@@ -694,10 +714,11 @@ const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)
 
 interface ProtectedAppDashboardRouteChildren {
   ProtectedAppDashboardIndexRouteRoute: typeof ProtectedAppDashboardIndexRouteRoute
-  ProtectedAppDashboardGrammarRouteRoute: typeof ProtectedAppDashboardGrammarRouteRoute
+  ProtectedAppDashboardGrammarIndexRouteRoute: typeof ProtectedAppDashboardGrammarIndexRouteRoute
   ProtectedAppDashboardMockTestIndexRouteRoute: typeof ProtectedAppDashboardMockTestIndexRouteRoute
   ProtectedAppDashboardPracticesIndexRouteRoute: typeof ProtectedAppDashboardPracticesIndexRouteRoute
   ProtectedAppDashboardVocabulariesIndexRouteRoute: typeof ProtectedAppDashboardVocabulariesIndexRouteRoute
+  ProtectedAppDashboardGrammarSlugRouteRoute: typeof ProtectedAppDashboardGrammarSlugRouteRoute
   ProtectedAppDashboardMockTestSlugRouteRoute: typeof ProtectedAppDashboardMockTestSlugRouteRoute
   ProtectedAppDashboardMockTestHistoryRouteRoute: typeof ProtectedAppDashboardMockTestHistoryRouteRoute
   ProtectedAppDashboardPracticesHistoryRouteRoute: typeof ProtectedAppDashboardPracticesHistoryRouteRoute
@@ -710,14 +731,16 @@ interface ProtectedAppDashboardRouteChildren {
 
 const ProtectedAppDashboardRouteChildren: ProtectedAppDashboardRouteChildren = {
   ProtectedAppDashboardIndexRouteRoute: ProtectedAppDashboardIndexRouteRoute,
-  ProtectedAppDashboardGrammarRouteRoute:
-    ProtectedAppDashboardGrammarRouteRoute,
+  ProtectedAppDashboardGrammarIndexRouteRoute:
+    ProtectedAppDashboardGrammarIndexRouteRoute,
   ProtectedAppDashboardMockTestIndexRouteRoute:
     ProtectedAppDashboardMockTestIndexRouteRoute,
   ProtectedAppDashboardPracticesIndexRouteRoute:
     ProtectedAppDashboardPracticesIndexRouteRoute,
   ProtectedAppDashboardVocabulariesIndexRouteRoute:
     ProtectedAppDashboardVocabulariesIndexRouteRoute,
+  ProtectedAppDashboardGrammarSlugRouteRoute:
+    ProtectedAppDashboardGrammarSlugRouteRoute,
   ProtectedAppDashboardMockTestSlugRouteRoute:
     ProtectedAppDashboardMockTestSlugRouteRoute,
   ProtectedAppDashboardMockTestHistoryRouteRoute:

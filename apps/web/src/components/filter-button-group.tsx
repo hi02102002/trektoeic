@@ -1,4 +1,4 @@
-import * as ToggleGroup from "@radix-ui/react-toggle-group";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 
 export interface FilterButtonGroupOption {
@@ -21,21 +21,21 @@ export function FilterButtonGroup({
 	className = "",
 }: FilterButtonGroupProps) {
 	return (
-		<ToggleGroup.Root
+		<ToggleGroup
 			type="single"
 			value={String(value)}
 			onValueChange={onValueChange}
 			className={cn("flex gap-3 overflow-x-auto", className)}
 		>
 			{options.map((option) => (
-				<ToggleGroup.Item
+				<ToggleGroupItem
 					key={option.value}
 					value={String(option.value)}
 					className={`cursor-pointer rounded-full border px-4 py-2 font-medium text-sm ${value === option.value ? "bg-primary text-primary-foreground" : "border-gray-300 bg-primary-foreground text-primary"}`}
 				>
 					{option.label}
-				</ToggleGroup.Item>
+				</ToggleGroupItem>
 			))}
-		</ToggleGroup.Root>
+		</ToggleGroup>
 	);
 }

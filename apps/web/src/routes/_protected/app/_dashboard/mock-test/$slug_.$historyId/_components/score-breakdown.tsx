@@ -1,6 +1,6 @@
 import { getRouteApi, Link } from "@tanstack/react-router";
 import { navigatorButtonVariants } from "@/components/practices/navigator";
-import { useCardStyle } from "@/hooks/styles/use-card-style";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const Route = getRouteApi(
@@ -8,7 +8,6 @@ const Route = getRouteApi(
 );
 
 export const ScoreBreakdown = () => {
-	const cardStyle = useCardStyle();
 	const params = Route.useParams();
 
 	const {
@@ -36,34 +35,36 @@ export const ScoreBreakdown = () => {
 	};
 
 	return (
-		<div className={cn(cardStyle)}>
-			<h2 className="mb-4 flex items-center gap-2 font-semibold text-primary text-sm uppercase tracking-wider">
-				Danh sách câu hỏi
-			</h2>
-			<div className="grid grid-cols-[repeat(auto-fit,minmax(32px,1fr))] gap-2">
-				{history.contents.map((q, index) => {
-					return (
-						<Link
-							to="/app/mock-test/$slug/$historyId/result-detail"
-							params={params}
-							search={{
-								questionId: q.questionId,
-								subQuestionId: q.subQuestionId,
-							}}
-							key={q.subQuestionId}
-							className={cn(
-								navigatorButtonVariants({
-									status: getQuestionStatus(q.subQuestionId),
-									isFlagged: q.isFlagged,
-								}),
-							)}
-							type="button"
-						>
-							{index + 1}
-						</Link>
-					);
-				})}
-			</div>
-		</div>
+		<Card>
+			<CardContent>
+				<h2 className="mb-4 flex items-center gap-2 font-semibold text-primary text-sm uppercase tracking-wider">
+					Danh sách câu hỏi
+				</h2>
+				<div className="grid grid-cols-[repeat(auto-fit,minmax(32px,1fr))] gap-2">
+					{history.contents.map((q, index) => {
+						return (
+							<Link
+								to="/app/mock-test/$slug/$historyId/result-detail"
+								params={params}
+								search={{
+									questionId: q.questionId,
+									subQuestionId: q.subQuestionId,
+								}}
+								key={q.subQuestionId}
+								className={cn(
+									navigatorButtonVariants({
+										status: getQuestionStatus(q.subQuestionId),
+										isFlagged: q.isFlagged,
+									}),
+								)}
+								type="button"
+							>
+								{index + 1}
+							</Link>
+						);
+					})}
+				</div>
+			</CardContent>
+		</Card>
 	);
 };

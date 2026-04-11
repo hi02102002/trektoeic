@@ -1,6 +1,8 @@
 @import "@fontsource-variable/montserrat";
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/manrope";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -28,7 +30,7 @@ body {
 	@apply !min-w-full;
 }
 :root {
-	--radius: 0.625rem;
+	--radius: 0;
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);
 	--card: oklch(1 0 0);
@@ -43,15 +45,15 @@ body {
 	--muted-foreground: oklch(0.556 0 0);
 	--accent: oklch(0.97 0 0);
 	--accent-foreground: oklch(0.205 0 0);
-	--destructive: oklch(57.7% 0.245 27.325);
+	--destructive: oklch(0.577 0.245 27.325);
 	--border: oklch(0.922 0 0);
 	--input: oklch(0.922 0 0);
 	--ring: oklch(0.708 0 0);
-	--chart-1: oklch(0.646 0.222 41.116);
-	--chart-2: oklch(0.6 0.118 184.704);
-	--chart-3: oklch(0.398 0.07 227.392);
-	--chart-4: oklch(0.828 0.189 84.429);
-	--chart-5: oklch(0.769 0.188 70.08);
+	--chart-1: oklch(0.809 0.105 251.813);
+	--chart-2: oklch(0.623 0.214 259.815);
+	--chart-3: oklch(0.546 0.245 262.881);
+	--chart-4: oklch(0.488 0.243 264.376);
+	--chart-5: oklch(0.424 0.199 265.638);
 	--sidebar: oklch(0.985 0 0);
 	--sidebar-foreground: oklch(0.145 0 0);
 	--sidebar-primary: oklch(0.205 0 0);
@@ -81,11 +83,11 @@ body {
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.556 0 0);
-	--chart-1: oklch(0.488 0.243 264.376);
-	--chart-2: oklch(0.696 0.17 162.48);
-	--chart-3: oklch(0.769 0.188 70.08);
-	--chart-4: oklch(0.627 0.265 303.9);
-	--chart-5: oklch(0.645 0.246 16.439);
+	--chart-1: oklch(0.809 0.105 251.813);
+	--chart-2: oklch(0.623 0.214 259.815);
+	--chart-3: oklch(0.546 0.245 262.881);
+	--chart-4: oklch(0.488 0.243 264.376);
+	--chart-5: oklch(0.424 0.199 265.638);
 	--sidebar: oklch(0.205 0 0);
 	--sidebar-foreground: oklch(0.985 0 0);
 	--sidebar-primary: oklch(0.488 0.243 264.376);
@@ -154,6 +156,16 @@ body {
 			height: 0;
 		}
 	}
+
+	--font-heading: var(--font-sans);
+
+	--font-sans: "Manrope Variable", sans-serif;
+
+	--radius-2xl: calc(var(--radius) * 1.8);
+
+	--radius-3xl: calc(var(--radius) * 2.2);
+
+	--radius-4xl: calc(var(--radius) * 2.6);
 }
 
 @layer base {
@@ -163,6 +175,9 @@ body {
 
 	body {
 		@apply bg-background text-foreground;
+	}
+	html {
+		@apply font-sans;
 	}
 }
 
@@ -233,4 +248,33 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
 	background-color: #cbd5e1;
+}
+
+/* Nội dung HTML bài ngữ pháp (lesson): bảng, list — giữ đọc được trên mobile */
+.grammar-lesson {
+	@apply overflow-x-auto;
+}
+
+.grammar-lesson :where(table) {
+	@apply my-4 w-full border-collapse text-sm;
+}
+
+.grammar-lesson :where(th, td) {
+	@apply border border-neutral-200 px-3 py-2 align-top text-left;
+}
+
+.grammar-lesson :where(ul, ol) {
+	@apply my-3 list-outside pl-5;
+}
+
+.grammar-lesson :where(li) {
+	@apply my-1;
+}
+
+.grammar-lesson :where(p) {
+	@apply my-2 leading-relaxed;
+}
+
+.grammar-lesson :where(strong) {
+	@apply font-semibold text-neutral-900;
 }

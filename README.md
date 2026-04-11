@@ -7,6 +7,7 @@ A full-stack TOEIC English test preparation platform. Study vocabulary with spac
 - **Mock Tests** — Full 7-part TOEIC mock tests sourced from ToeicMax, with per-question history review
 - **Part Practice** — Drill individual TOEIC parts (1–7) in isolated sessions
 - **Vocabulary System** — Hierarchical vocabulary categories with UK/US audio, images, and meanings
+- **Grammar (DB)** — Topics, sections, and exercises seeded from `packages/scripts/data/grammar-courses.json` or from the ToeicMax crawl (`toiecmax-courses.json` via `seed:grammar:toeicmax`); served via oRPC
 - **Spaced Repetition** — SM-2-based flashcard review (`new → learning → review → relearning`)
 - **Authentication** — Email/password, Magic Link, and Google OAuth via `better-auth`
 - **Type-safe API** — End-to-end oRPC with OpenAPI spec generation and rate limiting
@@ -115,6 +116,11 @@ pnpm db:migrate       # Run migrations (dev)
 pnpm db:migrate:prod  # Run migrations (prod)
 pnpm db:studio        # Open Drizzle Studio
 pnpm db:pull          # Introspect schema from DB
+
+# Data seed (run from repo root; uses apps/web/.env.local)
+pnpm --filter @trektoeic/scripts seed:grammar   # grammar_courses / grammar_topics / … from grammar-courses.json
+pnpm --filter @trektoeic/scripts seed:grammar:toeicmax   # map ToeicMax dump (default: data/toiecmax-courses.json)
+# Optional: GRAMMAR_TOEICMAX_COURSE_IDS=1,2  GRAMMAR_TOEICMAX_FILE=other.json
 
 # Email
 pnpm dev:mailer       # Preview React Email templates

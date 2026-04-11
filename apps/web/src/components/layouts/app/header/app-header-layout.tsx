@@ -5,7 +5,7 @@ import { MobileNavigation } from "./mobile-navigation";
 
 export function AppHeaderLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<div className="flex min-h-screen w-full flex-col">
+		<div className="flex min-h-screen w-full flex-col bg-neutral-50">
 			<header className="fixed top-0 z-50 w-full border-border border-b bg-background/80 backdrop-blur-md">
 				<div className="container mx-auto px-4">
 					<div className="flex h-14 items-center justify-between gap-4">

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createStandardSchemaV1, parseAsInteger } from "nuqs";
 import { AppContent, AppHeader } from "@/components/layouts/app";
-import { useCardStyle } from "@/hooks/styles/use-card-style";
+import { Card, CardContent } from "@/components/ui/card";
 import { HistoryDataTable } from "./_components/history-data-table";
 
 export const Route = createFileRoute(
@@ -39,8 +39,6 @@ function RouteComponent() {
 
 	console.log(histories);
 
-	const cardStyle = useCardStyle();
-
 	return (
 		<AppContent
 			header={
@@ -52,12 +50,14 @@ function RouteComponent() {
 		>
 			<div className="space-y-6">
 				{histories.items.length === 0 && (
-					<div className={cardStyle}>
-						<p className="text-neutral-500 text-sm">
-							Bạn chưa có lịch sử luyện tập nào. Hãy bắt đầu một bài luyện tập
-							để xem lịch sử tại đây.
-						</p>
-					</div>
+					<Card>
+						<CardContent>
+							<p className="text-neutral-500 text-sm">
+								Bạn chưa có lịch sử luyện tập nào. Hãy bắt đầu một bài luyện tập
+								để xem lịch sử tại đây.
+							</p>
+						</CardContent>
+					</Card>
 				)}
 
 				<HistoryDataTable histories={histories} />

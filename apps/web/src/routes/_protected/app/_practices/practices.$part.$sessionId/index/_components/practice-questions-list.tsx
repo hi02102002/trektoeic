@@ -1,3 +1,4 @@
+import { CheckCircleIcon, XCircleIcon } from "@phosphor-icons/react";
 import { getRouteApi } from "@tanstack/react-router";
 import { Activity, useEffect, useMemo } from "react";
 import {
@@ -185,10 +186,40 @@ export const PracticeQuestionsList = () => {
 											}
 										}}
 									/>
+									{mode === "normal" && currentAnswer?.choice ? (
+										<div
+											className={cn(
+												"flex items-center gap-2 rounded-lg border px-3 py-2.5 text-sm",
+												currentAnswer.isCorrect
+													? "border-emerald-200 bg-emerald-50/90 text-emerald-950"
+													: "border-red-200 bg-red-50/90 text-red-950",
+											)}
+										>
+											{currentAnswer.isCorrect ? (
+												<CheckCircleIcon
+													className="size-5 shrink-0 text-emerald-600"
+													weight="fill"
+												/>
+											) : (
+												<XCircleIcon
+													className="size-5 shrink-0 text-red-600"
+													weight="fill"
+												/>
+											)}
+											<span className="font-medium">
+												{currentAnswer.isCorrect ? "Chính xác!" : "Chưa đúng."}
+											</span>
+										</div>
+									) : null}
 									<Activity mode={currentAnswer.choice ? "visible" : "hidden"}>
 										<QuestionSubExplanation
 											mode={mode === "timed" ? "exam" : "practice"}
 											isAnswerSelected={!!currentAnswer.choice}
+											answerCorrect={
+												mode === "normal" && currentAnswer.choice
+													? currentAnswer.isCorrect
+													: undefined
+											}
 										/>
 									</Activity>
 								</div>

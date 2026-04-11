@@ -4,6 +4,7 @@ import type {
 	RouterClient,
 } from "@orpc/server";
 import { deckOfUserRouter } from "./deck-of-user";
+import { grammarRouter } from "./grammar.router";
 import { kitsRouter } from "./kits";
 import { mockTestRouter } from "./mock-test.router";
 import { partPractices } from "./part-practices";
@@ -21,6 +22,7 @@ export const appRouter = {
 	vocabularies: vocabulariesRouter,
 	vocabularyReview: vocabularyReviewRouter,
 	deckOfUsers: deckOfUserRouter,
+	grammar: grammarRouter,
 };
 export type AppRouter = typeof appRouter;
 export type AppRouterClient = RouterClient<typeof appRouter>;

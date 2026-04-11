@@ -13,6 +13,7 @@ import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import { scan } from "react-scan";
 import { NProgress } from "@/components/nprogress";
 import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { getUser } from "@/functions/get-user";
 import { generateMetadata } from "@/lib/meta";
 import type { orpc } from "@/lib/orpc/orpc";
@@ -148,14 +149,19 @@ function RootDocument() {
 			<head>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="isolate">
 				<NuqsAdapter>
-					<NProgress />
-					<Outlet />
-					<Toaster position="top-center" />
-					<TanStackRouterDevtools position="bottom-left" />
-					<ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
-					<Scripts />
+					<TooltipProvider>
+						<NProgress />
+						<Outlet />
+						<Toaster position="top-center" />
+						<TanStackRouterDevtools position="bottom-left" />
+						<ReactQueryDevtools
+							position="bottom"
+							buttonPosition="bottom-right"
+						/>
+						<Scripts />
+					</TooltipProvider>
 				</NuqsAdapter>
 			</body>
 			<Analytics />

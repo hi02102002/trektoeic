@@ -22,7 +22,11 @@
 		"seed:clean-vocabularies": "pnpm with-script src/seeds/clean-vocabularies.ts",
 		"seed:clean-vocabularies:prod": "pnpm with-script:prod src/seeds/clean-vocabularies.ts",
 		"seed:study4-vocabularies": "pnpm with-script src/seeds/study4/seed-study4-vocabularies.ts",
-		"seed:study4-vocabularies:prod": "pnpm with-script:prod src/seeds/study4/seed-study4-vocabularies.ts"
+		"seed:study4-vocabularies:prod": "pnpm with-script:prod src/seeds/study4/seed-study4-vocabularies.ts",
+		"seed:grammar": "pnpm with-script src/seeds/seed-grammar.ts",
+		"seed:grammar:prod": "pnpm with-script:prod src/seeds/seed-grammar.ts",
+		"seed:grammar:toeicmax": "pnpm with-script src/seeds/seed-grammar.ts -- --toeicmax",
+		"seed:grammar:toeicmax:prod": "pnpm with-script:prod src/seeds/seed-grammar.ts -- --toeicmax"
 	},
 	"devDependencies": {
 		"@trektoeic/config": "workspace:*",
@@ -35,6 +39,8 @@
 		"@trektoeic/crawler": "workspace:*",
 		"@trektoeic/db": "workspace:*",
 		"@trektoeic/env": "workspace:*",
+		"@trektoeic/schemas": "workspace:*",
+		"@trektoeic/utils": "workspace:*",
 		"lodash-es": "^4.18.1"
 	}
 }

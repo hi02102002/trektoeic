@@ -1,5 +1,4 @@
-import { CaretDown, FlagIcon } from "@phosphor-icons/react";
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { FlagIcon } from "@phosphor-icons/react";
 import type { QuestionWithSubs } from "@trektoeic/schemas/question-schema";
 import { useMount } from "ahooks";
 import {
@@ -9,9 +8,11 @@ import {
 	useCallback,
 	useEffect,
 	useMemo,
+	useState,
 } from "react";
 import { cn } from "@/lib/utils";
 import { getProxiedAudioUrl, getProxiedImageUrl } from "@/utils/proxy-image";
+import { AnswerExplanationCollapsible } from "./answer-explanation-collapsible";
 import { iconBadgeVariants } from "./icon-badge";
 import { ImageZoom } from "./kibo-ui/image-zoom";
 import { QuestionOption } from "./question-option";
@@ -24,11 +25,7 @@ import {
 	AudioPlayerTime,
 	useAudioPlayer,
 } from "./ui/audio-player";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "./ui/collapsible";
+import { Card, CardContent } from "./ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const PART_WITHOUT_TEXT = new Set([1, 2]);
@@ -55,6 +52,40 @@ type TQuestionContext = {
 type QuestionViewMode = "practice" | "review" | "exam";
 
 export const QuestionContext = createContext<TQuestionContext | null>(null);
+
+function useControllableState<T>({
+	prop,
+	defaultProp,
+	onChange,
+}: {
+	prop: T | undefined;
+	defaultProp: T;
+	onChange?: (value: T) => void;
+}) {
+	const [uncontrolledValue, setUncontrolledValue] = useState(defaultProp);
+	const isControlled = prop !== undefined;
+	const value = isControlled ? prop : uncontrolledValue;
+
+	const setValue = useCallback(
+		(nextValue: T | ((prevValue: T) => T)) => {
+			const resolvedValue =
+				typeof nextValue === "function"
+					? (nextValue as (prevValue: T) => T)(value)
+					: nextValue;
+
+			if (!isControlled) {
+				setUncontrolledValue(resolvedValue);
+			}
+
+			if (!Object.is(value, resolvedValue)) {
+				onChange?.(resolvedValue);
+			}
+		},
+		[isControlled, onChange, value],
+	);
+
+	return [value, setValue] as const;
+}
 
 export const useQuestionContext = () => {
 	const context = use(QuestionContext);
@@ -383,37 +414,41 @@ export const QuestionTeaser = ({
 	return (
 		<div className="space-y-3">
 			{shouldShowOriginal ? (
-				<div className="rounded-lg border bg-white p-4">
-					<p className="mb-3 font-medium text-gray-900 text-sm">
-						{teaserTitle}
-					</p>
-					<div className="space-y-4">
-						{hasImage ? (
-							<QuestionImage mode={mode} isReadyToReveal={false} />
-						) : null}
-						{hasTeaser ? (
-							<div
-								// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
-								dangerouslySetInnerHTML={{
-									__html: cleanedText,
-								}}
-								className={proseClassName}
-							/>
-						) : null}
-					</div>
-				</div>
+				<Card className="rounded-lg border bg-white ring-0">
+					<CardContent className="py-4">
+						<p className="mb-3 font-medium text-gray-900 text-sm">
+							{teaserTitle}
+						</p>
+						<div className="space-y-4">
+							{hasImage ? (
+								<QuestionImage mode={mode} isReadyToReveal={false} />
+							) : null}
+							{hasTeaser ? (
+								<div
+									// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+									dangerouslySetInnerHTML={{
+										__html: cleanedText,
+									}}
+									className={proseClassName}
+								/>
+							) : null}
+						</div>
+					</CardContent>
+				</Card>
 			) : null}
 			{shouldShowTranslation ? (
-				<div className="rounded-lg border bg-white p-4">
-					<p className="mb-3 font-medium text-gray-900 text-sm">Bản dịch</p>
-					<div
-						// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
-						dangerouslySetInnerHTML={{
-							__html: cleanedTranslation,
-						}}
-						className={proseClassName}
-					/>
-				</div>
+				<Card className="rounded-lg border bg-white ring-0">
+					<CardContent className="py-4">
+						<p className="mb-3 font-medium text-gray-900 text-sm">Bản dịch</p>
+						<div
+							// biome-ignore lint/security/noDangerouslySetInnerHtml: <no>
+							dangerouslySetInnerHTML={{
+								__html: cleanedTranslation,
+							}}
+							className={proseClassName}
+						/>
+					</CardContent>
+				</Card>
 			) : null}
 		</div>
 	);
@@ -516,9 +551,7 @@ export const QuestionSubText = ({
 				</div>
 			) : null}
 			{content ? (
-				<p className="font-medium text-base text-primary leading-relaxed">
-					{content}
-				</p>
+				<p className="text-neutral-700 text-sm leading-relaxed">{content}</p>
 			) : null}
 		</div>
 	) : null;
@@ -675,7 +708,7 @@ export const QuestionSubOptions = ({
 	};
 
 	return (
-		<ul className="space-y-1">
+		<ul className="flex flex-col gap-2">
 			{Object.entries(sub.options).map(([key, value]) => {
 				const isSelected = internal?.choice === key;
 				const isCorrect =
@@ -705,10 +738,13 @@ export const QuestionSubExplanation = ({
 	mode,
 	isAnswerSelected,
 	defaultOpen = false,
+	answerCorrect,
 }: {
 	mode: "practice" | "review" | "exam";
 	isAnswerSelected?: boolean;
 	defaultOpen?: boolean;
+	/** Khi biết đúng/sai (luyện tập / xem lại) — tô màu khối giải thích tương ứng. */
+	answerCorrect?: boolean;
 }) => {
 	const { sub } = useQuestionSubContext();
 
@@ -727,30 +763,22 @@ export const QuestionSubExplanation = ({
 		return null;
 	}
 
+	const tone =
+		answerCorrect === true
+			? "correct"
+			: answerCorrect === false
+				? "wrong"
+				: "neutral";
+
 	return (
-		<Collapsible defaultOpen={defaultOpen}>
-			<div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
-				<CollapsibleTrigger className="group flex w-full cursor-pointer items-center justify-between overflow-hidden px-4 py-3 transition-colors hover:bg-gray-50">
-					<h3 className="font-medium text-gray-900 text-sm">
-						Giải thích đáp án
-					</h3>
-					<CaretDown
-						className="size-4 text-gray-500 transition-transform duration-200 group-data-[state=open]:rotate-180"
-						weight="bold"
-					/>
-				</CollapsibleTrigger>
-				<CollapsibleContent>
-					<div className="border-gray-100 border-t px-4 py-3">
-						<div
-							// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation content>
-							dangerouslySetInnerHTML={{
-								__html: sub.translation.vi as string,
-							}}
-							className="prose prose-sm prose-neutral max-w-none whitespace-break-spaces text-sm [&_li]:text-gray-700 [&_p]:text-gray-700 [&_p]:leading-relaxed [&_strong]:font-semibold [&_strong]:text-gray-900 [&_ul]:space-y-1.5"
-						/>
-					</div>
-				</CollapsibleContent>
-			</div>
-		</Collapsible>
+		<AnswerExplanationCollapsible tone={tone} defaultOpen={defaultOpen}>
+			<div
+				// biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation content>
+				dangerouslySetInnerHTML={{
+					__html: sub.translation.vi as string,
+				}}
+				className="prose prose-sm prose-neutral max-w-none whitespace-break-spaces text-sm leading-relaxed [&_li]:text-neutral-700 [&_p]:my-2 [&_p]:text-neutral-700 [&_p]:first:mt-0 [&_p]:last:mb-0 [&_strong]:font-semibold [&_strong]:text-neutral-900 [&_ul]:my-2 [&_ul]:space-y-1"
+			/>
+		</AnswerExplanationCollapsible>
 	);
 };

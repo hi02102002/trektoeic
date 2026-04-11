@@ -7,6 +7,7 @@ import {
 import { getYoudaoDictVoiceUrl } from "@trektoeic/utils/get-youdao-dictvoice-url";
 import { Suspense } from "react";
 import { AudioPlayButton } from "@/components/audio-play-button";
+import { Card, CardContent } from "@/components/ui/card";
 import {
 	Empty,
 	EmptyDescription,
@@ -22,8 +23,6 @@ import {
 	SheetTitle,
 } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useCardStyle } from "@/hooks/styles/use-card-style";
-import { cn } from "@/lib/utils";
 
 type VocabularyReviewDunnoDetailDrawerProps = {
 	keyword: string;
@@ -130,36 +129,39 @@ export function VocabularyReviewDunnoDetailDrawer({
 }
 
 function VocabularyReviewDunnoDetailSkeleton() {
-	const cardStyle = useCardStyle();
-
 	return (
 		<div className="space-y-4">
-			<div className={cn(cardStyle, "h-auto justify-start space-y-3 p-4")}>
-				<Skeleton className="h-6 w-48" />
-				<Skeleton className="h-4 w-72" />
-			</div>
-
-			<div className={cn(cardStyle, "h-auto justify-start space-y-3 p-4")}>
-				<Skeleton className="h-5 w-24" />
-				<Skeleton className="h-4 w-full" />
-				<Skeleton className="h-4 w-5/6" />
-				<Skeleton className="h-16 w-full rounded-lg" />
-			</div>
-
-			<div className={cn(cardStyle, "h-auto justify-start space-y-3 p-4")}>
-				<Skeleton className="h-5 w-28" />
-				<div className="flex flex-wrap gap-2">
-					<Skeleton className="h-8 w-20 rounded-md" />
-					<Skeleton className="h-8 w-24 rounded-md" />
-					<Skeleton className="h-8 w-16 rounded-md" />
+			<Card>
+				<div className="space-y-3 p-4">
+					<Skeleton className="h-6 w-48" />
+					<Skeleton className="h-4 w-72" />
 				</div>
-			</div>
+			</Card>
+
+			<Card>
+				<div className="space-y-3 p-4">
+					<Skeleton className="h-5 w-24" />
+					<Skeleton className="h-4 w-full" />
+					<Skeleton className="h-4 w-5/6" />
+					<Skeleton className="h-16 w-full rounded-lg" />
+				</div>
+			</Card>
+
+			<Card>
+				<div className="space-y-3 p-4">
+					<Skeleton className="h-5 w-28" />
+					<div className="flex flex-wrap gap-2">
+						<Skeleton className="h-8 w-20 rounded-md" />
+						<Skeleton className="h-8 w-24 rounded-md" />
+						<Skeleton className="h-8 w-16 rounded-md" />
+					</div>
+				</div>
+			</Card>
 		</div>
 	);
 }
 
 function VocabularyReviewDunnoDetailContent({ keyword }: { keyword: string }) {
-	const cardStyle = useCardStyle();
 	const { data: dunnoDetail } = useSuspenseQuery({
 		queryKey: ["dunno-detail", keyword],
 		queryFn: () => fetchDunnoDetail(keyword),
@@ -193,110 +195,122 @@ function VocabularyReviewDunnoDetailContent({ keyword }: { keyword: string }) {
 
 	return (
 		<div className="space-y-4">
-			<div className={cn(cardStyle, "h-auto justify-start space-y-2 p-4")}>
-				<div className="flex items-center gap-2">
-					<p className="font-semibold text-lg">{dunnoDetail.word}</p>
-					<AudioPlayButton
-						className="size-7"
-						src={getYoudaoDictVoiceUrl(dunnoDetail.word)}
-						ariaLabel="Play vocabulary word"
-					/>
-				</div>
-				<p className="mt-2 text-muted-foreground text-sm">{pronounceText}</p>
-			</div>
-
-			{dunnoDetail.content.map((contentItem, idx) => (
-				<div
-					key={`${contentItem.kind}-${idx}`}
-					className={cn(cardStyle, "h-auto justify-start space-y-3 p-4")}
-				>
-					<p className="font-semibold text-base">{contentItem.kind}</p>
-					<div className="space-y-3">
-						{contentItem.means.map((meanItem, meanIdx) => (
-							<div
-								key={`${contentItem.kind}-mean-${meanIdx}`}
-								className="space-y-2"
-							>
-								<p className="text-[15px] leading-relaxed">{meanItem.mean}</p>
-								{meanItem.examples.length > 0 ? (
-									<div className="space-y-2 rounded-md bg-neutral-50 p-3">
-										{meanItem.examples.map((example) => (
-											<div
-												key={`${example._id}-${example.id}`}
-												className="space-y-1"
-											>
-												<div className="flex items-center gap-1.5">
-													<p className="text-sm italic leading-relaxed">
-														{example.e}
-													</p>
-													<AudioPlayButton
-														className="size-6 shrink-0"
-														iconClassName="size-3.5"
-														src={getYoudaoDictVoiceUrl(example.e)}
-														ariaLabel="Play example sentence"
-													/>
-												</div>
-												<p className="text-muted-foreground text-sm leading-relaxed">
-													{example.m}
-												</p>
-											</div>
-										))}
-									</div>
-								) : null}
-							</div>
-						))}
+			<Card>
+				<CardContent className="space-y-2">
+					<div className="flex items-center gap-2">
+						<p className="font-semibold text-lg">{dunnoDetail.word}</p>
+						<AudioPlayButton
+							className="size-7"
+							src={getYoudaoDictVoiceUrl(dunnoDetail.word)}
+							ariaLabel="Play vocabulary word"
+						/>
 					</div>
-				</div>
-			))}
+					<p className="mt-2 text-muted-foreground text-sm">{pronounceText}</p>
+				</CardContent>
+			</Card>
+
+			{dunnoDetail.content.map((contentItem) => {
+				const contentKey = `${contentItem.kind}-${contentItem.means.map((mean) => mean.mean).join("|")}`;
+
+				return (
+					<Card key={contentKey}>
+						<CardContent className="space-y-3">
+							<p className="font-semibold text-base">{contentItem.kind}</p>
+							<div className="space-y-3">
+								{contentItem.means.map((meanItem) => {
+									const meanKey = `${contentItem.kind}-${meanItem.mean}-${meanItem.examples.map((example) => `${example._id}-${example.id}`).join("|")}`;
+
+									return (
+										<div key={meanKey} className="space-y-2">
+											<p className="text-[15px] leading-relaxed">
+												{meanItem.mean}
+											</p>
+											{meanItem.examples.length > 0 ? (
+												<div className="space-y-2 rounded-md bg-neutral-50 p-3">
+													{meanItem.examples.map((example) => (
+														<div
+															key={`${example._id}-${example.id}`}
+															className="space-y-1"
+														>
+															<div className="flex items-center gap-1.5">
+																<p className="text-sm italic leading-relaxed">
+																	{example.e}
+																</p>
+																<AudioPlayButton
+																	className="size-6 shrink-0"
+																	iconClassName="size-3.5"
+																	src={getYoudaoDictVoiceUrl(example.e)}
+																	ariaLabel="Play example sentence"
+																/>
+															</div>
+															<p className="text-muted-foreground text-sm leading-relaxed">
+																{example.m}
+															</p>
+														</div>
+													))}
+												</div>
+											) : null}
+										</div>
+									);
+								})}
+							</div>
+						</CardContent>
+					</Card>
+				);
+			})}
 
 			{dunnoDetail.word_family.length > 0 ? (
-				<div className={cn(cardStyle, "h-auto justify-start space-y-3 p-4")}>
-					<p className="font-semibold text-base">Word family</p>
-					<div className="space-y-3">
-						{dunnoDetail.word_family.map((family) => {
-							const label = family.field || family.kind || "group";
-							const familyKey = `${label}-${family.p.join("|")}-${family.content.join("|")}`;
-							return (
-								<div key={familyKey} className="space-y-2">
-									<p className="text-muted-foreground text-xs uppercase">
-										{label}
-									</p>
-									{family.p.length > 0 ? (
-										<p className="text-muted-foreground text-sm">
-											{family.p.join(" | ")}
+				<Card>
+					<CardContent className="space-y-3">
+						<p className="font-semibold text-base">Word family</p>
+						<div className="space-y-3">
+							{dunnoDetail.word_family.map((family) => {
+								const label = family.field || family.kind || "group";
+								const familyKey = `${label}-${family.p.join("|")}-${family.content.join("|")}`;
+								return (
+									<div key={familyKey} className="space-y-2">
+										<p className="text-muted-foreground text-xs uppercase">
+											{label}
 										</p>
-									) : null}
-									<div className="flex flex-wrap gap-2">
-										{family.content.map((item) => (
-											<span
-												key={`${label}-${item}`}
-												className="rounded-md bg-neutral-100 px-2.5 py-1 text-sm"
-											>
-												{item}
-											</span>
-										))}
+										{family.p.length > 0 ? (
+											<p className="text-muted-foreground text-sm">
+												{family.p.join(" | ")}
+											</p>
+										) : null}
+										<div className="flex flex-wrap gap-2">
+											{family.content.map((item) => (
+												<span
+													key={`${label}-${item}`}
+													className="rounded-md bg-neutral-100 px-2.5 py-1 text-sm"
+												>
+													{item}
+												</span>
+											))}
+										</div>
 									</div>
-								</div>
-							);
-						})}
-					</div>
-				</div>
+								);
+							})}
+						</div>
+					</CardContent>
+				</Card>
 			) : null}
 
 			{synonyms.length > 0 ? (
-				<div className={cn(cardStyle, "h-auto justify-start space-y-3 p-4")}>
-					<p className="font-semibold text-base">Synonyms</p>
-					<div className="flex flex-wrap gap-2">
-						{synonyms.map((item) => (
-							<span
-								key={item}
-								className="rounded-md bg-neutral-100 px-2.5 py-1 text-sm"
-							>
-								{item}
-							</span>
-						))}
-					</div>
-				</div>
+				<Card>
+					<CardContent className="space-y-3">
+						<p className="font-semibold text-base">Synonyms</p>
+						<div className="flex flex-wrap gap-2">
+							{synonyms.map((item) => (
+								<span
+									key={item}
+									className="rounded-md bg-neutral-100 px-2.5 py-1 text-sm"
+								>
+									{item}
+								</span>
+							))}
+						</div>
+					</CardContent>
+				</Card>
 			) : null}
 		</div>
 	);
