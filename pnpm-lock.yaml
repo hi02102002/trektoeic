@@ -210,9 +210,6 @@ importers:
       '@tanstack/react-table':
         specifier: ^8.21.3
         version: 8.21.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@tanstack/react-virtual':
-        specifier: ^3.13.23
-        version: 3.13.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/router-plugin':
         specifier: ^1.167.12
         version: 1.167.12(@tanstack/react-router@1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
@@ -417,22 +414,22 @@ importers:
         version: 1.13.13(@opentelemetry/api@1.9.0)
       '@orpc/experimental-pino':
         specifier: 'catalog:'
-        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(pino@10.3.1)(ws@8.19.0)
+        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(pino@10.3.1)(ws@8.19.0)
       '@orpc/experimental-ratelimit':
         specifier: ^1.13.13
-        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/json-schema':
         specifier: 'catalog:'
-        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/openapi':
         specifier: 'catalog:'
-        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/server':
         specifier: 'catalog:'
-        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+        version: 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/zod':
         specifier: 'catalog:'
-        version: 1.13.13(@opentelemetry/api@1.9.0)(@orpc/contract@1.13.13(@opentelemetry/api@1.9.0))(@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)(zod@4.3.6)
+        version: 1.13.13(@opentelemetry/api@1.9.0)(@orpc/contract@1.13.13(@opentelemetry/api@1.9.0))(@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)(zod@4.3.6)
       '@trektoeic/auth':
         specifier: workspace:*
         version: link:../auth
@@ -481,7 +478,7 @@ importers:
         version: link:../mailer
       better-auth:
         specifier: 'catalog:'
-        version: 1.5.6(@opentelemetry/api@1.9.0)(@tanstack/react-start@1.167.16(crossws@0.4.3(srvx@0.11.14))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(@upstash/redis@1.36.2)(kysely@0.28.15)(pg@8.20.0))(next@16.1.7(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.20.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10)
+        version: 1.5.6(@opentelemetry/api@1.9.0)(@tanstack/react-start@1.167.16(crossws@0.4.3(srvx@0.11.15))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(@upstash/redis@1.36.2)(kysely@0.28.15)(pg@8.20.0))(next@16.1.7(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.20.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10)
       typescript:
         specifier: ^5
         version: 5.9.3
@@ -516,8 +513,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.0
       https-proxy-agent:
-        specifier: ^7.0.6
-        version: 7.0.6
+        specifier: ^9.0.0
+        version: 9.0.0
       puppeteer:
         specifier: ^24.40.0
         version: 24.40.0(typescript@5.9.3)
@@ -4009,12 +4006,6 @@ packages:
       react: '>=16.8'
       react-dom: '>=16.8'
 
-  '@tanstack/react-virtual@3.13.23':
-    resolution: {integrity: sha512-XnMRnHQ23piOVj2bzJqHrRrLg4r+F86fuBcwteKfbIjJrtGxb4z7tIvPVAe4B+4UVwo9G4Giuz5fmapcrnZ0OQ==}
-    peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-
   '@tanstack/router-core@1.168.9':
     resolution: {integrity: sha512-18oeEwEDyXOIuO1VBP9ACaK7tYHZUjynGDCoUh/5c/BNhia9vCJCp9O0LfhZXOorDc/PmLSgvmweFhVmIxF10g==}
     engines: {node: '>=20.19'}
@@ -4090,9 +4081,6 @@ packages:
   '@tanstack/table-core@8.21.3':
     resolution: {integrity: sha512-ldZXEhOBb8Is7xLs01fR3YEc3DERiz5silj8tnGkFZytt1abEvl/GhUmCE0PMLaMPTa3Jk4HbKmRlHmu+gCftg==}
     engines: {node: '>=12'}
-
-  '@tanstack/virtual-core@3.13.23':
-    resolution: {integrity: sha512-zSz2Z2HNyLjCplANTDyl3BcdQJc2k1+yyFoKhNRmCr7V7dY8o8q5m8uFTI1/Pg1kL+Hgrz6u3Xo6eFUB7l66cg==}
 
   '@tanstack/virtual-file-routes@1.161.7':
     resolution: {integrity: sha512-olW33+Cn+bsCsZKPwEGhlkqS6w3M2slFv11JIobdnCFKMLG97oAI2kWKdx5/zsywTL8flpnoIgaZZPlQTFYhdQ==}
@@ -4318,6 +4306,10 @@ packages:
     resolution: {integrity: sha512-MnA+YT8fwfJPgBx3m60MNqakm30XOkyIoH1y6huTQvC0PwZG7ki8NacLBcrPbNoo8vEZy7Jpuk7+jMO+CUovTQ==}
     engines: {node: '>= 14'}
 
+  agent-base@9.0.0:
+    resolution: {integrity: sha512-TQf59BsZnytt8GdJKLPfUZ54g/iaUL2OWDSFCCvMOhsHduDQxO8xC4PNeyIkVcA5KwL2phPSv0douC0fgWzmnA==}
+    engines: {node: '>= 20'}
+
   ahooks@3.9.7:
     resolution: {integrity: sha512-S0lvzhbdlhK36RFBkGv+RbOM/dbbweym+BIHM/bwwuWVSVN5TuVErHPMWo4w0t1NDYg5KPp2iEf7Y7E5LASYiw==}
     peerDependencies:
@@ -4474,7 +4466,7 @@ packages:
   basic-ftp@5.1.0:
     resolution: {integrity: sha512-RkaJzeJKDbaDWTIPiJwubyljaEPwpVWkm9Rt5h9Nd6h7tEXTJ3VB4qxdZBioV7JO5yLUaOKwz7vDOzlncUsegw==}
     engines: {node: '>=10.0.0'}
-    deprecated: Security vulnerability fixed in 5.2.0, please upgrade
+    deprecated: Security vulnerability fixed in 5.2.1, please upgrade
 
   better-auth@1.5.6:
     resolution: {integrity: sha512-QSpJTqaT1XVfWRQe/fm3PgeuwOIlz1nWX/Dx7nsHStJ382bLzmDbQk2u7IT0IJ6wS5SRxfqEE1Ev9TXontgyAQ==}
@@ -5570,6 +5562,10 @@ packages:
   https-proxy-agent@7.0.6:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
     engines: {node: '>= 14'}
+
+  https-proxy-agent@9.0.0:
+    resolution: {integrity: sha512-/MVmHp58WkOypgFhCLk4fzpPcFQvTJ/e6LBI7irpIO2HfxUbpmYoHF+KzipzJpxxzJu7aJNWQ0xojJ/dzV2G5g==}
+    engines: {node: '>= 20'}
 
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
@@ -6911,6 +6907,11 @@ packages:
 
   srvx@0.11.14:
     resolution: {integrity: sha512-mx+pKrWJCzo5m6uXqyB7n4VA81mpdFRroSWsVTQTYqCZE65hFJ+jtVIeyhtL2/kvtDMrHdbA0hWEUh/vu0+Viw==}
+    engines: {node: '>=20.16.0'}
+    hasBin: true
+
+  srvx@0.11.15:
+    resolution: {integrity: sha512-iXsux0UcOjdvs0LCMa2Ws3WwcDUozA3JN3BquNXkaFPP7TpRqgunKdEgoZ/uwb1J6xaYHfxtz9Twlh6yzwM6Tg==}
     engines: {node: '>=20.16.0'}
     hasBin: true
 
@@ -8705,10 +8706,10 @@ snapshots:
     transitivePeerDependencies:
       - '@opentelemetry/api'
 
-  '@orpc/experimental-pino@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(pino@10.3.1)(ws@8.19.0)':
+  '@orpc/experimental-pino@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(pino@10.3.1)(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.13(@opentelemetry/api@1.9.0)
-      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/shared': 1.13.13(@opentelemetry/api@1.9.0)
       pino: 10.3.1
     transitivePeerDependencies:
@@ -8717,10 +8718,10 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/experimental-ratelimit@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)':
+  '@orpc/experimental-ratelimit@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.13(@opentelemetry/api@1.9.0)
-      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/shared': 1.13.13(@opentelemetry/api@1.9.0)
       '@orpc/standard-server': 1.13.13(@opentelemetry/api@1.9.0)
     transitivePeerDependencies:
@@ -8745,12 +8746,12 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/json-schema@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)':
+  '@orpc/json-schema@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)':
     dependencies:
       '@orpc/contract': 1.13.13(@opentelemetry/api@1.9.0)
       '@orpc/interop': 1.13.13
-      '@orpc/openapi': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
-      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+      '@orpc/openapi': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
+      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/shared': 1.13.13(@opentelemetry/api@1.9.0)
       json-schema-typed: 8.0.2
     transitivePeerDependencies:
@@ -8785,13 +8786,13 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/openapi@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)':
+  '@orpc/openapi@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.13(@opentelemetry/api@1.9.0)
       '@orpc/contract': 1.13.13(@opentelemetry/api@1.9.0)
       '@orpc/interop': 1.13.13
       '@orpc/openapi-client': 1.13.13(@opentelemetry/api@1.9.0)
-      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/shared': 1.13.13(@opentelemetry/api@1.9.0)
       '@orpc/standard-server': 1.13.13(@opentelemetry/api@1.9.0)
       json-schema-typed: 8.0.2
@@ -8822,7 +8823,7 @@ snapshots:
       - '@opentelemetry/api'
       - fastify
 
-  '@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)':
+  '@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)':
     dependencies:
       '@orpc/client': 1.13.13(@opentelemetry/api@1.9.0)
       '@orpc/contract': 1.13.13(@opentelemetry/api@1.9.0)
@@ -8836,7 +8837,7 @@ snapshots:
       '@orpc/standard-server-peer': 1.13.13(@opentelemetry/api@1.9.0)
       cookie: 1.1.1
     optionalDependencies:
-      crossws: 0.4.3(srvx@0.11.14)
+      crossws: 0.4.3(srvx@0.11.15)
       ws: 8.19.0
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -8918,12 +8919,12 @@ snapshots:
       - fastify
       - ws
 
-  '@orpc/zod@1.13.13(@opentelemetry/api@1.9.0)(@orpc/contract@1.13.13(@opentelemetry/api@1.9.0))(@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)(zod@4.3.6)':
+  '@orpc/zod@1.13.13(@opentelemetry/api@1.9.0)(@orpc/contract@1.13.13(@opentelemetry/api@1.9.0))(@orpc/server@1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0))(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)(zod@4.3.6)':
     dependencies:
       '@orpc/contract': 1.13.13(@opentelemetry/api@1.9.0)
-      '@orpc/json-schema': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
-      '@orpc/openapi': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
-      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.14))(ws@8.19.0)
+      '@orpc/json-schema': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
+      '@orpc/openapi': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
+      '@orpc/server': 1.13.13(@opentelemetry/api@1.9.0)(crossws@0.4.3(srvx@0.11.15))(ws@8.19.0)
       '@orpc/shared': 1.13.13(@opentelemetry/api@1.9.0)
       escape-string-regexp: 5.0.0
       wildcard-match: 5.1.4
@@ -10435,13 +10436,13 @@ snapshots:
     transitivePeerDependencies:
       - crossws
 
-  '@tanstack/react-start-server@1.166.25(crossws@0.4.3(srvx@0.11.14))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+  '@tanstack/react-start-server@1.166.25(crossws@0.4.3(srvx@0.11.15))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@tanstack/history': 1.161.6
       '@tanstack/react-router': 1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/router-core': 1.168.9
       '@tanstack/start-client-core': 1.167.9
-      '@tanstack/start-server-core': 1.167.9(crossws@0.4.3(srvx@0.11.14))
+      '@tanstack/start-server-core': 1.167.9(crossws@0.4.3(srvx@0.11.15))
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
     transitivePeerDependencies:
@@ -10468,15 +10469,15 @@ snapshots:
       - vite-plugin-solid
       - webpack
 
-  '@tanstack/react-start@1.167.16(crossws@0.4.3(srvx@0.11.14))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))':
+  '@tanstack/react-start@1.167.16(crossws@0.4.3(srvx@0.11.15))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       '@tanstack/react-router': 1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/react-start-client': 1.166.25(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      '@tanstack/react-start-server': 1.166.25(crossws@0.4.3(srvx@0.11.14))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@tanstack/react-start-server': 1.166.25(crossws@0.4.3(srvx@0.11.15))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tanstack/router-utils': 1.161.6
       '@tanstack/start-client-core': 1.167.9
-      '@tanstack/start-plugin-core': 1.167.17(@tanstack/react-router@1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.14))(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
-      '@tanstack/start-server-core': 1.167.9(crossws@0.4.3(srvx@0.11.14))
+      '@tanstack/start-plugin-core': 1.167.17(@tanstack/react-router@1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.15))(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/start-server-core': 1.167.9(crossws@0.4.3(srvx@0.11.15))
       pathe: 2.0.3
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
@@ -10499,12 +10500,6 @@ snapshots:
   '@tanstack/react-table@8.21.3(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:
       '@tanstack/table-core': 8.21.3
-      react: 19.2.4
-      react-dom: 19.2.4(react@19.2.4)
-
-  '@tanstack/react-virtual@3.13.23(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
-    dependencies:
-      '@tanstack/virtual-core': 3.13.23
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
 
@@ -10612,7 +10607,7 @@ snapshots:
       - vite-plugin-solid
       - webpack
 
-  '@tanstack/start-plugin-core@1.167.17(@tanstack/react-router@1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.14))(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))':
+  '@tanstack/start-plugin-core@1.167.17(@tanstack/react-router@1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(crossws@0.4.3(srvx@0.11.15))(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))':
     dependencies:
       '@babel/code-frame': 7.27.1
       '@babel/core': 7.29.0
@@ -10623,7 +10618,7 @@ snapshots:
       '@tanstack/router-plugin': 1.167.12(@tanstack/react-router@1.168.10(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
       '@tanstack/router-utils': 1.161.6
       '@tanstack/start-client-core': 1.167.9
-      '@tanstack/start-server-core': 1.167.9(crossws@0.4.3(srvx@0.11.14))
+      '@tanstack/start-server-core': 1.167.9(crossws@0.4.3(srvx@0.11.15))
       cheerio: 1.2.0
       exsolve: 1.0.8
       pathe: 2.0.3
@@ -10656,13 +10651,13 @@ snapshots:
     transitivePeerDependencies:
       - crossws
 
-  '@tanstack/start-server-core@1.167.9(crossws@0.4.3(srvx@0.11.14))':
+  '@tanstack/start-server-core@1.167.9(crossws@0.4.3(srvx@0.11.15))':
     dependencies:
       '@tanstack/history': 1.161.6
       '@tanstack/router-core': 1.168.9
       '@tanstack/start-client-core': 1.167.9
       '@tanstack/start-storage-context': 1.166.23
-      h3-v2: h3@2.0.1-rc.16(crossws@0.4.3(srvx@0.11.14))
+      h3-v2: h3@2.0.1-rc.16(crossws@0.4.3(srvx@0.11.15))
       seroval: 1.5.1
     transitivePeerDependencies:
       - crossws
@@ -10675,8 +10670,6 @@ snapshots:
   '@tanstack/store@0.9.3': {}
 
   '@tanstack/table-core@8.21.3': {}
-
-  '@tanstack/virtual-core@3.13.23': {}
 
   '@tanstack/virtual-file-routes@1.161.7': {}
 
@@ -10879,6 +10872,8 @@ snapshots:
 
   agent-base@7.1.4: {}
 
+  agent-base@9.0.0: {}
+
   ahooks@3.9.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@babel/runtime': 7.29.2
@@ -11062,7 +11057,7 @@ snapshots:
       - '@cloudflare/workers-types'
       - '@opentelemetry/api'
 
-  better-auth@1.5.6(@opentelemetry/api@1.9.0)(@tanstack/react-start@1.167.16(crossws@0.4.3(srvx@0.11.14))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(@upstash/redis@1.36.2)(kysely@0.28.15)(pg@8.20.0))(next@16.1.7(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.20.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10):
+  better-auth@1.5.6(@opentelemetry/api@1.9.0)(@tanstack/react-start@1.167.16(crossws@0.4.3(srvx@0.11.15))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2)))(drizzle-kit@0.31.10)(drizzle-orm@0.45.2(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(@upstash/redis@1.36.2)(kysely@0.28.15)(pg@8.20.0))(next@16.1.7(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(pg@8.20.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.10):
     dependencies:
       '@better-auth/core': 1.5.6(@better-auth/utils@0.3.1)(@better-fetch/fetch@1.1.21)(@opentelemetry/api@1.9.0)(better-call@1.3.2(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.2.0)
       '@better-auth/drizzle-adapter': 1.5.6(@better-auth/core@1.5.6(@better-auth/utils@0.3.1)(@better-fetch/fetch@1.1.21)(@opentelemetry/api@1.9.0)(better-call@1.3.2(zod@4.3.6))(jose@6.1.3)(kysely@0.28.14)(nanostores@1.2.0))(@better-auth/utils@0.3.1)(drizzle-orm@0.45.2(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(@upstash/redis@1.36.2)(kysely@0.28.15)(pg@8.20.0))
@@ -11082,7 +11077,7 @@ snapshots:
       nanostores: 1.2.0
       zod: 4.3.6
     optionalDependencies:
-      '@tanstack/react-start': 1.167.16(crossws@0.4.3(srvx@0.11.14))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/react-start': 1.167.16(crossws@0.4.3(srvx@0.11.15))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(vite@7.3.1(@types/node@25.5.0)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.2))
       drizzle-kit: 0.31.10
       drizzle-orm: 0.45.2(@opentelemetry/api@1.9.0)(@types/pg@8.20.0)(@upstash/redis@1.36.2)(kysely@0.28.15)(pg@8.20.0)
       next: 16.1.7(@babel/core@7.29.0)(@opentelemetry/api@1.9.0)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -11351,9 +11346,9 @@ snapshots:
     optionalDependencies:
       srvx: 0.10.1
 
-  crossws@0.4.3(srvx@0.11.14):
+  crossws@0.4.3(srvx@0.11.15):
     optionalDependencies:
-      srvx: 0.11.14
+      srvx: 0.11.15
     optional: true
 
   crypto-js@4.2.0: {}
@@ -12099,16 +12094,16 @@ snapshots:
   h3@2.0.1-rc.16(crossws@0.4.3(srvx@0.10.1)):
     dependencies:
       rou3: 0.8.1
-      srvx: 0.11.14
+      srvx: 0.11.15
     optionalDependencies:
       crossws: 0.4.3(srvx@0.10.1)
 
-  h3@2.0.1-rc.16(crossws@0.4.3(srvx@0.11.14)):
+  h3@2.0.1-rc.16(crossws@0.4.3(srvx@0.11.15)):
     dependencies:
       rou3: 0.8.1
-      srvx: 0.11.14
+      srvx: 0.11.15
     optionalDependencies:
-      crossws: 0.4.3(srvx@0.11.14)
+      crossws: 0.4.3(srvx@0.11.15)
     optional: true
 
   has-symbols@1.1.0: {}
@@ -12171,6 +12166,13 @@ snapshots:
   https-proxy-agent@7.0.6:
     dependencies:
       agent-base: 7.1.4
+      debug: 4.4.3
+    transitivePeerDependencies:
+      - supports-color
+
+  https-proxy-agent@9.0.0:
+    dependencies:
+      agent-base: 9.0.0
       debug: 4.4.3
     transitivePeerDependencies:
       - supports-color
@@ -13694,6 +13696,8 @@ snapshots:
   srvx@0.10.1: {}
 
   srvx@0.11.14: {}
+
+  srvx@0.11.15: {}
 
   standard-as-callback@2.1.0:
     optional: true
