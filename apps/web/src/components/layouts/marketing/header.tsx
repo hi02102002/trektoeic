@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "@/components/logo";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export const Header = () => {
 	return (
@@ -10,8 +11,14 @@ export const Header = () => {
 					<Link to="/" className="inline-block">
 						<Logo />
 					</Link>
-					<div className="flex items-center gap-4">
-						<Link to="/login" className={buttonVariants()}>
+					<div className="flex items-center gap-2 sm:gap-3">
+						<Link
+							to="/about-us"
+							className={buttonVariants({ variant: "ghost" })}
+						>
+							Giới thiệu
+						</Link>
+						<Link to="/login" className={cn(buttonVariants())}>
 							Bắt đầu ngay
 						</Link>
 					</div>

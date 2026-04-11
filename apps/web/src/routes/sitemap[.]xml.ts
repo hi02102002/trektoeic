@@ -23,7 +23,7 @@ const urls: SitemapUrl[] = [
 		priority: 1.0,
 	},
 	{
-		loc: "/about",
+		loc: "/about-us",
 		changefreq: "monthly",
 		priority: 0.8,
 	},

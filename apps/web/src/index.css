@@ -203,19 +203,35 @@ body {
 	}
 }
 
-.bg-mesh {
-	background-color: #ffffff;
+/** Landing / marketing: lưới + glow nhẹ (đặt trên nền bg-neutral-50) */
+.bg-landing-surface {
 	background-image:
-		linear-gradient(to right, rgba(228, 228, 231, 0.3) 1px, transparent 1px),
-		linear-gradient(to bottom, rgba(228, 228, 231, 0.3) 1px, transparent 1px),
-		radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
-		radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.08) 0px, transparent 50%);
+		linear-gradient(
+			to right,
+			color-mix(in oklch, var(--border) 55%, transparent) 1px,
+			transparent 1px
+		),
+		linear-gradient(
+			to bottom,
+			color-mix(in oklch, var(--border) 55%, transparent) 1px,
+			transparent 1px
+		),
+		radial-gradient(
+			at 0% 0%,
+			color-mix(in oklch, var(--foreground) 4%, transparent) 0px,
+			transparent 45%
+		),
+		radial-gradient(
+			at 100% 100%,
+			color-mix(in oklch, var(--chart-2) 12%, transparent) 0px,
+			transparent 50%
+		);
 	background-size:
-		40px 40px,
-		40px 40px,
+		32px 32px,
+		32px 32px,
 		100% 100%,
 		100% 100%;
-	mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+	mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 
 .glass-panel {

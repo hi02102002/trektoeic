@@ -12,7 +12,7 @@ export const Route = createFileRoute("/(marketing)/_marketing")({
 
 function RouteComponent() {
 	return (
-		<div>
+		<div className="min-h-screen bg-neutral-50 text-foreground">
 			<Header />
 			<Outlet />
 			<Footer />

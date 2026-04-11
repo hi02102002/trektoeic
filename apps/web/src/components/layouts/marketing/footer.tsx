@@ -3,12 +3,13 @@ import {
 	LinkedinLogo,
 	TwitterLogo,
 } from "@phosphor-icons/react";
+import { Link } from "@tanstack/react-router";
 import { Logo } from "@/components/logo";
 
 export const Footer = () => {
 	return (
-		<footer className="border-neutral-200 border-t bg-white pt-16 pb-8">
-			<div className="mx-auto max-w-6xl px-6">
+		<footer className="border-border border-t bg-background pt-16 pb-8 ring-1 ring-foreground/5">
+			<div className="container mx-auto max-w-6xl px-4">
 				<div className="mb-12 grid grid-cols-2 gap-8 md:grid-cols-4">
 					<div className="col-span-2 md:col-span-1">
 						<Logo />
@@ -18,99 +19,114 @@ export const Footer = () => {
 						</p>
 					</div>
 					<div>
-						<h4 className="mb-4 font-semibold text-neutral-900 text-xs uppercase tracking-wider">
-							Study
+						<h4 className="mb-4 font-heading font-semibold text-foreground text-xs uppercase tracking-wider">
+							Học tập
 						</h4>
-						<ul className="space-y-3 text-neutral-500 text-sm">
+						<ul className="space-y-3 text-muted-foreground text-sm">
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Listening (Part 1-4)
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Listening (Part 1–4)
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Reading (Part 5-7)
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Reading (Part 5–7)
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Vocabulary Drills
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Từ vựng
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Grammar Review
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Ngữ pháp
+								</Link>
 							</li>
 						</ul>
 					</div>
 					<div>
-						<h4 className="mb-4 font-semibold text-neutral-900 text-xs uppercase tracking-wider">
-							Company
+						<h4 className="mb-4 font-heading font-semibold text-foreground text-xs uppercase tracking-wider">
+							Công ty
 						</h4>
-						<ul className="space-y-3 text-neutral-500 text-sm">
+						<ul className="space-y-3 text-muted-foreground text-sm">
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									About Us
-								</a>
+								<Link to="/about-us" className="hover:text-foreground">
+									Giới thiệu
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									For Enterprise
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Doanh nghiệp
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Success Stories
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Câu chuyện thành công
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Pricing
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Bảng giá
+								</Link>
 							</li>
 						</ul>
 					</div>
 					<div>
-						<h4 className="mb-4 font-semibold text-neutral-900 text-xs uppercase tracking-wider">
-							Support
+						<h4 className="mb-4 font-heading font-semibold text-foreground text-xs uppercase tracking-wider">
+							Hỗ trợ
 						</h4>
-						<ul className="space-y-3 text-neutral-500 text-sm">
+						<ul className="space-y-3 text-muted-foreground text-sm">
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Help Center
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Trung tâm trợ giúp
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Score Calculator
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Ước lượng điểm
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Terms of Service
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Điều khoản
+								</Link>
 							</li>
 							<li>
-								<a href="#" className="hover:text-neutral-900">
-									Privacy Policy
-								</a>
+								<Link to="/login" className="hover:text-foreground">
+									Bảo mật
+								</Link>
 							</li>
 						</ul>
 					</div>
 				</div>
-				<div className="flex flex-col items-center justify-between gap-4 border-neutral-100 border-t pt-8 sm:flex-row">
-					<p className="text-neutral-400 text-xs">
-						© 2025 TrekToeic. All rights reserved.
+				<div className="flex flex-col items-center justify-between gap-4 border-border border-t pt-8 sm:flex-row">
+					<p className="text-muted-foreground text-xs">
+						© {new Date().getFullYear()} TrekToeic.
 					</p>
 					<div className="flex gap-4">
-						<a href="#" className="text-neutral-400 hover:text-neutral-600">
+						<a
+							href="https://twitter.com"
+							className="text-muted-foreground hover:text-foreground"
+							target="_blank"
+							rel="noreferrer"
+						>
 							<TwitterLogo size={16} />
 						</a>
-						<a href="#" className="text-neutral-400 hover:text-neutral-600">
+						<a
+							href="https://instagram.com"
+							className="text-muted-foreground hover:text-foreground"
+							target="_blank"
+							rel="noreferrer"
+						>
 							<InstagramLogo size={16} />
 						</a>
-						<a href="#" className="text-neutral-400 hover:text-neutral-600">
+						<a
+							href="https://linkedin.com"
+							className="text-muted-foreground hover:text-foreground"
+							target="_blank"
+							rel="noreferrer"
+						>
 							<LinkedinLogo size={16} />
 						</a>
 					</div>

@@ -22,6 +22,7 @@ import { Route as ApiUploadBackblazeRouteImport } from './routes/api/upload/back
 import { Route as ApiRpcSplatRouteImport } from './routes/api/rpc/$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 import { Route as ProtectedAppDashboardRouteImport } from './routes/_protected/app/_dashboard'
+import { Route as marketingMarketingAboutUsRouteRouteImport } from './routes/(marketing)/_marketing/about-us/route'
 import { Route as marketingMarketingAboutRouteRouteImport } from './routes/(marketing)/_marketing/about/route'
 import { Route as marketingMarketingIndexRouteRouteImport } from './routes/(marketing)/_marketing/index/route'
 import { Route as ProtectedAppDashboardIndexRouteRouteImport } from './routes/_protected/app/_dashboard/index/route'
@@ -106,6 +107,12 @@ const ProtectedAppDashboardRoute = ProtectedAppDashboardRouteImport.update({
   path: '/app',
   getParentRoute: () => ProtectedRoute,
 } as any)
+const marketingMarketingAboutUsRouteRoute =
+  marketingMarketingAboutUsRouteRouteImport.update({
+    id: '/about-us',
+    path: '/about-us',
+    getParentRoute: () => marketingMarketingRoute,
+  } as any)
 const marketingMarketingAboutRouteRoute =
   marketingMarketingAboutRouteRouteImport.update({
     id: '/about',
@@ -246,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/api/$': typeof ApiSplatRoute
   '/proxy/$': typeof ProxySplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
+  '/about-us': typeof marketingMarketingAboutUsRouteRoute
   '/app': typeof ProtectedAppDashboardRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
@@ -279,6 +287,7 @@ export interface FileRoutesByTo {
   '/api/$': typeof ApiSplatRoute
   '/proxy/$': typeof ProxySplatRoute
   '/about': typeof marketingMarketingAboutRouteRoute
+  '/about-us': typeof marketingMarketingAboutUsRouteRoute
   '/app': typeof ProtectedAppDashboardIndexRouteRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
@@ -315,6 +324,7 @@ export interface FileRoutesById {
   '/proxy/$': typeof ProxySplatRoute
   '/(marketing)/_marketing/': typeof marketingMarketingIndexRouteRoute
   '/(marketing)/_marketing/about': typeof marketingMarketingAboutRouteRoute
+  '/(marketing)/_marketing/about-us': typeof marketingMarketingAboutUsRouteRoute
   '/_protected/app/_dashboard': typeof ProtectedAppDashboardRouteWithChildren
   '/api/auth/$': typeof ApiAuthSplatRoute
   '/api/rpc/$': typeof ApiRpcSplatRoute
@@ -350,6 +360,7 @@ export interface FileRouteTypes {
     | '/api/$'
     | '/proxy/$'
     | '/about'
+    | '/about-us'
     | '/app'
     | '/api/auth/$'
     | '/api/rpc/$'
@@ -383,6 +394,7 @@ export interface FileRouteTypes {
     | '/api/$'
     | '/proxy/$'
     | '/about'
+    | '/about-us'
     | '/app'
     | '/api/auth/$'
     | '/api/rpc/$'
@@ -418,6 +430,7 @@ export interface FileRouteTypes {
     | '/proxy/$'
     | '/(marketing)/_marketing/'
     | '/(marketing)/_marketing/about'
+    | '/(marketing)/_marketing/about-us'
     | '/_protected/app/_dashboard'
     | '/api/auth/$'
     | '/api/rpc/$'
@@ -551,6 +564,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/app'
       preLoaderRoute: typeof ProtectedAppDashboardRouteImport
       parentRoute: typeof ProtectedRoute
+    }
+    '/(marketing)/_marketing/about-us': {
+      id: '/(marketing)/_marketing/about-us'
+      path: '/about-us'
+      fullPath: '/about-us'
+      preLoaderRoute: typeof marketingMarketingAboutUsRouteRouteImport
+      parentRoute: typeof marketingMarketingRoute
     }
     '/(marketing)/_marketing/about': {
       id: '/(marketing)/_marketing/about'
@@ -794,11 +814,13 @@ const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
 interface marketingMarketingRouteChildren {
   marketingMarketingIndexRouteRoute: typeof marketingMarketingIndexRouteRoute
   marketingMarketingAboutRouteRoute: typeof marketingMarketingAboutRouteRoute
+  marketingMarketingAboutUsRouteRoute: typeof marketingMarketingAboutUsRouteRoute
 }
 
 const marketingMarketingRouteChildren: marketingMarketingRouteChildren = {
   marketingMarketingIndexRouteRoute: marketingMarketingIndexRouteRoute,
   marketingMarketingAboutRouteRoute: marketingMarketingAboutRouteRoute,
+  marketingMarketingAboutUsRouteRoute: marketingMarketingAboutUsRouteRoute,
 }
 
 const marketingMarketingRouteWithChildren =
